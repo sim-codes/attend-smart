@@ -41,7 +41,7 @@ export default function Index() {
         <Text size="3xl" bold>Get Started?</Text>
 
         <Button className="w-full rounded-full self-center mt-4" size="xl" onPress={handleSubmit} variant="solid">
-          <ButtonText>Login</ButtonText>
+          <ButtonText size="xl">Login</ButtonText>
         </Button>
 
         <Button className="w-full rounded-full self-center mt-4" size="xl" onPress={handleSubmit} variant="outline">

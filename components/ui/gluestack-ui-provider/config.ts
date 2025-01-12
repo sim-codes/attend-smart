@@ -3,46 +3,48 @@ import { vars } from 'nativewind';
 
 export const config = {
   light: vars({
-    '--color-primary-0': '179 179 179',
-    '--color-primary-50': '153 153 153',
-    '--color-primary-100': '128 128 128',
-    '--color-primary-200': '115 115 115',
-    '--color-primary-300': '102 102 102',
-    '--color-primary-400': '82 82 82',
-    '--color-primary-500': '51 51 51',
-    '--color-primary-600': '41 41 41',
-    '--color-primary-700': '31 31 31',
-    '--color-primary-800': '13 13 13',
-    '--color-primary-900': '10 10 10',
-    '--color-primary-950': '8 8 8',
+    '--color-primary-0': '204 221 221',  // Very light
+'--color-primary-50': '179 204 204',
+'--color-primary-100': '153 186 186',
+'--color-primary-200': '128 169 169',
+'--color-primary-300': '102 151 151',
+'--color-primary-400': '64 107 107',
+'--color-primary-500': '26 54 54',   // Base color
+'--color-primary-600': '20 43 43',
+'--color-primary-700': '16 35 35',
+'--color-primary-800': '13 27 27',
+'--color-primary-900': '10 20 20',   // Deep shade
+'--color-primary-950': '8 15 15',    // Deepest shade
 
-    /* Secondary  */
-    '--color-secondary-0': '253 253 253',
-    '--color-secondary-50': '251 251 251',
-    '--color-secondary-100': '246 246 246',
-    '--color-secondary-200': '242 242 242',
-    '--color-secondary-300': '237 237 237',
-    '--color-secondary-400': '230 230 231',
-    '--color-secondary-500': '217 217 219',
-    '--color-secondary-600': '198 199 199',
-    '--color-secondary-700': '189 189 189',
-    '--color-secondary-800': '177 177 177',
-    '--color-secondary-900': '165 164 164',
-    '--color-secondary-950': '157 157 157',
+/* Secondary */
+'--color-secondary-0': '214 189 152',   // Light neutral tone (matches primary light)
+'--color-secondary-50': '182 158 121',   // Soft tan/earthy neutral
+'--color-secondary-100': '155 134 102',  // Muted olive brown
+'--color-secondary-200': '128 109 79',   // Light brown neutral
+'--color-secondary-300': '112 95 70',    // Medium neutral
+'--color-secondary-400': '94 81 60',     // Subtle earthy brown
+'--color-secondary-500': '82 70 52',     // Strong brownish green
+'--color-secondary-600': '72 62 46',     // Darker earthy tone
+'--color-secondary-700': '60 52 38',     // Deep brownish green
+'--color-secondary-800': '52 44 33',     // Darker neutral
+'--color-secondary-900': '44 37 28',     // Deepest brown for contrast
+'--color-secondary-950': '38 32 24',     // Deepest neutral accent
+
 
     /* Tertiary */
-    '--color-tertiary-0': '255 250 245',
-    '--color-tertiary-50': '255 242 229',
-    '--color-tertiary-100': '255 233 213',
-    '--color-tertiary-200': '254 209 170',
-    '--color-tertiary-300': '253 180 116',
-    '--color-tertiary-400': '251 157 75',
-    '--color-tertiary-500': '231 129 40',
-    '--color-tertiary-600': '215 117 31',
-    '--color-tertiary-700': '180 98 26',
-    '--color-tertiary-800': '130 73 23',
-    '--color-tertiary-900': '108 61 19',
-    '--color-tertiary-950': '84 49 18',
+'--color-tertiary-0': '103 125 106',    // Soft greenish beige (complementary to primary)
+'--color-tertiary-50': '90 112 94',     // Lighter olive tone
+'--color-tertiary-100': '77 94 79',     // Soft green olive
+'--color-tertiary-200': '64 79 64',     // Subtle green-brown tone
+'--color-tertiary-300': '54 66 55',     // Muted greenish brown
+'--color-tertiary-400': '46 56 46',     // Slightly darker green
+'--color-tertiary-500': '39 48 40',     // Deep muted green
+'--color-tertiary-600': '33 41 34',     // Deeper earthy green
+'--color-tertiary-700': '28 34 28',     // Very deep earthy tone
+'--color-tertiary-800': '23 29 23',     // Deepest earthy green
+'--color-tertiary-900': '19 24 19',     // Deep forest green
+'--color-tertiary-950': '16 20 16',     // Very dark green accent
+
 
     /* Error */
     '--color-error-0': '254 233 233',
@@ -101,58 +103,60 @@ export const config = {
     '--color-info-950': '3 38 56',
 
     /* Typography */
-    '--color-typography-0': '254 254 255',
-    '--color-typography-50': '245 245 245',
-    '--color-typography-100': '229 229 229',
-    '--color-typography-200': '219 219 220',
-    '--color-typography-300': '212 212 212',
-    '--color-typography-400': '163 163 163',
-    '--color-typography-500': '140 140 140',
-    '--color-typography-600': '115 115 115',
-    '--color-typography-700': '82 82 82',
-    '--color-typography-800': '64 64 64',
-    '--color-typography-900': '38 38 39',
-    '--color-typography-950': '23 23 23',
+'--color-typography-0': '214 189 152',   // Lightest (for light text on dark backgrounds)
+'--color-typography-50': '103 125 106',   // Light shade
+'--color-typography-100': '64 83 76',     // Light-medium shade
+'--color-typography-200': '103 125 106',  // Medium light shade
+'--color-typography-300': '128 169 169',  // Neutral medium tone
+'--color-typography-400': '179 204 204',  // Medium-dark shade
+'--color-typography-500': '26 54 54',     // Base (dark text)
+'--color-typography-600': '20 43 43',     // Darker tone
+'--color-typography-700': '16 35 35',     // Darker shade
+'--color-typography-800': '13 27 27',     // Very dark tone
+'--color-typography-900': '10 20 20',     // Deepest shade (for headings)
+'--color-typography-950': '8 15 15',      // Deepest dark for accents
 
-    /* Outline */
-    '--color-outline-0': '253 254 254',
-    '--color-outline-50': '243 243 243',
-    '--color-outline-100': '230 230 230',
-    '--color-outline-200': '221 220 219',
-    '--color-outline-300': '211 211 211',
-    '--color-outline-400': '165 163 163',
-    '--color-outline-500': '140 141 141',
-    '--color-outline-600': '115 116 116',
-    '--color-outline-700': '83 82 82',
-    '--color-outline-800': '65 65 65',
-    '--color-outline-900': '39 38 36',
-    '--color-outline-950': '26 23 23',
 
-    /* Background */
-    '--color-background-0': '255 255 255',
-    '--color-background-50': '246 246 246',
-    '--color-background-100': '242 241 241',
-    '--color-background-200': '220 219 219',
-    '--color-background-300': '213 212 212',
-    '--color-background-400': '162 163 163',
-    '--color-background-500': '142 142 142',
-    '--color-background-600': '116 116 116',
-    '--color-background-700': '83 82 82',
-    '--color-background-800': '65 64 64',
-    '--color-background-900': '39 38 37',
-    '--color-background-950': '18 18 18',
+/* Outline */
+'--color-outline-0': '253 254 254',   // Lightest neutral tone
+'--color-outline-50': '243 243 243',  // Very light gray
+'--color-outline-100': '230 230 230', // Light gray for subtle outlines
+'--color-outline-200': '221 220 219', // Soft grayish shade
+'--color-outline-300': '211 211 211', // Neutral gray
+'--color-outline-400': '165 163 163', // Medium gray
+'--color-outline-500': '140 141 141', // Neutral gray
+'--color-outline-600': '115 116 116', // Slightly darker gray
+'--color-outline-700': '83 82 82',    // Darker gray outline
+'--color-outline-800': '65 65 65',    // Very dark gray
+'--color-outline-900': '39 38 36',    // Deepest gray
+'--color-outline-950': '26 23 23',    // Very dark gray accent
 
-    /* Background Special */
-    '--color-background-error': '254 241 241',
-    '--color-background-warning': '255 243 234',
-    '--color-background-success': '237 252 242',
-    '--color-background-muted': '247 248 247',
-    '--color-background-info': '235 248 254',
+/* Background */
+'--color-background-0': '255 255 255',   // White for background
+'--color-background-50': '246 246 246',  // Very light background shade
+'--color-background-100': '242 241 241', // Soft off-white background
+'--color-background-200': '220 219 219', // Light gray
+'--color-background-300': '213 212 212', // Subtle gray for soft contrast
+'--color-background-400': '162 163 163', // Medium neutral gray
+'--color-background-500': '142 142 142', // Muted background
+'--color-background-600': '116 116 116', // Darker background
+'--color-background-700': '83 82 82',    // Dark gray
+'--color-background-800': '65 64 64',    // Deeper gray for background elements
+'--color-background-900': '39 38 37',    // Dark gray for darker elements
+'--color-background-950': '18 18 18',    // Very dark background
 
-    /* Focus Ring Indicator  */
-    '--color-indicator-primary': '55 55 55',
-    '--color-indicator-info': '83 153 236',
-    '--color-indicator-error': '185 28 28',
+
+/* Background Special */
+'--color-background-error': '254 241 241',  // Light red for error
+'--color-background-warning': '255 243 234', // Light yellowish for warnings
+'--color-background-success': '237 252 242', // Soft green for success
+'--color-background-muted': '247 248 247',  // Muted background for disabled items
+'--color-background-info': '235 248 254',   // Light blue for info messages
+
+/* Focus Ring Indicator */
+'--color-indicator-primary': '55 55 55',    // Deep dark ring for primary focus
+'--color-indicator-info': '83 153 236',     // Blue ring for info focus
+'--color-indicator-error': '185 28 28',     // Red ring for error focus
   }),
   dark: vars({
     '--color-primary-0': '166 166 166',
