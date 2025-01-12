@@ -170,9 +170,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        heading: undefined,
-        body: undefined,
-        mono: undefined,
+        heading: ['Nunito_900Black', 'sans-serif'],
+        body: ['Nunito', 'sans-serif'],
+        mono: ['Roboto Mono', 'monospace'],
         roboto: ['Roboto', 'sans-serif'],
       },
       fontWeight: {

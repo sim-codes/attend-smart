@@ -1,4 +1,3 @@
-import { Text, View } from "react-native";
 import { useState } from "react";
 import { FormControl,
   FormControlError,
@@ -13,6 +12,10 @@ import { VStack } from '@/components/ui/vstack';
 import { Input, InputField } from '@/components/ui/input';
 import { Button, ButtonText } from '@/components/ui/button';
 import Feather from '@expo/vector-icons/Feather';
+import { Center } from "@/components/ui/center";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
+import { Image } from "@/components/ui/image";
 
 
 export default function Index() {
@@ -28,42 +31,23 @@ export default function Index() {
   }
 
   return (
-    <VStack className="w-full max-w-[300px] rounded-md border border-background-200 p-4">
+    <VStack className="h-full w-full p-4 justify-center" space="sm">
+      <Image source={require('@/assets/images/student.png')} size="full" className="self-center aspect-[384/384] h-1/2" alt="alt"/>
 
-      <Text className="text-lg font-semibold text-primary-500">Sign In</Text>
-      <FormControl
-        isInvalid={isInvalid}
-        size="md"
-        isDisabled={false}
-        isReadOnly={false}
-        isRequired={false}
-      >
-        <FormControlLabel>
-          <FormControlLabelText>Password</FormControlLabelText>
-        </FormControlLabel>
-        <Input className="my-1" size="md">
-          <InputField
-            type="password"
-            placeholder="password"
-            value={inputValue}
-            onChangeText={(text) => setInputValue(text)}
-          />
-        </Input>
-        <FormControlHelper>
-          <FormControlHelperText>
-            Must be atleast 6 characters.
-          </FormControlHelperText>
-        </FormControlHelper>
-        <FormControlError>
-          <FormControlErrorIcon as={AlertCircleIcon} />
-          <FormControlErrorText>
-            Atleast 6 characters are required.
-          </FormControlErrorText>
-        </FormControlError>
-      </FormControl>
-      <Button className="w-fit self-end mt-4" size="sm" onPress={handleSubmit} variant="solid">
-        <ButtonText>Submit</ButtonText>
-      </Button>
+      <Heading size="3xl">Hello!</Heading>
+      <Text size="3xl" bold>Create your acount and if you have one login</Text>
+
+      <Center className="gap-y-8">
+        <Text size="3xl" bold>Get Started?</Text>
+
+        <Button className="w-full rounded-full self-center mt-4" size="xl" onPress={handleSubmit} variant="solid">
+          <ButtonText>Login</ButtonText>
+        </Button>
+
+        <Button className="w-full rounded-full self-center mt-4" size="xl" onPress={handleSubmit} variant="outline">
+          <ButtonText size="xl">Sign Up</ButtonText>
+        </Button>
+      </Center>
     </VStack>
   );
 
