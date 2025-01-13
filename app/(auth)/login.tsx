@@ -1,77 +1,67 @@
 import { useState } from "react";
 import { Text } from "@/components/ui/text";
-import { View } from "react-native";
 import { VStack } from "@/components/ui/vstack";
-import { Heading } from "@/components/ui/heading";
-import { FormControl,
-  FormControlError,
-  FormControlErrorText,
-  FormControlLabel,
-  FormControlLabelText,
-  FormControlHelper,
-  FormControlHelperText,
-  FormControlErrorIcon,
-} from '@/components/ui/form-control';
-
-import { Input, InputField } from '@/components/ui/input';
-import Feather from '@expo/vector-icons/Feather';
+import FormFieldComponent from '@/components/FormFieldComponent ';
+import { Link } from "expo-router";
+import { Button, ButtonText } from "@/components/ui/button";
+import { loginFormFields } from "@/constants/forms";
+import { LoginFieldId } from "@/types";
 
 export default function Login() {
+  const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
+    email: '',
+    password: ''
+  });
 
-  const [isInvalid, setIsInvalid] = useState(false)
-  const [inputValue, setInputValue] = useState("12345")
+  const handleChange = (id: LoginFieldId) => (value: string) => {
+    setFormData(prev => ({ ...prev, [id]: value }));
+};
+
   const handleSubmit = () => {
-    if (inputValue.length < 6) {
-      setIsInvalid(true)
-    } else {
-      setIsInvalid(false)
-    }
+    alert("Login button clicked1");
   }
 
   return (
-    <VStack className="h-full w-full justify-between bg-primary-500" space="xl">
-      <VStack className="p-6">
-        <Text size="3xl" className="text-secondary-0">Welcome Back,</Text>
-        <Text size="3xl" className="text-secondary-0" bold>Log In!</Text>
+    <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
+      <VStack className="my-6 p-6">
+        <Text size="4xl" className="text-secondary-0">Welcome Back,</Text>
+        <Text size="4xl" className="text-secondary-0" bold>Log In!</Text>
       </VStack>
 
-      <VStack className="bg-secondary-0/70 h-full rounded-t-[5rem] p-6">
-        <FormControl
-          className="w-full py-6"
-          isInvalid={isInvalid}
-          size="lg"
-          isDisabled={false}
-          isReadOnly={false}
-          isRequired={false}
+      <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-14 py-12 px-4">
+
+      {loginFormFields.map(field => (
+          <FormFieldComponent
+              key={field.id}
+              {...field}
+              value={formData[field.id]}
+              onChange={handleChange(field.id)}
+          />
+      ))}
+
+
+      <Link href="/(auth)/forget-password"
+        className="self-end underline text-primary-500 font-bold text-lg"
+      >
+        Forgot Password?
+      </Link>
+
+      <Button className="w-full rounded-full self-center mt-4" size="xl"
+        onPress={() => handleSubmit()}
+        variant="solid">
+        <ButtonText size="xl">Log In</ButtonText>
+      </Button>
+
+      <Text className="text-center text-primary-500" size="lg">
+        Don't have an account?{" "}
+        <Link href="/(auth)/signup"
+          className="underline text-primary-500 font-bold text-lg"
         >
-          <FormControlLabel>
-            <FormControlLabelText>Password</FormControlLabelText>
-          </FormControlLabel>
-          <Input className="my-1" size="lg">
-            <InputField
-              type="password"
-              placeholder="password"
-              value={inputValue}
-              onChangeText={(text) => setInputValue(text)}
-            />
-          </Input>
-          <FormControlHelper>
-            <FormControlHelperText>
-              Must be atleast 6 characters.
-            </FormControlHelperText>
-          </FormControlHelper>
-          <FormControlError>
-            <FormControlErrorIcon as={AlertCircleIcon} />
-            <FormControlErrorText>
-              Atleast 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
-        </FormControl>
+          Sign up
+        </Link>
+      </Text>
+
       </VStack>
     </VStack>
   );
-
-  function AlertCircleIcon(props: any) {
-    return <Feather name="alert-circle" {...props} />;
-  }
 }
