@@ -1,34 +1,30 @@
-import { useState } from "react";
-import { FormControl,
-  FormControlError,
-  FormControlErrorIcon,
-  FormControlErrorText,
-  FormControlHelper,
-  FormControlHelperText,
-  FormControlLabel,
-  FormControlLabelText,
-} from '@/components/ui/form-control';
+import { useRouter } from "expo-router";
 import { VStack } from '@/components/ui/vstack';
-import { Input, InputField } from '@/components/ui/input';
 import { Button, ButtonText } from '@/components/ui/button';
-import Feather from '@expo/vector-icons/Feather';
 import { Center } from "@/components/ui/center";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 
+type AuthType = 'login' | 'signup';
 
 export default function Index() {
+  const router = useRouter();
 
-  const [isInvalid, setIsInvalid] = useState(false)
-  const [inputValue, setInputValue] = useState("12345")
-  const handleSubmit = () => {
-    if (inputValue.length < 6) {
-      setIsInvalid(true)
+
+  const navigateToNextPage = (type: AuthType) => {
+    if (type === "login") {
+      router.push("/login");
+    } else if (type === "signup") {
+      router.push("/signup");
     } else {
-      setIsInvalid(false)
+      console.error("Invalid auth type");
     }
-  }
+  };
+
+  const handleSubmit = (type: AuthType) => {
+    navigateToNextPage(type);
+  };
 
   return (
     <VStack className="h-full w-full p-4 justify-center" space="sm">
@@ -40,18 +36,18 @@ export default function Index() {
       <Center className="gap-y-8">
         <Text size="3xl" bold>Get Started?</Text>
 
-        <Button className="w-full rounded-full self-center mt-4" size="xl" onPress={handleSubmit} variant="solid">
+        <Button className="w-full rounded-full self-center mt-4" size="xl"
+        onPress={() => handleSubmit("login")}
+        variant="solid">
           <ButtonText size="xl">Login</ButtonText>
         </Button>
 
-        <Button className="w-full rounded-full self-center mt-4" size="xl" onPress={handleSubmit} variant="outline">
+        <Button className="w-full rounded-full self-center mt-4" size="xl"
+        onPress={() => handleSubmit("signup")}
+        variant="outline">
           <ButtonText size="xl">Sign Up</ButtonText>
         </Button>
       </Center>
     </VStack>
   );
-
-  function AlertCircleIcon(props: any) {
-    return <Feather name="alert-circle" {...props} />;
-  }
 }
