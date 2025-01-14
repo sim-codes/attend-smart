@@ -5,7 +5,7 @@ import FormFieldComponent from '@/components/FormFieldComponent ';
 import { Link } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { loginFormFields } from "@/constants/forms";
-import { LoginFieldId } from "@/types";
+import { LoginFieldId } from "@/constants/types";
 
 export default function Login() {
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({

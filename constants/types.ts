@@ -13,7 +13,7 @@ isReadOnly?: boolean;
 }
 
 export type LoginFieldId = 'email' | 'password';
-export type SignupFieldId = LoginFieldId | 'username' | 'confirmPassword' | 'firstName';
+export type SignupFieldId = LoginFieldId | 'username' | 'confirmPassword' | 'firstname' | 'lastname' | 'phonenumber' | 'roles';
 
 interface BaseFormField {
     label: string;
@@ -40,4 +40,13 @@ export interface LoginFormField extends BaseFormField {
 
 export interface SignupFormField extends BaseFormField {
     id: SignupFieldId;
+}
+
+export type SignupStep = 'personal' | 'account' | 'contact';
+
+export interface SignupFormFields {
+    [key: string]: {
+        fields: SignupFormField[];
+        title: string;
+    }
 }

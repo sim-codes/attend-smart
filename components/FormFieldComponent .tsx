@@ -1,4 +1,4 @@
-import { FormFieldProps } from "@/types";
+import { FormFieldProps } from "@/constants/types";
 import { FormControl,
     FormControlError,
     FormControlErrorText,
