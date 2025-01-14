@@ -24,7 +24,7 @@ export default function RootLayout() {
   }
 
   return (
-    <GluestackUIProvider >
+    <GluestackUIProvider>
       <Slot />
     </GluestackUIProvider>
   )

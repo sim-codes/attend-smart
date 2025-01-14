@@ -24,7 +24,9 @@ export default function SignUp() {
     const [errors, setErrors] = useState<Partial<Record<SignupFieldId, string>>>({});
 
     const handleSubmit = () => {
-        alert("Login button clicked1");
+        if (!validateStep(currentStep)) return;
+
+        alert("Sign up button clicked!");
     }
 
     const handleChange = (id: SignupFieldId) => (value: string) => {

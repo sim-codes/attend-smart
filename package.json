@@ -27,7 +27,7 @@
     "@gluestack-ui/nativewind-utils": "^1.0.26",
     "@gluestack-ui/overlay": "^0.1.16",
     "@gluestack-ui/toast": "^1.0.8",
-    "@react-navigation/bottom-tabs": "^7.2.0",
+    "@react-navigation/material-top-tabs": "^7.1.0",
     "@react-navigation/native": "^7.0.14",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "~52.0.25",
@@ -54,7 +54,8 @@
     "react-native-svg": "^15.2.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "react-native-pager-view": "6.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

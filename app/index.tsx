@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useRouter, Link } from "expo-router";
 import { VStack } from '@/components/ui/vstack';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Center } from "@/components/ui/center";
