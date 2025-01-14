@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import FormFieldComponent from '@/components/FormFieldComponent ';
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { signupSteps } from "@/constants/forms";
 import { SignupStep, SignupFieldId } from '@/constants/types';
 
 
 export default function SignUp() {
-
+    const router = useRouter();
     const [currentStep, setCurrentStep] = useState<SignupStep>('personal');
     const [formData, setFormData] = useState<Record<SignupFieldId, string>>({
         firstname: '',
@@ -26,7 +26,7 @@ export default function SignUp() {
     const handleSubmit = () => {
         if (!validateStep(currentStep)) return;
 
-        alert("Sign up button clicked!");
+        router.push("/login");
     }
 
     const handleChange = (id: SignupFieldId) => (value: string) => {

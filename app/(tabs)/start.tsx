@@ -3,7 +3,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { TabBarIcon } from '@/components/TabBarIcon';
 import Login from '../(auth)/login';
 import Signup from '../(auth)/signup';
-
+import Home from '@/app/(tabs)/home';
+import Profile from '@/app/(tabs)/profile';
+import Schedules from './schedules';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -13,6 +15,7 @@ return (
         initialRouteName='Home'
         tabBarPosition='bottom'
         keyboardDismissMode='on-drag'
+        style={styles.test}
         screenOptions={{
             tabBarActiveTintColor: '#D6BD98',
             tabBarInactiveTintColor: '#677D6A',
@@ -20,7 +23,7 @@ return (
             tabBarStyle: styles.tab,
         }}
     >
-        <Tab.Screen name="Home" component={Login}
+        <Tab.Screen name="Home" component={Home}
         options={{
             tabBarIndicator: () => null,
             title: 'Home',
@@ -30,15 +33,23 @@ return (
         }}
         />
 
-        <Tab.Screen name="Resources" component={Signup}
+        <Tab.Screen name="Schedules" component={Schedules}
             options={{
+            title: 'Schedules',
             tabBarIndicator: () => null,
-            title: 'Resources',
             tabBarIcon: ({ color, focused }) => (
-                <TabBarIcon name={focused ? 'file-tray' : 'file-tray-outline'} color={color} />
+                <TabBarIcon name={focused ? 'settings' : 'settings-outline'} color={color} />
             ),
-            }}
-        />
+        }}/>
+
+        <Tab.Screen name="Profile" component={Profile}
+            options={{
+            title: 'Profile',
+            tabBarIndicator: () => null,
+            tabBarIcon: ({ color, focused }) => (
+                <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+            ),
+        }}/>
     </Tab.Navigator>
 );
 }
@@ -46,7 +57,9 @@ return (
 const styles = StyleSheet.create({
     tab: {
         margin: 'auto',
+        overflow: 'hidden',
         backgroundColor: '#1A3636',
+        width: '100%'
     },
     label: {
         textAlign: 'center',
@@ -54,6 +67,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textTransform: 'capitalize',
         margin: 0,
-        fontFamily: 'Nunito_400Regular',
-    }
+    },
+    test: {
+        backgroundColor: 'rgba(214,189,152,1)',
+    },
 })

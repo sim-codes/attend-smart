@@ -34,7 +34,9 @@ export default function Index() {
       <Text size="3xl" bold>Create your acount and if you have one login</Text>
 
       <Center className="gap-y-8">
-        <Text size="3xl" bold>Get Started?</Text>
+        <Text size="3xl" bold>
+          Get Started?
+        </Text>
 
         <Button className="w-full rounded-full self-center mt-4" size="xl"
         onPress={() => handleSubmit("login")}

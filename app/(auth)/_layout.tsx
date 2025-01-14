@@ -3,7 +3,7 @@ import { View, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboar
 
 export default function AuthLayout(){
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={true}>
             <View style={{ flex: 1 }}>
                 <Slot />
             </View>

@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import FormFieldComponent from '@/components/FormFieldComponent ';
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { loginFormFields } from "@/constants/forms";
 import { LoginFieldId } from "@/constants/types";
 
 export default function Login() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
     email: '',
     password: ''
@@ -18,7 +20,7 @@ export default function Login() {
 };
 
   const handleSubmit = () => {
-    alert("Login button clicked1");
+    router.push("/start");
   }
 
   return (
