@@ -30,7 +30,8 @@ export default function SignUp() {
     }
 
     const handleChange = (id: SignupFieldId) => (value: string) => {
-        setFormData(prev => ({ ...prev, [id]: value }));
+        const trimmedValue = value.replace(/\s/g, '');
+        setFormData(prev => ({ ...prev, [id]: trimmedValue }));
 
         if (errors[id]) {
             setErrors(prev => ({ ...prev, [id]: '' }));
@@ -69,8 +70,8 @@ export default function SignUp() {
                     }
                     break;
                 case 'phonenumber':
-                    if (!/^\d{10}$/.test(value)) {
-                        newErrors.phonenumber = 'Please enter a valid 10-digit phone number';
+                    if (!/^\d{11}$/.test(value)) {
+                        newErrors.phonenumber = 'Please enter a valid 11-digit phone number';
                         isValid = false;
                     }
                     break;

@@ -15,13 +15,44 @@ export default function Login() {
     password: ''
   });
 
+  const [errors, setErrors] = useState<Partial<Record<LoginFieldId, string>>>({});
+
   const handleChange = (id: LoginFieldId) => (value: string) => {
-    setFormData(prev => ({ ...prev, [id]: value }));
-};
+    const trimmedValue = value.replace(/\s/g, '');
+    setFormData(prev => ({ ...prev, [id]: trimmedValue }));
+    if (errors[id]) {
+        setErrors(prev => ({ ...prev, [id]: '' }));
+    }
+  };
 
   const handleSubmit = () => {
+    if (!validateForm()) return;
     router.push("/start");
   }
+
+  const validateForm = (): boolean => {
+    const newErrors: Partial<Record<LoginFieldId, string>> = {};
+    let isValid = true;
+
+    if (!formData.email) {
+        newErrors.email = 'Email is required';
+        isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = 'Please enter a valid email';
+        isValid = false;
+    }
+
+    if (!formData.password) {
+        newErrors.password = 'Password is required';
+        isValid = false;
+    } else if (formData.password.length < 6) {
+        newErrors.password = 'Password must be at least 6 characters';
+        isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   return (
     <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
@@ -38,6 +69,8 @@ export default function Login() {
               {...field}
               value={formData[field.id]}
               onChange={handleChange(field.id)}
+              isInvalid={!!errors[field.id]}
+              errorText={errors[field.id]}
           />
       ))}
 

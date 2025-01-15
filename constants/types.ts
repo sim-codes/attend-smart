@@ -23,20 +23,9 @@ interface BaseFormField {
     isRequired?: boolean;
 }
 
-export interface LoginCredentials {
-    email: string;
-    password: string;
-}
-
-export interface RegisterCredentials extends LoginCredentials {
-    username: string;
-    confirmPassword: string;
-}
-
 export interface LoginFormField extends BaseFormField {
     id: LoginFieldId;
 }
-
 
 export interface SignupFormField extends BaseFormField {
     id: SignupFieldId;

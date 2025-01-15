@@ -78,6 +78,7 @@ export const loginFormFields: LoginFormField[] = [
         label: "Email",
         placeholder: "Enter your email",
         type: "text",
+        helperText: "Enter a valid email address",
         isRequired: true
     },
     {
