@@ -1,10 +1,8 @@
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TabBarIcon } from '@/components/TabBarIcon';
-import Login from '../(auth)/login';
-import Signup from '../(auth)/signup';
-import Home from '@/app/(tabs)/home';
-import Profile from '@/app/(tabs)/profile';
+import Home from '@/app/(app)/(tabs)/home';
+import Profile from '@/app/(app)/(tabs)/profile';
 import Schedules from './schedules';
 
 const Tab = createMaterialTopTabNavigator();

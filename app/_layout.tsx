@@ -24,22 +24,11 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-const unstable_settings = {
-  initialRouteName: 'home',
-};
 
   return (
     <SessionProvider>
       <GluestackUIProvider>
-        <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{
-          headerTitle: "",
-          headerTransparent: true,
-          headerBackImageSource: require("@/assets/images/arrow-back-cream.png"),
-        }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
+        <Slot />
       </GluestackUIProvider>
     </SessionProvider>
   )

@@ -6,9 +6,11 @@ import { Link, useRouter } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { loginFormFields } from "@/constants/forms";
 import { LoginFieldId } from "@/constants/types";
+import { useSession } from "@/hooks/ctx";
 
 export default function Login() {
   const router = useRouter();
+  const { signIn } = useSession();
 
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
     email: '',
@@ -27,7 +29,8 @@ export default function Login() {
 
   const handleSubmit = () => {
     if (!validateForm()) return;
-    router.push("/start");
+    signIn(formData);
+    router.push("/");
   }
 
   const validateForm = (): boolean => {
@@ -75,7 +78,7 @@ export default function Login() {
       ))}
 
 
-      <Link href="/(auth)/forget-password"
+      <Link href="/(app)/(auth)/forget-password"
         className="self-end underline text-primary-500 font-bold text-lg"
       >
         Forgot Password?
@@ -89,7 +92,7 @@ export default function Login() {
 
       <Text className="text-center text-primary-500" size="lg">
         Don't have an account?{" "}
-        <Link href="/(auth)/signup"
+        <Link href="/(app)/(auth)/signup"
           className="underline text-primary-500 font-bold text-lg"
         >
           Sign up

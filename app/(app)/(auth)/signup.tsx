@@ -133,7 +133,7 @@ export default function SignUp() {
 
             <Text className="text-center text-primary-500" size="lg">
             Have an account?{" "}
-            <Link href="/(auth)/login"
+            <Link href="/(app)/(auth)/login"
                 className="underline text-primary-500 font-bold text-lg"
             >
                 Login
