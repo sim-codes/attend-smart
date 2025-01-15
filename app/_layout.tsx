@@ -4,7 +4,7 @@ import { Slot, Stack } from "expo-router";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { useFonts, Nunito_400Regular, Nunito_900Black } from "@expo-google-fonts/nunito";
 import * as SplashScreen from 'expo-splash-screen';
-import { Ionicons } from "@expo/vector-icons";
+import { SessionProvider } from "@/hooks/ctx";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,16 +29,18 @@ const unstable_settings = {
 };
 
   return (
-    <GluestackUIProvider>
-      <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{
-        headerTitle: "",
-        headerTransparent: true,
-        headerBackImageSource: require("@/assets/images/arrow-back-cream.png"),
-      }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-    </GluestackUIProvider>
+    <SessionProvider>
+      <GluestackUIProvider>
+        <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{
+          headerTitle: "",
+          headerTransparent: true,
+          headerBackImageSource: require("@/assets/images/arrow-back-cream.png"),
+        }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </GluestackUIProvider>
+    </SessionProvider>
   )
 }
