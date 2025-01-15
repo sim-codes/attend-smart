@@ -60,3 +60,8 @@ export interface LoginResponse {
     token: TokenDto;
     user: UserProfile;
 }
+
+export interface LoginCredentials {
+    email: string;
+    password: string;
+}

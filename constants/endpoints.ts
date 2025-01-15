@@ -1,4 +1,4 @@
-export const endpoints = {
+export const API_ENDPOINTS = {
     faculty: {
         getAll: '/faculties',
         getSingle: '/faculties/{id}',
