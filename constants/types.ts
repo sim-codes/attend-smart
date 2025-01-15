@@ -41,3 +41,22 @@ export interface SignupFormFields {
         title: string;
     }
 }
+
+export interface TokenDto {
+    accessToken: string;
+    refreshToken: string;
+}
+export interface UserProfile {
+    id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    username: string;
+    phonenumber: string;
+    roles: string[];
+}
+
+export interface LoginResponse {
+    token: TokenDto;
+    user: UserProfile;
+}

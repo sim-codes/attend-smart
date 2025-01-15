@@ -19,24 +19,7 @@ import {
 export default function Profile() {
     const { signOut } = useSession();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
-  const handleClose = () => setShowAlertDialog(false)
-
-    const handleSignOut = () => {
-        Alert.alert(
-            '',
-            'Are you sure you want to sign out?',
-            [
-                {
-                    text: 'Cancel',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Sign Out',
-                    onPress: () => signOut()
-                }
-            ]
-        );
-    }
+    const handleClose = () => setShowAlertDialog(false)
 
     return (
         <VStack className="h-full w-full justify-between bg-primary-500 py-10 px-6" space="4xl">

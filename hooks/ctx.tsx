@@ -45,7 +45,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         value={{
         signIn: ({ email, password }: LoginProps) => {
             if (email === user.email && password === user.password) {
-                setSession(email);
+                setSession(user.name);
             }
         },
         signOut: () => {
