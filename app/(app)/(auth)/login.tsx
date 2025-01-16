@@ -10,10 +10,10 @@ import { useSession } from "@/hooks/ctx";
 
 export default function Login() {
   const router = useRouter();
-  const { signIn } = useSession();
+  const { login } = useSession();
 
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
-    email: '',
+    username: '',
     password: ''
   });
 
@@ -29,19 +29,23 @@ export default function Login() {
 
   const handleSubmit = () => {
     if (!validateForm()) return;
-    signIn(formData);
-    router.push("/");
+    // signIn(formData);
+    try {
+        console.log('Login form data', formData);
+        login(formData);
+        console.log('Login successful');
+        router.push('/');
+    } catch (error) {
+        console.error('Login failed', error);
+    }
   }
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<LoginFieldId, string>> = {};
     let isValid = true;
 
-    if (!formData.email) {
-        newErrors.email = 'Email is required';
-        isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        newErrors.email = 'Please enter a valid email';
+    if (!formData.username) {
+        newErrors.username = 'Email is required';
         isValid = false;
     }
 

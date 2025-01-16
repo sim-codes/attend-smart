@@ -74,11 +74,11 @@ export const signupSteps: SignupFormFields = {
 
 export const loginFormFields: LoginFormField[] = [
     {
-        id: 'email',
-        label: "Email",
-        placeholder: "Enter your email",
+        id: 'username',
+        label: "Username",
+        placeholder: "Enter your username",
         type: "text",
-        helperText: "Enter a valid email address",
+        helperText: "Enter a valid username",
         isRequired: true
     },
     {

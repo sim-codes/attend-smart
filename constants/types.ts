@@ -14,8 +14,8 @@ isDisabled?: boolean;
 isReadOnly?: boolean;
 }
 
-export type LoginFieldId = 'email' | 'password';
-export type SignupFieldId = LoginFieldId | 'username' | 'confirmPassword' | 'firstname' | 'lastname' | 'phonenumber' | 'roles';
+export type LoginFieldId = 'username' | 'password';
+export type SignupFieldId = LoginFieldId | 'email' | 'confirmPassword' | 'firstname' | 'lastname' | 'phonenumber' | 'roles';
 
 interface BaseFormField {
     label: string;
@@ -53,6 +53,7 @@ export interface UserProfile {
     email: string;
     username: string;
     phonenumber: string;
+    profileImageUrl: string;
     roles: string[];
 }
 
@@ -62,6 +63,6 @@ export interface LoginResponse {
 }
 
 export interface LoginCredentials {
-    email: string;
+    username: string;
     password: string;
 }

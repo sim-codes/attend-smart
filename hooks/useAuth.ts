@@ -42,9 +42,11 @@ export function useAuth() {
     const { tokens, setTokens, loading: tokensLoading } = useTokenStorage();
 
     const login = useCallback(async (credentials: LoginCredentials) => {
+        console.log("From useAuth:", credentials)
         try {
             dispatch({ type: 'SET_LOADING' });
             const response = await authService.login(credentials);
+            console.log("Response from useAuth:", response)
             await setTokens(response.token);
             dispatch({ type: 'SET_USER', payload: response.user });
         } catch (error) {
