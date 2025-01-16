@@ -3,13 +3,13 @@ import { useSession } from "@/hooks/ctx";
 import { Text } from "@/components/ui/text";
 
 export default function TabLayout(){
-    const { session, isLoading } = useSession();
+    const { loading, isAuthenticated } = useSession();
 
-    if (isLoading) {
+    if (loading) {
         return <Text>Loading...</Text>;
     }
 
-    if (!session) {
+    if (!isAuthenticated) {
         return <Redirect href="/start" />;
     }
 

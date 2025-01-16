@@ -1,6 +1,6 @@
 // services/api.ts
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
-import { API_ENDPOINTS } from '@/constants/endpoints';
+import { API_ENDPOINTS, PUBLIC_ENDPOINTS } from '@/constants/endpoints';
 import { TokenDto, LoginResponse } from '@/constants/types';
 import * as SecureStore from 'expo-secure-store';
 import { setStorageItemAsync } from './storage';
@@ -12,6 +12,7 @@ class ApiClient {
   private client: AxiosInstance;
 
   constructor() {
+    console.log('Initializing API client with BASE_URL:', BASE_URL);
     this.client = axios.create({
       baseURL: BASE_URL,
       timeout: API_CONFIG.TIMEOUT,
@@ -28,15 +29,25 @@ class ApiClient {
     // Request interceptor
     this.client.interceptors.request.use(
       async (config) => {
-        try {
+        console.log('Request Config:', {
+          url: config.url,
+          method: config.method,
+          headers: config.headers,
+          data: config.data
+      });
+
+        const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
+          endpoint => config.url?.includes(endpoint)
+        );
+
+        if (!isPublicEndpoint) {
           const accessToken = await SecureStore.getItemAsync('auth.token.access');
           if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`;
           }
-          return config;
-        } catch (error) {
-          return Promise.reject(error);
         }
+
+        return config;
       },
       (error) => {
         return Promise.reject(error);
@@ -47,9 +58,14 @@ class ApiClient {
     this.client.interceptors.response.use(
       (response) => response,
       async (error) => {
+
         const originalRequest = error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
+          endpoint => originalRequest.url?.includes(endpoint)
+        );
+
+        if (error.response?.status === 401 && !isPublicEndpoint && !originalRequest._retry) {
           originalRequest._retry = true;
 
           try {

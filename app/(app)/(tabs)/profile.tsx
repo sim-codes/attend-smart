@@ -17,7 +17,7 @@ import {
   } from '@/components/ui/alert-dialog';
 
 export default function Profile() {
-    const { signOut } = useSession();
+    const { logout } = useSession();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
     const handleClose = () => setShowAlertDialog(false)
 
@@ -51,7 +51,7 @@ export default function Profile() {
                 >
                 <ButtonText>Cancel</ButtonText>
                 </Button>
-                <Button size="sm" onPress={() => signOut()}>
+                <Button size="sm" onPress={() => logout()}>
                 <ButtonText>Log out</ButtonText>
                 </Button>
             </AlertDialogFooter>

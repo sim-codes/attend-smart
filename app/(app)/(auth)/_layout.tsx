@@ -1,5 +1,5 @@
 import { Slot } from "expo-router";
-import { View, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
+import { View, Pressable, TouchableWithoutFeedback, Platform, Keyboard } from 'react-native';
 
 export default function AuthLayout(){
     return (

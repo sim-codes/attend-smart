@@ -1,6 +1,7 @@
 // hooks/useAuth.ts
 import { useCallback, useReducer, useEffect } from 'react';
 import { useTokenStorage } from '../services/tokenStorage';
+import { useUserStorage } from './useUserStorage';
 import { authService } from '@/services/auth';
 import type { LoginCredentials, UserProfile } from '@/constants/types';
 
@@ -40,36 +41,35 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 export function useAuth() {
     const [state, dispatch] = useReducer(authReducer, initialState);
     const { tokens, setTokens, loading: tokensLoading } = useTokenStorage();
+    const { user, setUser } = useUserStorage();
 
     const login = useCallback(async (credentials: LoginCredentials) => {
-        console.log("From useAuth:", credentials)
         try {
             dispatch({ type: 'SET_LOADING' });
             const response = await authService.login(credentials);
-            console.log("Response from useAuth:", response)
             await setTokens(response.token);
+            await setUser(response.user);
             dispatch({ type: 'SET_USER', payload: response.user });
         } catch (error) {
             dispatch({ type: 'SET_ERROR', payload: 'Login failed' });
             throw error;
         }
-    }, [setTokens]);
+    }, [setTokens, setUser]);
 
     const logout = useCallback(async () => {
         await setTokens(null);
+        await setUser(null);
         dispatch({ type: 'LOGOUT' });
-    }, [setTokens]);
+    }, [setTokens, setUser]);
 
   // Initialize auth state
     useEffect(() => {
         if (!tokensLoading) {
-        if (tokens) {
-            authService.getCurrentUser()
-            .then(user => dispatch({ type: 'SET_USER', payload: user }))
-            .catch(() => logout());
-        } else {
-            dispatch({ type: 'LOGOUT' });
-        }
+            if (tokens && user) {
+                // dispatch({ type: 'SET_USER', payload: user });
+            } else {
+                dispatch({ type: 'LOGOUT' });
+            }
         }
     }, [tokens, tokensLoading, logout]);
 

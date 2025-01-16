@@ -31,9 +31,7 @@ export default function Login() {
     if (!validateForm()) return;
     // signIn(formData);
     try {
-        console.log('Login form data', formData);
         login(formData);
-        console.log('Login successful');
         router.push('/');
     } catch (error) {
         console.error('Login failed', error);

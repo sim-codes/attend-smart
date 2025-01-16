@@ -68,3 +68,8 @@ export const API_ENDPOINTS = {
         update: '/lecturers/{id}',
     },
 } as const;
+
+export const PUBLIC_ENDPOINTS = [
+    API_ENDPOINTS.authentication.login,
+    API_ENDPOINTS.authentication.register
+] as const;

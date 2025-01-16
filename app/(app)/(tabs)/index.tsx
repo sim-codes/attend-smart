@@ -10,7 +10,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function Index() {
 return (
     <Tab.Navigator
-        initialRouteName='Home'
+        initialRouteName='home'
         tabBarPosition='bottom'
         keyboardDismissMode='on-drag'
         style={styles.test}
@@ -21,7 +21,7 @@ return (
             tabBarStyle: styles.tab,
         }}
     >
-        <Tab.Screen name="Home" component={Home}
+        <Tab.Screen name="home" component={Home}
         options={{
             tabBarIndicator: () => null,
             title: 'Home',
