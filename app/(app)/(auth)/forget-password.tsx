@@ -36,7 +36,7 @@ export default function ForgetPassword() {
 
       <Text className="text-center text-primary-500" size="lg">
         Remember the password?{" "}
-        <Link href="/(auth)/login"
+        <Link href="/(app)/(auth)/login"
           className="underline text-primary-500 font-bold text-lg"
         >
           Login

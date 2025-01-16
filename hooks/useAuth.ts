@@ -66,7 +66,7 @@ export function useAuth() {
     useEffect(() => {
         if (!tokensLoading) {
             if (tokens && user) {
-                // dispatch({ type: 'SET_USER', payload: user });
+                // dispatch({ type: 'SET_USER' });
             } else {
                 dispatch({ type: 'LOGOUT' });
             }

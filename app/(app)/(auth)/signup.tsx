@@ -6,9 +6,11 @@ import { Link, useRouter } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { signupSteps } from "@/constants/forms";
 import { SignupStep, SignupFieldId } from '@/constants/types';
-
+import { useSession } from "@/hooks/ctx";
 
 export default function SignUp() {
+    const { loading } = useSession();
+      const [formError, setFormError] = useState<string | null>(null);
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState<SignupStep>('personal');
     const [formData, setFormData] = useState<Record<SignupFieldId, string>>({
@@ -125,7 +127,7 @@ export default function SignUp() {
 
             <Button className="w-full rounded-full self-center" size="xl"
                 onPress={currentStep === 'contact' ? handleSubmit : handleNext}
-                variant="solid">
+                variant="solid" isDisabled={loading}>
                 <ButtonText size="xl">
                     {currentStep === 'contact' ? 'Submit' : 'Next'}
                 </ButtonText>

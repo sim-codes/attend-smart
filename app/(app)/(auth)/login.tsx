@@ -10,13 +10,13 @@ import { useSession } from "@/hooks/ctx";
 
 export default function Login() {
   const router = useRouter();
-  const { login } = useSession();
+  const { login, loading } = useSession();
+  const [formError, setFormError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
     username: '',
     password: ''
   });
-
   const [errors, setErrors] = useState<Partial<Record<LoginFieldId, string>>>({});
 
   const handleChange = (id: LoginFieldId) => (value: string) => {
@@ -27,14 +27,16 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
-    // signIn(formData);
+    
     try {
-        login(formData);
+        await login(formData);
         router.push('/');
     } catch (error) {
         console.error('Login failed', error);
+        setFormError('Login failed. Please try again.');
+        return;
     }
   }
 
@@ -79,7 +81,11 @@ export default function Login() {
           />
       ))}
 
-
+      {formError && (
+          <Text size="md" className="text-red-700 text-center" bold>
+              {formError}
+          </Text>
+      )}
       <Link href="/(app)/(auth)/forget-password"
         className="self-end underline text-primary-500 font-bold text-lg"
       >
@@ -88,7 +94,7 @@ export default function Login() {
 
       <Button className="w-full rounded-full self-center mt-4" size="xl"
         onPress={() => handleSubmit()}
-        variant="solid">
+        variant="solid" isDisabled={loading}>
         <ButtonText size="xl">Log In</ButtonText>
       </Button>
 

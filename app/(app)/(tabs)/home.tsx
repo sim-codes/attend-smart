@@ -14,8 +14,6 @@ import { useSession } from "@/hooks/ctx";
 export default function Home() {
     const { user } = useSession();
 
-    console.log(user?.profileImageUrl);
-
     return (
         <VStack className="h-full w-full bg-primary-500 py-10 px-6" space="4xl">
         <HStack className="justify-between items-center w-full">

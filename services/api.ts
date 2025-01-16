@@ -12,7 +12,6 @@ class ApiClient {
   private client: AxiosInstance;
 
   constructor() {
-    console.log('Initializing API client with BASE_URL:', BASE_URL);
     this.client = axios.create({
       baseURL: BASE_URL,
       timeout: API_CONFIG.TIMEOUT,
@@ -29,12 +28,7 @@ class ApiClient {
     // Request interceptor
     this.client.interceptors.request.use(
       async (config) => {
-        console.log('Request Config:', {
-          url: config.url,
-          method: config.method,
-          headers: config.headers,
-          data: config.data
-      });
+
 
         const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
           endpoint => config.url?.includes(endpoint)
@@ -127,7 +121,6 @@ class ApiClient {
   }
 
   async post<T>(url: string, data?: object, config?: AxiosRequestConfig): Promise<T> {
-    console.log("From api services:", data)
     return this.request<T>({
       method: 'POST',
       url,
