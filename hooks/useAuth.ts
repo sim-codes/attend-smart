@@ -71,7 +71,7 @@ export function useAuth() {
                 dispatch({ type: 'LOGOUT' });
             }
         }
-    }, [tokens, tokensLoading, logout]);
+    }, [tokensLoading, logout]);
 
     return {
         user: state.user,

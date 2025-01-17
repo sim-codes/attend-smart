@@ -48,11 +48,11 @@ export interface TokenDto {
 }
 export interface UserProfile {
     id: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
     username: string;
-    phonenumber: string;
+    phoneNumber: string;
     profileImageUrl: string;
     roles: string[];
 }

@@ -31,7 +31,7 @@ return (
         }}
         />
 
-        <Tab.Screen name="Schedules" component={Schedules}
+        <Tab.Screen name="schedules" component={Schedules}
             options={{
             title: 'Schedules',
             tabBarIndicator: () => null,
@@ -40,7 +40,7 @@ return (
             ),
         }}/>
 
-        <Tab.Screen name="Profile" component={Profile}
+        <Tab.Screen name="profile" component={Profile}
             options={{
             title: 'Profile',
             tabBarIndicator: () => null,
