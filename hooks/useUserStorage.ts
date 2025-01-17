@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 const USER_STORAGE_KEY = 'user';
 
 export function useUserStorage() {
-    const [user, setUserState] = useStorageState(USER_STORAGE_KEY);
+    const [[_, user], setUserState] = useStorageState(USER_STORAGE_KEY);
 
     const setUser = useCallback(async (userData: UserProfile | null) => {
         if (userData) {
@@ -16,7 +16,7 @@ export function useUserStorage() {
     }, [setUserState]);
 
     return {
-        user: user ??  (JSON.parse(user) as UserProfile),
+        user: user ? (JSON.parse(user) as UserProfile) : null,
         setUser,
         loading: user === undefined
     };
