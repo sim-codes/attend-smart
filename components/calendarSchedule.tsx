@@ -1,44 +1,26 @@
-import React, { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { View, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { Text } from './ui/text';
 import { Ionicons } from '@expo/vector-icons';
-import { 
-  format, 
-  addMonths, 
-  subMonths, 
-  startOfMonth, 
-  endOfMonth, 
+import {
+  format,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
   startOfWeek,
-  endOfWeek,
   eachDayOfInterval,
   isSameDay,
   isSameMonth,
   addDays,
   getDay
 } from 'date-fns';
+import { CalendarScheduleProps } from '@/constants/types';
 
-type Schedule = {
-  id: string;
-  time: string;
-  title: string;
-  description?: string;
-};
-
-type ScheduleMap = {
-  [date: string]: Schedule[];
-};
-
-type CalendarScheduleProps = {
-  schedules: ScheduleMap;
-  onSchedulePress?: (schedule: Schedule) => void;
-};
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const CalendarSchedule: React.FC<CalendarScheduleProps> = ({ 
-  schedules,
-  onSchedulePress 
-}) => {
+const CalendarSchedule = ({schedules, onSchedulePress}: CalendarScheduleProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [scheduleHeight] = useState(new Animated.Value(0));
@@ -48,9 +30,9 @@ const CalendarSchedule: React.FC<CalendarScheduleProps> = ({
     const monthEnd = endOfMonth(currentMonth);
     const startDate = startOfWeek(monthStart);
     const endDate = addDays(monthEnd, 6 - getDay(monthEnd)); // Align last row properly
-  
+
     const days = eachDayOfInterval({ start: startDate, end: endDate });
-  
+
     return days;
   };
 
@@ -80,7 +62,7 @@ const CalendarSchedule: React.FC<CalendarScheduleProps> = ({
   };
 
   const navigateMonth = (direction: 'prev' | 'next') => {
-    setCurrentMonth(direction === 'next' ? 
+    setCurrentMonth(direction === 'next' ?
       addMonths(currentMonth, 1) :
       subMonths(currentMonth, 1)
     );

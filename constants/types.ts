@@ -66,3 +66,19 @@ export interface LoginCredentials {
     username: string;
     password: string;
 }
+
+export type Schedule = {
+    id: string;
+    time: string;
+    title: string;
+    description?: string;
+};
+
+export type ScheduleMap = {
+    [date: string]: Schedule[];
+};
+
+export type CalendarScheduleProps = {
+    schedules: ScheduleMap;
+    onSchedulePress?: (schedule: Schedule) => void;
+};
