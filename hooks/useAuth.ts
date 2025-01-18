@@ -47,6 +47,7 @@ export function useAuth() {
         try {
             dispatch({ type: 'SET_LOADING' });
             const statusCode = await authService.signup(credentials);
+            dispatch({ type: 'LOGOUT'});
             return statusCode;
         } catch (err) {
             dispatch({ type: 'SET_ERROR', payload: err instanceof  Error ? err.message : "An error occured during signup"});
