@@ -67,6 +67,20 @@ export interface LoginCredentials {
     password: string;
 }
 
+export interface SignUpCredentials {
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    roles: string[];
+}
+
+export interface SignupResponse {
+    status: number;
+}
+
 export type Schedule = {
     id: string;
     time: string;

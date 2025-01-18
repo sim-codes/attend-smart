@@ -1,7 +1,7 @@
 import { useContext, createContext, type PropsWithChildren } from 'react';
 import { useStorageState } from '@/hooks/useStorageState';
 import { useAuth } from './useAuth';
-import type { UserProfile } from '@/constants/types';
+import type { SignUpCredentials, UserProfile } from '@/constants/types';
 
 interface LoginProps {
     email: string;
@@ -19,6 +19,7 @@ interface AuthContextType {
     loading: boolean;
     error: string | null;
     login: (credentials: { username: string; password: string }) => Promise<void>;
+    signup: (credetials: SignUpCredentials) => Promise<number>;
     logout: () => Promise<void>;
     isAuthenticated: boolean;
 }
@@ -28,21 +29,10 @@ export const AuthContext = createContext<AuthContextType>({
     loading: false,
     error: null,
     login: async () => {},
+    signup: async () => 0,
     logout: async () => {},
     isAuthenticated: false,
 });
-
-// const AuthContext = createContext<{
-//     signIn: (props: LoginProps) => void
-//     signOut: () => void;
-//     session?: string | null;
-//     isLoading: boolean;
-// }>({
-//     signIn: () => null,
-//     signOut: () => null,
-//     session: null,
-//     isLoading: false,
-// });
 
 // This hook can be used to access the user info.
 export function useSession() {

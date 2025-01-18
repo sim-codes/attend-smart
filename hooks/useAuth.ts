@@ -3,7 +3,7 @@ import { useCallback, useReducer, useEffect } from 'react';
 import { useTokenStorage } from '../services/tokenStorage';
 import { useUserStorage } from './useUserStorage';
 import { authService } from '@/services/auth';
-import type { LoginCredentials, UserProfile } from '@/constants/types';
+import type { LoginCredentials, SignUpCredentials, UserProfile } from '@/constants/types';
 
 interface AuthState {
     user: UserProfile | null;
@@ -43,6 +43,17 @@ export function useAuth() {
     const { tokens, setTokens, loading: tokensLoading } = useTokenStorage();
     const { user, setUser } = useUserStorage();
 
+    const signup = async (credentials: SignUpCredentials) => {
+        try {
+            dispatch({ type: 'SET_LOADING' });
+            const statusCode = await authService.signup(credentials);
+            return statusCode;
+        } catch (err) {
+            dispatch({ type: 'SET_ERROR', payload: err instanceof  Error ? err.message : "An error occured during signup"});
+            throw err;
+        }
+    }
+
     const login = useCallback(async (credentials: LoginCredentials) => {
         try {
             dispatch({ type: 'SET_LOADING' });
@@ -80,6 +91,7 @@ export function useAuth() {
         loading: state.loading || tokensLoading,
         error: state.error,
         login,
+        signup,
         logout,
         isAuthenticated: !!state.user
     };

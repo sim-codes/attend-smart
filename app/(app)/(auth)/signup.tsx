@@ -9,7 +9,7 @@ import { SignupStep, SignupFieldId } from '@/constants/types';
 import { useSession } from "@/hooks/ctx";
 
 export default function SignUp() {
-    const { loading } = useSession();
+    const { loading, error, signup } = useSession();
       const [formError, setFormError] = useState<string | null>(null);
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState<SignupStep>('personal');
@@ -25,8 +25,31 @@ export default function SignUp() {
     });
     const [errors, setErrors] = useState<Partial<Record<SignupFieldId, string>>>({});
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!validateStep(currentStep)) return;
+
+
+        try {
+            const statusCode = await signup({
+                firstName: formData.firstname,
+                lastName: formData.lastname,
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                phoneNumber: formData.phonenumber,
+                roles: [
+                    "Student"
+                ]
+            })
+
+            if (statusCode === 201) {
+                router.push("/(app)/(auth)/login");
+            }
+
+            console.log(statusCode)
+        } catch (error) {
+            throw error;
+        }
 
         router.push("/login");
     }

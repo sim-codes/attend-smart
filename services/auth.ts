@@ -1,6 +1,10 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import type { LoginCredentials, LoginResponse, UserProfile } from '@/constants/types';
+import type { LoginCredentials,
+    LoginResponse, UserProfile,
+    SignUpCredentials,
+    SignupResponse
+} from '@/constants/types';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -20,6 +24,28 @@ export const authService = {
                     // @ts-ignore
                     response: error.response?.data,
                     // @ts-ignore
+                    status: error.response?.status,
+                    url: error.config?.url
+                });
+            }
+            throw error;
+        }
+    },
+
+    async signup(credentials: SignUpCredentials): Promise<number> {
+        try{
+            const response = await apiClient.post<SignupResponse>(
+                API_ENDPOINTS.authentication.register,
+                credentials
+            );
+            return response.status;
+        } catch (error) {
+            console.error("Error during signup request:", error);
+            if (axios.isAxiosError(error)) {
+                console.log('Network Error Details:', {
+                    message: error.message,
+                    code: error.code,
+                    response: error.response?.data,
                     status: error.response?.status,
                     url: error.config?.url
                 });
