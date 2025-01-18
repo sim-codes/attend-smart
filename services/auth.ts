@@ -1,9 +1,8 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import type { LoginCredentials, LoginResponse, UserProfile } from '@/constants/types';
-import { API_CONFIG } from '../constants/config';
 import axios from 'axios';
-import { useSession } from '@/hooks/useSession';
+import * as SecureStore from 'expo-secure-store';
 
 export const authService = {
     async login(credentials: LoginCredentials) {
@@ -35,4 +34,14 @@ export const authService = {
         );
         return;
     },
+
+    async getStoredUserData(): Promise<UserProfile | null> {
+        const userData = await SecureStore.getItemAsync('auth.user');
+        return userData ? JSON.parse(userData) : null;
+    },
+
+    async isAuthenticated() {
+        const userData = await SecureStore.getItemAsync('auth.user');
+        return !!userData;
+    }
 };

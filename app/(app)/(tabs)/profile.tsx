@@ -2,7 +2,7 @@ import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
 import { useSession } from "@/hooks/ctx";
 import { useState } from 'react';
-import { Button, ButtonText, ButtonIcon } from "@/components/ui/button";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Pressable } from "react-native";
 import { Heading } from "@/components/ui/heading";
 import {
@@ -10,19 +10,16 @@ import {
     AlertDialogBackdrop,
     AlertDialogContent,
     AlertDialogHeader,
-    AlertDialogCloseButton,
     AlertDialogFooter,
     AlertDialogBody,
 } from '@/components/ui/alert-dialog';
 import { HStack } from "@/components/ui/hstack";
 import { Avatar, AvatarFallbackText, AvatarImage } from "@/components/ui/avatar";
 import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function Profile() {
-    const { user } = useSession();
-    const { logout } = useSession();
+    const { user, logout } = useSession();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
     const handleClose = () => setShowAlertDialog(false)
 

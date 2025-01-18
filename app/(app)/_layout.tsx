@@ -8,9 +8,9 @@ export const unstable_settings = {
 
 
 export default function AppLayout() {
-    const { isLoading } = useSession();
+    const { loading } = useSession();
 
-    if (isLoading) {
+    if (loading) {
         return <Text>Loading...</Text>
     }
 

@@ -10,7 +10,7 @@ import { useSession } from "@/hooks/ctx";
 
 export default function Login() {
   const router = useRouter();
-  const { login, loading } = useSession();
+  const { user, login, loading } = useSession();
   const [formError, setFormError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
@@ -59,6 +59,11 @@ export default function Login() {
 
     setErrors(newErrors);
     return isValid;
+  };
+
+  if (user) {
+    router.push('/');
+    return null;
   };
 
   return (

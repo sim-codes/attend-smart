@@ -64,14 +64,16 @@ export function useAuth() {
 
   // Initialize auth state
     useEffect(() => {
-        if (!tokensLoading) {
-            if (tokens && user) {
-                dispatch({ type: 'SET_USER', payload: user });
+        const checkAuth = async () => {
+            const storedUser = await authService.getStoredUserData();
+            if (storedUser) {
+                dispatch({ type: 'SET_USER', payload: storedUser })
             } else {
                 dispatch({ type: 'LOGOUT' });
             }
-        }
-    }, [tokensLoading, logout]);
+        };
+        checkAuth();
+    }, []);
 
     return {
         user: state.user,
