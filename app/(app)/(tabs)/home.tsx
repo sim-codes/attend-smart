@@ -50,6 +50,30 @@ const courses = [
         name: "Computer Networks",
         courseCode: "CSC 601",
         creditUnits: 3
+    },
+    {
+        id: 7,
+        name: "Database Management Systems",
+        courseCode: "CSC 701",
+        creditUnits: 3
+    },
+    {
+        id: 8,
+        name: "Web Development",
+        courseCode: "CSC 801",
+        creditUnits: 3
+    },
+    {
+        id: 9,
+        name: "Mobile App Development",
+        courseCode: "CSC 901",
+        creditUnits: 3
+    },
+    {
+        id: 10,
+        name: "Cloud Computing",
+        courseCode: "CSC 1001",
+        creditUnits: 3
     }
 ]
 
@@ -91,13 +115,13 @@ export default function Home() {
             </HStack>
 
             <HStack className="justify-between items-center w-full gap-x-2">
-                <Button variant="outline" className="" size="lg">
-                    <Ionicons name="add-outline" size={24} color="#D6BD98" />
+                <Button variant="outline" className="" size="xl">
+                    <Ionicons name="add-outline" size={34} color="#D6BD98" />
                     <ButtonText className="text-secondary-0">Register Course</ButtonText>
                 </Button>
 
-                <Button variant="outline" className="" size="lg">
-                    <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
+                <Button variant="outline" className="" size="xl">
+                    <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
                     <ButtonText className="text-secondary-0">Take Attedance</ButtonText>
                 </Button>
             </HStack>

@@ -71,7 +71,7 @@ const CalendarSchedule = ({schedules, onSchedulePress}: CalendarScheduleProps) =
   return (
     <View className="bg-primary-700 rounded-3xl">
       {/* Calendar Header */}
-      <View className="flex-row justify-between items-center p-4 bg-primary-700">
+      <View className="flex-row justify-between rounded-3xl items-center p-4 bg-primary-700">
         <TouchableOpacity onPress={() => navigateMonth('prev')}>
           <Ionicons name="arrow-back-outline" size={24} color="white" />
         </TouchableOpacity>

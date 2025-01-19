@@ -96,3 +96,14 @@ export type CalendarScheduleProps = {
     schedules: ScheduleMap;
     onSchedulePress?: (schedule: Schedule) => void;
 };
+
+export interface Course {
+    id: number;
+    name: string;
+    courseCode: string;
+    creditUnits: number;
+}
+export interface CourseListProps {
+    courses: Course[];
+    onDeleteCourses?: (courseIds: number[]) => Promise<void>;
+}
