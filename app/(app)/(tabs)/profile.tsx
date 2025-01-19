@@ -110,9 +110,9 @@ export default function Profile() {
             <ModalDialog
                 isOpen={showAlertDialog}
                 onClose={() => setShowAlertDialog(false)}
-                onConfirm={logout}
+                onAction={logout}
                 title="Sign Out"
-                confirmText="Sign Out"
+                actionText="Sign Out"
                 cancelText="Cancel"
             >Are you sure you want to sign out?</ModalDialog>
         </VStack>

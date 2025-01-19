@@ -16,9 +16,9 @@ import { ConfirmDialogProps } from '@/constants/types';
 const ModalDialog: React.FC<ConfirmDialogProps> = ({
     isOpen,
     onClose,
-    onConfirm,
-    title = 'Confirm Action',
-    confirmText = 'Confirm',
+    onAction,
+    title = 'Action Dialog',
+    actionText = 'Proceed',
     cancelText = 'Cancel',
     children,
     size = 'md',
@@ -54,11 +54,11 @@ const ModalDialog: React.FC<ConfirmDialogProps> = ({
                 <Button
                     size="sm"
                     onPress={() => {
-                    onConfirm();
+                    onAction();
                     onClose();
                     }}
                 >
-                    <ButtonText>{confirmText}</ButtonText>
+                    <ButtonText>{actionText}</ButtonText>
                 </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>

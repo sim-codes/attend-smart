@@ -113,9 +113,9 @@ export interface CourseListProps {
 export interface ConfirmDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onAction: () => void;
     title?: string;
-    confirmText?: string;
+    actionText?: string;
     cancelText?: string;
     children: ReactNode;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'full';

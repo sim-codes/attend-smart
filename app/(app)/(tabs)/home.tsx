@@ -1,6 +1,6 @@
 import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
-import { Text } from "@/components/ui/text";
+import { useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {
     Avatar,
@@ -13,6 +13,9 @@ import { useSession } from "@/hooks/ctx";
 import { Button, ButtonText } from '@/components/ui/button';
 import { FontAwesome6 } from "@expo/vector-icons";
 import CourseList from "@/components/CourseList";
+import RegisterCourse from "@/components/RegisterCourse";
+import TakeAttendance from "@/components/TakeAttendance";
+import ModalDialog from "@/components/ModalDialog";
 
 const courses = [
     {
@@ -79,6 +82,8 @@ const courses = [
 
 export default function Home() {
     const { user } = useSession();
+    const [showDialog, setShowDialog] = useState(false);
+    const [ action, setAction ] = useState<string>('');
 
     const handleDeleteCourses = async (courseIds: number[]) => {
         try {
@@ -94,7 +99,7 @@ export default function Home() {
         } catch (error) {
           console.error('Error:', error);
         }
-      };
+    };
 
     return (
         <VStack className="h-full w-full bg-primary-500 py-10 px-6" space="4xl">
@@ -115,12 +120,18 @@ export default function Home() {
             </HStack>
 
             <HStack className="justify-between items-center w-full gap-x-2">
-                <Button variant="outline" className="" size="xl">
+                <Button variant="outline" className="" size="xl" onPress={() => {
+                    setShowDialog(true);
+                    setAction('register');
+                }}>
                     <Ionicons name="add-outline" size={34} color="#D6BD98" />
                     <ButtonText className="text-secondary-0">Register Course</ButtonText>
                 </Button>
 
-                <Button variant="outline" className="" size="xl">
+                <Button variant="outline" className="" size="xl" onPress={() => {
+                    setShowDialog(true);
+                    setAction('attendance');
+                }}>
                     <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
                     <ButtonText className="text-secondary-0">Take Attedance</ButtonText>
                 </Button>
@@ -130,6 +141,17 @@ export default function Home() {
             courses={courses}
             onDeleteCourses={handleDeleteCourses}
             />
+
+            <ModalDialog
+                isOpen={showDialog}
+                onClose={() => setShowDialog(false)}
+                onAction={() => {}}
+                title={action === 'register' ? 'Register Course' : 'Take Attendance'}
+                actionText={action === 'register' ? 'Register' : 'Take Attendance'}
+                cancelText="Cancel"
+            >
+                {action === 'register' ? <RegisterCourse /> : <TakeAttendance />}
+            </ModalDialog>
 
         </VStack>
     )
