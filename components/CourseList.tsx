@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { useState } from 'react';
+import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@/components/ui/button';
 import { CourseListProps, Course } from '@/constants/types';
 import CustomCheckbox from '@/components/CheckBox';
+import { VStack } from '@/components/ui/vstack';
+import { Text } from '@/components/ui/text';
+import { HStack } from '@/components/ui/hstack';
 
 const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps) => {
     const [selectedCourses, setSelectedCourses] = useState<Set<number>>(new Set());
@@ -19,6 +22,10 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
             }
             return newSet;
         });
+    };
+
+    const calculateTotalUnits = () => {
+        return courses.reduce((total, course) => total + course.creditUnits, 0);
     };
 
     const handleDeleteSelected = async () => {
@@ -42,38 +49,44 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
                 selectedCourses.has(item.id) ? 'bg-secondary-0/20' : ''
             }`}
         >
-            <View className="flex-row justify-between items-start">
-                <View className="flex-1">
-                    <Text className="text-lg font-semibold text-white">{item.name}</Text>
+            <HStack className="justify-between items-start">
+                <VStack className="flex-1">
+                    <Text size="lg" className="font-semibold text-white">{item.name}</Text>
                     <Text className="text-tertiary-100 mt-1">{item.courseCode}</Text>
                     <Text className="text-tertiary-100 mt-1">
                         Credits: {item.creditUnits}
                     </Text>
-                </View>
+                </VStack>
                 <CustomCheckbox isChecked={selectedCourses.has(item.id)} />
-            </View>
+            </HStack>
         </TouchableOpacity>
     );
 
     const renderEmptyComponent = () => (
-        <View className="flex-1 justify-center items-center p-4">
-            <Text className="text-tertiary-100 text-lg text-center">
+        <VStack className="flex-1 justify-center items-center p-4">
+            <Text className="text-tertiary-100 text-center" size="lg">
                 You have not registered for any courses yet.
             </Text>
-        </View>
+        </VStack>
     );
 
     return (
         <View className="flex-1 bg-transparent">
             {/* Header */}
-            <View className="p-4 border-b border-gray-200">
-                <Text className="text-xl font-bold text-white mb-2">
-                    Registered Courses
+            <VStack className="p-4 border-b border-gray-200">
+                <Text className="text-white mb-2 text-center" size="2xl" bold>
+                    {courses.length}
+                    {" "}Registered Courses
                 </Text>
-                <Text className="text-lg font-semibold text-secondary-0">
-                    Selected: {selectedCourses.size}
-                </Text>
-            </View>
+                <HStack className="justify-between items-center">
+                    <Text size='lg' className="font-semibold text-secondary-0">
+                        Total Units: {calculateTotalUnits()}
+                    </Text>
+                    <Text size='lg' className="font-semibold text-secondary-0">
+                        Selected: {selectedCourses.size}
+                    </Text>
+                </HStack>
+            </VStack>
 
             {/* Course List */}
             <FlatList
@@ -86,7 +99,7 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
 
             {/* Footer with Delete Button */}
             <View className="p-4 border-t border-gray-200">
-                <Button
+                <Button size='xl'
                     onPress={handleDeleteSelected}
                     isDisabled={selectedCourses.size === 0 || isDeleting}
                     className={`px-4 py-3 rounded-lg ${

@@ -25,43 +25,43 @@ const ModalDialog: React.FC<ConfirmDialogProps> = ({
 }) => {
     return (
         <AlertDialog isOpen={isOpen} onClose={onClose} size={size}>
-        <AlertDialogBackdrop />
-        <AlertDialogContent>
-            <AlertDialogHeader>
-            <Heading size="md" className="text-typography-950 font-semibold">
-                {title}
-            </Heading>
-            </AlertDialogHeader>
+            <AlertDialogBackdrop />
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                <Heading size="md" className="text-typography-950 font-semibold">
+                    {title}
+                </Heading>
+                </AlertDialogHeader>
 
-            <AlertDialogBody className="mt-3 mb-4">
-            {typeof children === 'string' ? (
-                <Text size="sm">{children}</Text>
-            ) : (
-                children
-            )}
-            </AlertDialogBody>
+                <AlertDialogBody className="mt-3 mb-4">
+                {typeof children === 'string' ? (
+                    <Text size="sm">{children}</Text>
+                ) : (
+                    children
+                )}
+                </AlertDialogBody>
 
-            <AlertDialogFooter>
-            <Button
-                variant="outline"
-                action="secondary"
-                onPress={onClose}
-                size="sm"
-                className="mr-3"
-            >
-                <ButtonText>{cancelText}</ButtonText>
-            </Button>
-            <Button
-                size="sm"
-                onPress={() => {
-                onConfirm();
-                onClose();
-                }}
-            >
-                <ButtonText>{confirmText}</ButtonText>
-            </Button>
-            </AlertDialogFooter>
-        </AlertDialogContent>
+                <AlertDialogFooter>
+                <Button
+                    variant="outline"
+                    action="secondary"
+                    onPress={onClose}
+                    size="sm"
+                    className="mr-3"
+                >
+                    <ButtonText>{cancelText}</ButtonText>
+                </Button>
+                <Button
+                    size="sm"
+                    onPress={() => {
+                    onConfirm();
+                    onClose();
+                    }}
+                >
+                    <ButtonText>{confirmText}</ButtonText>
+                </Button>
+                </AlertDialogFooter>
+            </AlertDialogContent>
         </AlertDialog>
     );
 };
