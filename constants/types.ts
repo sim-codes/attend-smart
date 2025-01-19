@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 
 export interface FormFieldProps {
@@ -106,4 +108,15 @@ export interface Course {
 export interface CourseListProps {
     courses: Course[];
     onDeleteCourses?: (courseIds: number[]) => Promise<void>;
+}
+
+export interface ConfirmDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
+    title?: string;
+    confirmText?: string;
+    cancelText?: string;
+    children: ReactNode;
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'full';
 }
