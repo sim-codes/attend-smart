@@ -67,6 +67,12 @@ export const API_ENDPOINTS = {
         create: '/lecturers/{id}',
         update: '/lecturers/{id}',
     },
+    enrollment: {
+        getAll: '/enrollments/{studentId}',
+        getSingle: '/enrollments/{studentId}/{courseId}',
+        create: '/enrollments/{studentId}',
+        delete: '/enrollments/{studentId}/{courseId}',
+    },
 } as const;
 
 export const PUBLIC_ENDPOINTS = [

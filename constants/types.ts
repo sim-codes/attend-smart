@@ -120,3 +120,10 @@ export interface ConfirmDialogProps {
     children: ReactNode;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'full';
 }
+
+export interface EnrollmentResponse {
+    id: number;
+    studentId: number;
+    courseId: number;
+    enrollmentDate: string;
+}

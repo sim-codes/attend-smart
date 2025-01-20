@@ -1,6 +1,6 @@
 import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {
     Avatar,
@@ -16,6 +16,8 @@ import CourseList from "@/components/CourseList";
 import RegisterCourse from "@/components/RegisterCourse";
 import TakeAttendance from "@/components/TakeAttendance";
 import ModalDialog from "@/components/ModalDialog";
+import { enrollmentService } from "@/services/enrollment";
+import { EnrollmentResponse } from "@/constants/types";
 
 const courses = [
     {
@@ -84,6 +86,22 @@ export default function Home() {
     const { user } = useSession();
     const [showDialog, setShowDialog] = useState(false);
     const [ action, setAction ] = useState<string>('');
+    const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
+
+    useEffect(() => {
+        console.log("User:", user);
+        const fetchEnrolledCourses = async () => {
+            try {
+                const response = await enrollmentService.getEnrolledCourses(user?.id!);
+                console.log("Enrolled courses:", response);
+                setEnrolledCourses(response as EnrollmentResponse[]);
+            } catch (error) {
+                console.error("Error fetching enrolled courses:", error);
+            }
+        };
+
+        fetchEnrolledCourses();
+    }, []);
 
     const handleDeleteCourses = async (courseIds: number[]) => {
         try {
