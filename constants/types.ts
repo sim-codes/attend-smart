@@ -101,13 +101,13 @@ export type CalendarScheduleProps = {
 
 export interface Course {
     id: number;
-    name: string;
+    title: string;
     courseCode: string;
     creditUnits: number;
 }
 export interface CourseListProps {
-    courses: Course[];
-    onDeleteCourses?: (courseIds: number[]) => Promise<void>;
+    courses: EnrollmentResponse[];
+    onDeleteCourses?: (courseIds: string[]) => Promise<void>;
 }
 
 export interface ConfirmDialogProps {
@@ -122,8 +122,10 @@ export interface ConfirmDialogProps {
 }
 
 export interface EnrollmentResponse {
-    id: number;
-    studentId: number;
-    courseId: number;
+    id: string;
+    courseId: string;
+    courseTitle: string;
+    courseCode: string;
+    creditUnits: number;
     enrollmentDate: string;
 }

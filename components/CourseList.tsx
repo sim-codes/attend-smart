@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@/components/ui/button';
-import { CourseListProps, Course } from '@/constants/types';
+import { CourseListProps, EnrollmentResponse } from '@/constants/types';
 import CustomCheckbox from '@/components/CheckBox';
 import { VStack } from '@/components/ui/vstack';
 import { Text } from '@/components/ui/text';
 import { HStack } from '@/components/ui/hstack';
 
 const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps) => {
-    const [selectedCourses, setSelectedCourses] = useState<Set<number>>(new Set());
+    const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const toggleCourseSelection = (courseId: number) => {
+    const toggleCourseSelection = (courseId: string) => {
         setSelectedCourses(prev => {
             const newSet = new Set(prev);
             if (newSet.has(courseId)) {
@@ -42,7 +42,7 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
         }
     };
 
-    const renderItem = ({ item }: { item: Course }) => (
+    const renderItem = ({ item }: { item: EnrollmentResponse }) => (
         <TouchableOpacity
             onPress={() => toggleCourseSelection(item.id)}
             className={`p-4 border-b border-primary-700 ${
@@ -51,9 +51,9 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
         >
             <HStack className="justify-between items-start">
                 <VStack className="flex-1">
-                    <Text size="lg" className="font-semibold text-white">{item.name}</Text>
-                    <Text className="text-tertiary-100 mt-1">{item.courseCode}</Text>
-                    <Text className="text-tertiary-100 mt-1">
+                    <Text size="lg" className="font-semibold text-white">{item.courseTitle}</Text>
+                    <Text className="text-secondary-100 mt-1">{item.courseCode}</Text>
+                    <Text className="text-secondary-100 mt-1">
                         Credits: {item.creditUnits}
                     </Text>
                 </VStack>
