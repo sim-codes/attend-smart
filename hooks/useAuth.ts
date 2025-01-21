@@ -44,7 +44,6 @@ export function useAuth() {
     const [state, dispatch] = useReducer(authReducer, initialState);
     const { tokens, setTokens, loading: tokensLoading } = useTokenStorage();
     const { user, setUser } = useUserStorage();
-    console.log("User from useAuth", user);
 
     const clearError = useCallback(() => {
         dispatch({ type: 'CLEAR_ERROR' });
@@ -93,7 +92,6 @@ export function useAuth() {
     useEffect(() => {
         if (!tokensLoading) {
             if (tokens && !user) {
-                // We have tokens but no user - potential inconsistent state
                 logout().catch(console.error);
             } else if (user) {
                 dispatch({ type: 'SET_USER', payload: user });

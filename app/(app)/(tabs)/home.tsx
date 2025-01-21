@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {
     Avatar,
-    AvatarBadge,
     AvatarFallbackText,
     AvatarImage,
 } from '@/components/ui/avatar';
@@ -27,7 +26,6 @@ export default function Home() {
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
 
     useEffect(() => {
-        console.log(user?.id!);
         const fetchEnrolledCourses = async () => {
             try {
                 const response = await enrollmentService.getEnrolledCourses(user?.id!);

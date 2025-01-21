@@ -29,7 +29,7 @@ export default function Login() {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-    
+
     try {
         await login(formData);
         router.push('/');

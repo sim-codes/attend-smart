@@ -1,7 +1,7 @@
 // services/api.ts
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { API_ENDPOINTS, PUBLIC_ENDPOINTS } from '@/constants/endpoints';
-import { TokenDto, LoginResponse } from '@/constants/types';
+import { LoginResponse } from '@/constants/types';
 import * as SecureStore from 'expo-secure-store';
 import { setStorageItemAsync } from './storage';
 import { API_CONFIG } from '@/constants/config';
