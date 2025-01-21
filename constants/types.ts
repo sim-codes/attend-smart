@@ -129,3 +129,15 @@ export interface EnrollmentResponse {
     creditUnits: number;
     enrollmentDate: string;
 }
+
+export interface StudentProfile {
+    userId: string;
+    matriculationNumber: string;
+    level: string;
+    department: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    profileImageUrl: string;
+}

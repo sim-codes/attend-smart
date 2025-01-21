@@ -1,13 +1,13 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import axios from 'axios';
-import { EnrollmentResponse } from '@/constants/types';
+import { StudentProfile } from '@/constants/types';
 
-export const enrollmentService = {
-    async getEnrolledCourses(studentId: string) {
+export const studentService = {
+    async getStudentProfile(studentId: string) {
         try {
-            return await apiClient.get<EnrollmentResponse[]>(
-                API_ENDPOINTS.enrollment.getAll.replace('{studentId}', studentId)
+            return await apiClient.get<StudentProfile>(
+                API_ENDPOINTS.student.getSingle.replace('{id}', studentId)
             );
         } catch (error) {
             console.error("Error during get enrolled courses request:", error);

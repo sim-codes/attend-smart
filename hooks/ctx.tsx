@@ -1,21 +1,12 @@
 import { useContext, createContext, type PropsWithChildren } from 'react';
 import { useStorageState } from '@/hooks/useStorageState';
 import { useAuth } from './useAuth';
-import type { SignUpCredentials, UserProfile } from '@/constants/types';
-
-interface LoginProps {
-    email: string;
-    password: string;
-}
-
-const user = {
-    name: 'simcodes',
-    email: 'sim@gmail.com',
-    password: '123456',
-}
+import type { SignUpCredentials, UserProfile, StudentProfile } from '@/constants/types';
+import * as SecureStore from 'expo-secure-store';
 
 interface AuthContextType {
     user: UserProfile | null;
+    student: StudentProfile | null;
     loading: boolean;
     error: string | null;
     login: (credentials: { username: string; password: string }) => Promise<void>;
@@ -26,6 +17,7 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType>({
     user: null,
+    student: null,
     loading: false,
     error: null,
     login: async () => {},
@@ -47,8 +39,20 @@ export function useSession() {
     return value;
 }
 
+// get user from storage
+async function getUserFromStorage() {
+    const user = await SecureStore.getItemAsync('user');
+    return user ? JSON.parse(user) : null;
+}
+
 export function SessionProvider({ children }: PropsWithChildren) {
     const auth = useAuth();
+    console.log("Context called", auth.user);
+
+    // print user info from storage
+    getUserFromStorage().then((user) => {
+        console.log("User from storage", user);
+    });
     return (
     <AuthContext.Provider
         value={auth}>

@@ -3,10 +3,12 @@ import { useCallback, useReducer, useEffect } from 'react';
 import { useTokenStorage } from '../services/tokenStorage';
 import { useUserStorage } from './useUserStorage';
 import { authService } from '@/services/auth';
-import type { LoginCredentials, SignUpCredentials, UserProfile } from '@/constants/types';
+import { studentService } from '@/services/student';
+import type { LoginCredentials, SignUpCredentials, UserProfile, StudentProfile } from '@/constants/types';
 
 interface AuthState {
     user: UserProfile | null;
+    student: StudentProfile | null;
     loading: boolean;
     error: string | null;
 }
@@ -14,11 +16,13 @@ interface AuthState {
 type AuthAction =
     | { type: 'SET_LOADING' }
     | { type: 'SET_USER'; payload: UserProfile }
+    | { type: 'SET_STUDENT'; payload: StudentProfile }
     | { type: 'SET_ERROR'; payload: string }
     | { type: 'LOGOUT' };
 
 const initialState: AuthState = {
     user: null,
+    student: null,
     loading: true,
     error: null
 };
@@ -29,6 +33,8 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         return { ...state, loading: true, error: null };
         case 'SET_USER':
         return { ...state, user: action.payload, loading: false, error: null };
+        case 'SET_STUDENT':
+        return { ...state, student: action.payload, loading: false, error: null };
         case 'SET_ERROR':
         return { ...state, error: action.payload, loading: false };
         case 'LOGOUT':
@@ -39,9 +45,11 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 }
 
 export function useAuth() {
+    console.log("useAuth called");
     const [state, dispatch] = useReducer(authReducer, initialState);
     const { tokens, setTokens, loading: tokensLoading } = useTokenStorage();
     const { user, setUser } = useUserStorage();
+    console.log("User from useAuth", user);
 
     const signup = async (credentials: SignUpCredentials) => {
         try {
@@ -76,19 +84,12 @@ export function useAuth() {
 
   // Initialize auth state
     useEffect(() => {
-        const checkAuth = async () => {
-            const storedUser = await authService.getStoredUserData();
-            if (storedUser) {
-                dispatch({ type: 'SET_USER', payload: storedUser })
-            } else {
-                dispatch({ type: 'LOGOUT' });
-            }
-        };
-        checkAuth();
+        user ? dispatch({ type: 'SET_USER', payload: user }) : dispatch({ type: 'LOGOUT' });
     }, []);
 
     return {
         user: state.user,
+        student: state.student,
         loading: state.loading || tokensLoading,
         error: state.error,
         login,
