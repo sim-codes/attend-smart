@@ -6,7 +6,7 @@ export default function TabLayout(){
     const { loading, isAuthenticated } = useSession();
 
     if (loading) {
-        return <Text>Loading...</Text>;
+        return <Text>Loading from tabs...</Text>;
     }
 
     if (!isAuthenticated) {

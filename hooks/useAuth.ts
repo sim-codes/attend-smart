@@ -1,14 +1,11 @@
-// hooks/useAuth.ts
 import { useCallback, useReducer, useEffect } from 'react';
 import { useTokenStorage } from '../services/tokenStorage';
 import { useUserStorage } from './useUserStorage';
 import { authService } from '@/services/auth';
-import { studentService } from '@/services/student';
-import type { LoginCredentials, SignUpCredentials, UserProfile, StudentProfile } from '@/constants/types';
+import type { LoginCredentials, SignUpCredentials, UserProfile } from '@/constants/types';
 
 interface AuthState {
     user: UserProfile | null;
-    student: StudentProfile | null;
     loading: boolean;
     error: string | null;
 }
@@ -16,52 +13,55 @@ interface AuthState {
 type AuthAction =
     | { type: 'SET_LOADING' }
     | { type: 'SET_USER'; payload: UserProfile }
-    | { type: 'SET_STUDENT'; payload: StudentProfile }
     | { type: 'SET_ERROR'; payload: string }
+    | { type: 'CLEAR_ERROR' }
     | { type: 'LOGOUT' };
 
 const initialState: AuthState = {
     user: null,
-    student: null,
-    loading: true,
+    loading: false, // Changed from true since we use tokensLoading
     error: null
 };
 
 function authReducer(state: AuthState, action: AuthAction): AuthState {
     switch (action.type) {
         case 'SET_LOADING':
-        return { ...state, loading: true, error: null };
+            return { ...state, loading: true, error: null };
         case 'SET_USER':
-        return { ...state, user: action.payload, loading: false, error: null };
-        case 'SET_STUDENT':
-        return { ...state, student: action.payload, loading: false, error: null };
+            return { ...state, user: action.payload, loading: false, error: null };
         case 'SET_ERROR':
-        return { ...state, error: action.payload, loading: false };
+            return { ...state, error: action.payload, loading: false };
+        case 'CLEAR_ERROR':
+            return { ...state, error: null };
         case 'LOGOUT':
-        return { ...state, user: null, loading: false, error: null };
+            return { ...initialState };
         default:
-        return state;
+            return state;
     }
 }
 
 export function useAuth() {
-    console.log("useAuth called");
     const [state, dispatch] = useReducer(authReducer, initialState);
     const { tokens, setTokens, loading: tokensLoading } = useTokenStorage();
     const { user, setUser } = useUserStorage();
     console.log("User from useAuth", user);
 
-    const signup = async (credentials: SignUpCredentials) => {
+    const clearError = useCallback(() => {
+        dispatch({ type: 'CLEAR_ERROR' });
+    }, []);
+
+    const signup = useCallback(async (credentials: SignUpCredentials) => {
         try {
             dispatch({ type: 'SET_LOADING' });
             const statusCode = await authService.signup(credentials);
-            dispatch({ type: 'LOGOUT'});
+            dispatch({ type: 'LOGOUT' });
             return statusCode;
         } catch (err) {
-            dispatch({ type: 'SET_ERROR', payload: err instanceof  Error ? err.message : "An error occured during signup"});
+            const errorMessage = err instanceof Error ? err.message : "An error occurred during signup";
+            dispatch({ type: 'SET_ERROR', payload: errorMessage });
             throw err;
         }
-    }
+    }, []);
 
     const login = useCallback(async (credentials: LoginCredentials) => {
         try {
@@ -71,30 +71,46 @@ export function useAuth() {
             await setUser(response.user);
             dispatch({ type: 'SET_USER', payload: response.user });
         } catch (error) {
-            dispatch({ type: 'SET_ERROR', payload: 'Login failed' });
+            const errorMessage = error instanceof Error ? error.message : 'Login failed';
+            dispatch({ type: 'SET_ERROR', payload: errorMessage });
             throw error;
         }
     }, [setTokens, setUser]);
 
     const logout = useCallback(async () => {
-        await setTokens(null);
-        await setUser(null);
-        dispatch({ type: 'LOGOUT' });
+        try {
+            dispatch({ type: 'SET_LOADING' });
+            await setTokens(null);
+            await setUser(null);
+            dispatch({ type: 'LOGOUT' });
+        } catch (error) {
+            dispatch({ type: 'SET_ERROR', payload: 'Logout failed' });
+            throw error;
+        }
     }, [setTokens, setUser]);
 
-  // Initialize auth state
+    // Sync user state with storage
     useEffect(() => {
-        user ? dispatch({ type: 'SET_USER', payload: user }) : dispatch({ type: 'LOGOUT' });
-    }, []);
+        if (!tokensLoading) {
+            if (tokens && !user) {
+                // We have tokens but no user - potential inconsistent state
+                logout().catch(console.error);
+            } else if (user) {
+                dispatch({ type: 'SET_USER', payload: user });
+            } else {
+                dispatch({ type: 'LOGOUT' });
+            }
+        }
+    }, [tokensLoading, logout]);
 
     return {
         user: state.user,
-        student: state.student,
         loading: state.loading || tokensLoading,
         error: state.error,
         login,
         signup,
         logout,
-        isAuthenticated: !!state.user
+        clearError,
+        isAuthenticated: !!state.user && !!tokens
     };
 }

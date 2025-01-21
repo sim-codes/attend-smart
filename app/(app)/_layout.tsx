@@ -1,6 +1,7 @@
 import { Stack, Redirect } from "expo-router";
 import { useSession } from "@/hooks/ctx";
 import { Text } from "@/components/ui/text";
+import { Link, useRouter } from "expo-router";
 
 export const unstable_settings = {
     initialRouteName: '(tabs)',
@@ -8,7 +9,8 @@ export const unstable_settings = {
 
 
 export default function AppLayout() {
-    const { loading } = useSession();
+    const { loading, isAuthenticated, user } = useSession();
+    const router = useRouter();
 
     if (loading) {
         return <Text>Loading...</Text>
@@ -16,13 +18,13 @@ export default function AppLayout() {
 
     return (
     <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="start" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{
             headerTitle: "",
             headerTransparent: true,
             headerBackImageSource: require("@/assets/images/arrow-back-cream.png"),
         }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
     )
 }

@@ -21,14 +21,13 @@ import { EnrollmentResponse } from "@/constants/types";
 
 
 export default function Home() {
-    const { user, student } = useSession();
+    const { user } = useSession();
     const [showDialog, setShowDialog] = useState(false);
     const [ action, setAction ] = useState<string>('');
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
 
     useEffect(() => {
         console.log(user?.id!);
-        console.log(student?.userId!);
         const fetchEnrolledCourses = async () => {
             try {
                 const response = await enrollmentService.getEnrolledCourses(user?.id!);
