@@ -1,8 +1,6 @@
 import { useContext, createContext, type PropsWithChildren } from 'react';
-import { useStorageState } from '@/hooks/useStorageState';
 import { useAuth } from './useAuth';
-import type { SignUpCredentials, UserProfile, StudentProfile } from '@/constants/types';
-import * as SecureStore from 'expo-secure-store';
+import type { SignUpCredentials, UserProfile } from '@/constants/types';
 
 interface AuthContextType {
     user: UserProfile | null;

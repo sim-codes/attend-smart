@@ -1,10 +1,11 @@
 import "@/global.css";
 import { useEffect } from "react";
-import { Slot, Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { useFonts, Nunito_400Regular, Nunito_900Black } from "@expo-google-fonts/nunito";
 import * as SplashScreen from 'expo-splash-screen';
 import { SessionProvider } from "@/hooks/ctx";
+import { AppContextProvider } from "@/hooks/appContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,9 +28,11 @@ export default function RootLayout() {
 
   return (
     <SessionProvider>
-      <GluestackUIProvider>
-        <Slot />
-      </GluestackUIProvider>
+      <AppContextProvider>
+        <GluestackUIProvider>
+          <Slot />
+        </GluestackUIProvider>
+      </AppContextProvider>
     </SessionProvider>
   )
 }

@@ -130,6 +130,11 @@ export interface EnrollmentResponse {
     enrollmentDate: string;
 }
 
+export interface AppContextType {
+    profile: StudentProfile | null;
+    updateProfile: (newProfile: StudentProfile) => void;
+}
+
 export interface StudentProfile {
     userId: string;
     matriculationNumber: string;
