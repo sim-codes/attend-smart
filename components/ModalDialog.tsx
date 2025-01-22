@@ -28,7 +28,7 @@ const ModalDialog: React.FC<ConfirmDialogProps> = ({
             <AlertDialogBackdrop />
             <AlertDialogContent>
                 <AlertDialogHeader>
-                <Heading size="md" className="text-typography-950 font-semibold">
+                <Heading size="lg" className="text-typography-950 font-semibold">
                     {title}
                 </Heading>
                 </AlertDialogHeader>

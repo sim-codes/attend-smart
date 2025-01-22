@@ -1,5 +1,6 @@
 import { FormFieldProps } from "@/constants/types";
-import { FormControl,
+import {
+    FormControl,
     FormControlError,
     FormControlErrorText,
     FormControlLabel,
@@ -10,6 +11,16 @@ import { FormControl,
 } from '@/components/ui/form-control';
 import { Input, InputField } from '@/components/ui/input';
 import Feather from '@expo/vector-icons/Feather';
+import Dropdown from '@/components/Dropdown';
+
+interface Option {
+    value: string;
+    label: string;
+}
+
+interface EnhancedFormFieldProps extends FormFieldProps {
+    options?: Option[];
+}
 
 const FormFieldComponent = ({
     label,
@@ -23,10 +34,11 @@ const FormFieldComponent = ({
     isRequired,
     isDisabled,
     isReadOnly,
-}: FormFieldProps) => {
+    options = [],
+}: EnhancedFormFieldProps) => {
     return (
         <FormControl
-        className="gap-y-1"
+            className="gap-y-1"
             isInvalid={isInvalid}
             isDisabled={isDisabled}
             isReadOnly={isReadOnly}
@@ -35,24 +47,31 @@ const FormFieldComponent = ({
             <FormControlLabel>
                 <FormControlLabelText size="xl">{label}</FormControlLabelText>
             </FormControlLabel>
-            <Input className="" size="xl">
-                <InputField
-                    type={type}
-                    placeholder={placeholder}
+
+            {type === 'select' ? (
+                <Dropdown
+                    options={options}
                     value={value}
-                    onChangeText={(text) => onChange(text)}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    error={isInvalid ? errorText : undefined}
+                    disabled={isDisabled || isReadOnly}
                 />
-            </Input>
-            {helperText && (
+            ) : (
+                <Input className="" size="xl">
+                    <InputField
+                        type={type}
+                        placeholder={placeholder}
+                        value={value}
+                        onChangeText={(text) => onChange(text)}
+                    />
+                </Input>
+            )}
+
+            {helperText && !isInvalid && (
                 <FormControlHelper>
                     <FormControlHelperText>{helperText}</FormControlHelperText>
                 </FormControlHelper>
-            )}
-            {isInvalid && (
-                <FormControlError>
-                    <FormControlErrorIcon as={AlertCircleIcon} />
-                    <FormControlErrorText>{errorText}</FormControlErrorText>
-                </FormControlError>
             )}
         </FormControl>
     );

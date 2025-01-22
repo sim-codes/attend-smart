@@ -19,6 +19,7 @@ import { enrollmentService } from "@/services/enrollment";
 import { EnrollmentResponse } from "@/constants/types";
 import { useApp } from "@/hooks/appContext";
 import { Image } from "@/components/ui/image";
+import NoProfileHome from "@/components/NoProfileHome";
 
 
 export default function Home() {
@@ -32,11 +33,11 @@ export default function Home() {
         if (!profile) return;
 
         async function fetchEnrolledCourses() {
-            try {
-                const response = await enrollmentService.getEnrolledCourses(user?.id!);
-                setEnrolledCourses(response as EnrollmentResponse[]);
-            } catch (error) {
-                console.error("Error fetching enrolled courses:", error);
+            const { data, success, error } = await enrollmentService.getEnrolledCourses(user?.id!);
+            if (success) {
+                setEnrolledCourses(data!)
+            } else {
+                console.error("Error fetching enrolled courses:", error?.message);
             }
         };
 
@@ -104,17 +105,7 @@ export default function Home() {
                     />
                 </>
                 :
-                <>
-                <Image source={require('@/assets/images/student.png')} size="full" className="self-center aspect-[384/384] h-2/3" alt="alt"/>
-                <Heading className="text-white text-center" size="xl">You haven't set up your student profile yet</Heading>
-                <Button variant="outline" className="gap-x-2" size="xl" onPress={() => {
-                        setShowDialog(true);
-                        setAction('attendance');
-                    }}>
-                        <FontAwesome6 name="user" size={28} color="#D6BD98" />
-                        <ButtonText className="text-secondary-0">Let's do that</ButtonText>
-                </Button>
-                </>
+                <NoProfileHome />
             }
 
             <ModalDialog

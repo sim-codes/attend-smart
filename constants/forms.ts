@@ -1,4 +1,4 @@
-import { LoginFormField, SignupFormFields } from "@/constants/types";
+import { LoginFormField, SignupFormFields, ProfileCreationFormField } from "@/constants/types";
 
 
 export const signupSteps: SignupFormFields = {
@@ -89,3 +89,41 @@ export const loginFormFields: LoginFormField[] = [
         isRequired: true
     }
 ];
+
+export const profileFormFields: ProfileCreationFormField[] = [
+    {
+        id: "matriculationNumber",
+        label: "Matriculation Number",
+        placeholder: "Enter your matriculation number",
+        type: "text",
+        isRequired: true
+    },
+    {
+        id: "level",
+        label: "Level",
+        placeholder: "Select your level",
+        type: "select",
+        options: [
+            { value: "100", label: "100 Level" },
+            { value: "200", label: "200 Level" },
+            { value: "300", label: "300 Level" },
+            { value: "400", label: "400 Level" },
+            { value: "500", label: "500 Level" }
+        ],
+        isRequired: true
+    },
+    {
+        id: "department",
+        label: "Department",
+        placeholder: "Select your department",
+        type: "select",
+        options: [
+            { value: "computer_science", label: "Computer Science" },
+            { value: "electrical_engineering", label: "Electrical Engineering" },
+            { value: "mechanical_engineering", label: "Mechanical Engineering" },
+            { value: "civil_engineering", label: "Civil Engineering" },
+            { value: "chemical_engineering", label: "Chemical Engineering" }
+        ],
+        isRequired: true
+    }
+]

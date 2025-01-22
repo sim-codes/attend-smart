@@ -5,7 +5,7 @@ export type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 export interface FormFieldProps {
 label: string;
 placeholder: string;
-type?: 'text' | 'password';
+type?: 'text' | 'password' | 'select';
 value: string;
 onChange: (value: string) => void;
 helperText?: string;
@@ -22,9 +22,15 @@ export type SignupFieldId = LoginFieldId | 'email' | 'confirmPassword' | 'firstn
 interface BaseFormField {
     label: string;
     placeholder: string;
-    type: 'text' | 'password';
+    type: 'text' | 'password' | 'select';
+    options?: { value: string; label: string; }[];
     helperText?: string;
     isRequired?: boolean;
+}
+
+export type ProfileFieldId = "matriculationNumber" | "level" | "department";
+export interface ProfileCreationFormField extends BaseFormField {
+    id: ProfileFieldId;
 }
 
 export interface LoginFormField extends BaseFormField {

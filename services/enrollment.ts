@@ -6,7 +6,7 @@ import { ServiceHandler } from './serviceHandler';
 
 export const enrollmentService = {
     async getEnrolledCourses(studentId: string) {
-        return ServiceHandler.execute<EnrollmentResponse>(() =>
+        return ServiceHandler.execute<EnrollmentResponse[]>(() =>
             apiClient.get(API_ENDPOINTS.enrollment.getAll.replace('{studentId}', studentId))
         );
     }
