@@ -3,6 +3,7 @@ import { AppContextType, StudentProfile } from '@/constants/types';
 import { studentService } from '@/services/student';
 import { useSession } from '@/hooks/ctx';
 
+
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppContextProvider({ children }: PropsWithChildren) {
@@ -11,18 +12,20 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     const { user } = useSession();
 
     useEffect(() => {
-        async function getStudentProfile(){
+        if (!user?.id) return;
+
+        async function getStudentProfile() {
             try {
-                await studentService.getStudentProfile(user?.id!)
-                .then((response) => updateProfile(response));
+                const response = await studentService.getStudentProfile(user?.id!);
+                setProfile(response);
             } catch (error) {
-                console.error("Error fetching enrolled courses:", error);
+                setProfile(null);
+                console.error("Error fetching student profile:", error);
             }
         }
 
         getStudentProfile();
-    }, []);
-    console.log(profile);
+    }, [user]);
 
     return (
         <AppContext.Provider value={{ profile, updateProfile}}
@@ -31,7 +34,6 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         </AppContext.Provider>
     );
 };
-
 
 export function useApp() {
     const context = useContext(AppContext);

@@ -18,7 +18,7 @@ import ModalDialog from "@/components/ModalDialog";
 import { enrollmentService } from "@/services/enrollment";
 import { EnrollmentResponse } from "@/constants/types";
 import { useApp } from "@/hooks/appContext";
-import { Text } from "@/components/ui/text";
+import { Image } from "@/components/ui/image";
 
 
 export default function Home() {
@@ -29,7 +29,9 @@ export default function Home() {
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
 
     useEffect(() => {
-        const fetchEnrolledCourses = async () => {
+        if (!profile) return;
+
+        async function fetchEnrolledCourses() {
             try {
                 const response = await enrollmentService.getEnrolledCourses(user?.id!);
                 setEnrolledCourses(response as EnrollmentResponse[]);
@@ -103,13 +105,14 @@ export default function Home() {
                 </>
                 :
                 <>
-                <Text>You don't have a profile!</Text>
+                <Image source={require('@/assets/images/student.png')} size="full" className="self-center aspect-[384/384] h-2/3" alt="alt"/>
+                <Heading className="text-white text-center" size="xl">You haven't set up your student profile yet</Heading>
                 <Button variant="outline" className="gap-x-2" size="xl" onPress={() => {
                         setShowDialog(true);
                         setAction('attendance');
                     }}>
                         <FontAwesome6 name="user" size={28} color="#D6BD98" />
-                        <ButtonText className="text-secondary-0">Create profile to continue</ButtonText>
+                        <ButtonText className="text-secondary-0">Let's do that</ButtonText>
                 </Button>
                 </>
             }

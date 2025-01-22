@@ -88,7 +88,6 @@ export function useAuth() {
         }
     }, [setTokens, setUser]);
 
-    // Sync user state with storage
     useEffect(() => {
         if (!tokensLoading) {
             if (tokens && !user) {
@@ -99,7 +98,7 @@ export function useAuth() {
                 dispatch({ type: 'LOGOUT' });
             }
         }
-    }, [tokensLoading, logout]);
+    }, [tokensLoading]);
 
     return {
         user: state.user,
