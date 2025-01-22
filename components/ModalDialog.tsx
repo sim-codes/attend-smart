@@ -55,7 +55,7 @@ const ModalDialog: React.FC<ConfirmDialogProps> = ({
                     size="sm"
                     onPress={() => {
                     onAction();
-                    onClose();
+                    // onClose();
                     }}
                 >
                     <ButtonText>{actionText}</ButtonText>

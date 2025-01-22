@@ -27,10 +27,18 @@ interface BaseFormField {
     helperText?: string;
     isRequired?: boolean;
 }
+export type ProfileStep = 'faculty' | 'details';
 
-export type ProfileFieldId = "matriculationNumber" | "level" | "department";
+export type ProfileFieldId = "matriculationNumber" | "level" | "department"| "faculty";
 export interface ProfileCreationFormField extends BaseFormField {
     id: ProfileFieldId;
+}
+
+export interface ProfileCreationFormFields {
+    [key: string]: {
+        fields: ProfileCreationFormField[];
+        title: string;
+    }
 }
 
 export interface LoginFormField extends BaseFormField {
@@ -163,4 +171,10 @@ export interface ServiceResponse<T> {
     data?: T;
     error?: ErrorResponse;
     success: boolean;
+}
+
+export interface FacultyApiResponse{
+    id: string;
+    name: string;
+    code: string;
 }

@@ -5,7 +5,6 @@ import type { LoginCredentials,
     SignUpCredentials,
     SignupResponse
 } from '@/constants/types';
-import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { ServiceHandler } from './serviceHandler';
 

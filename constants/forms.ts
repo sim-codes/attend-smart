@@ -1,4 +1,4 @@
-import { LoginFormField, SignupFormFields, ProfileCreationFormField } from "@/constants/types";
+import { LoginFormField, SignupFormFields, ProfileCreationFormFields } from "@/constants/types";
 
 
 export const signupSteps: SignupFormFields = {
@@ -90,40 +90,62 @@ export const loginFormFields: LoginFormField[] = [
     }
 ];
 
-export const profileFormFields: ProfileCreationFormField[] = [
-    {
-        id: "matriculationNumber",
-        label: "Matriculation Number",
-        placeholder: "Enter your matriculation number",
-        type: "text",
-        isRequired: true
+export const profileSteps: ProfileCreationFormFields = {
+    faculty: {
+        title: "",
+        fields: [
+            {
+                id: "faculty",
+                label: "Level",
+                placeholder: "Select your faculty",
+                type: "select",
+                options: [
+                    { value: "fos", label: "Faculty of Science" },
+                    { value: "foa", label: "Faculty of Arts" },
+                    { value: "foe", label: "Faculty of Engineering" }
+                ],
+                isRequired: true
+            }
+        ]
     },
-    {
-        id: "level",
-        label: "Level",
-        placeholder: "Select your level",
-        type: "select",
-        options: [
-            { value: "100", label: "100 Level" },
-            { value: "200", label: "200 Level" },
-            { value: "300", label: "300 Level" },
-            { value: "400", label: "400 Level" },
-            { value: "500", label: "500 Level" }
-        ],
-        isRequired: true
-    },
-    {
-        id: "department",
-        label: "Department",
-        placeholder: "Select your department",
-        type: "select",
-        options: [
-            { value: "computer_science", label: "Computer Science" },
-            { value: "electrical_engineering", label: "Electrical Engineering" },
-            { value: "mechanical_engineering", label: "Mechanical Engineering" },
-            { value: "civil_engineering", label: "Civil Engineering" },
-            { value: "chemical_engineering", label: "Chemical Engineering" }
-        ],
-        isRequired: true
+    details: {
+        title: "",
+        fields: [
+            {
+                id: "matriculationNumber",
+                label: "Matriculation Number",
+                placeholder: "Enter your matriculation number",
+                type: "text",
+                isRequired: true
+            },
+            {
+                id: "level",
+                label: "Level",
+                placeholder: "Select your level",
+                type: "select",
+                options: [
+                    { value: "100", label: "100 Level" },
+                    { value: "200", label: "200 Level" },
+                    { value: "300", label: "300 Level" },
+                    { value: "400", label: "400 Level" },
+                    { value: "500", label: "500 Level" }
+                ],
+                isRequired: true
+            },
+            {
+                id: "department",
+                label: "Department",
+                placeholder: "Select your department",
+                type: "select",
+                options: [
+                    { value: "computer_science", label: "Computer Science" },
+                    { value: "electrical_engineering", label: "Electrical Engineering" },
+                    { value: "mechanical_engineering", label: "Mechanical Engineering" },
+                    { value: "civil_engineering", label: "Civil Engineering" },
+                    { value: "chemical_engineering", label: "Chemical Engineering" }
+                ],
+                isRequired: true
+            }
+        ]
     }
-]
+}
