@@ -9,9 +9,11 @@ import { Avatar, AvatarFallbackText, AvatarImage } from "@/components/ui/avatar"
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import ModalDialog from "@/components/ModalDialog";
+import { useApp } from "@/hooks/appContext";
 
 export default function Profile() {
     const { user, logout } = useSession();
+    const { profile } = useApp();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
 
     return (
@@ -62,29 +64,41 @@ export default function Profile() {
 
             <VStack space="sm">
                 <Heading size="md" className="text-secondary-0">Student Details</Heading>
-                <HStack space="sm" className="items-end">
-                    <Ionicons name="folder-open-outline" size={28} color="#677D6A" />
-                    <VStack>
-                        <Text size="xl" className="text-white">Computer Science</Text>
-                        <Text size="md" className="text-tertiary-100">Department</Text>
-                    </VStack>
-                </HStack>
+                {
+                    profile ?
+                    <>
+                    <HStack space="sm" className="items-end">
+                        <Ionicons name="folder-open-outline" size={28} color="#677D6A" />
+                        <VStack>
+                            <Text size="xl" className="text-white">{profile?.department}</Text>
+                            <Text size="md" className="text-tertiary-100">Department</Text>
+                        </VStack>
+                    </HStack>
 
-                <HStack space="sm" className="items-end">
-                    <Ionicons name="people-outline" size={28} color="#677D6A" />
-                    <VStack>
-                        <Text size="xl" className="text-white">21/0611</Text>
-                        <Text size="md" className="text-tertiary-100">Matric Number</Text>
-                    </VStack>
-                </HStack>
+                    <HStack space="sm" className="items-end">
+                        <Ionicons name="people-outline" size={28} color="#677D6A" />
+                        <VStack>
+                            <Text size="xl" className="text-white">{profile?.matriculationNumber}</Text>
+                            <Text size="md" className="text-tertiary-100">Matric Number</Text>
+                        </VStack>
+                    </HStack>
 
-                <HStack space="sm" className="items-end">
-                    <Ionicons name="list-outline" size={28} color="#677D6A" />
-                    <VStack>
-                        <Text size="xl" className="text-white">400</Text>
-                        <Text size="md" className="text-tertiary-100">Level</Text>
-                    </VStack>
-                </HStack>
+                    <HStack space="sm" className="items-end">
+                        <Ionicons name="list-outline" size={28} color="#677D6A" />
+                        <VStack>
+                            <Text size="xl" className="text-white">{profile?.level}</Text>
+                            <Text size="md" className="text-tertiary-100">Level</Text>
+                        </VStack>
+                    </HStack>
+                    </> : <>
+                    <Pressable onPress={() => setShowAlertDialog(true)}>
+                        <HStack space="sm" className="items-end">
+                            <FontAwesome name="user-o" size={28} color="#677D6A" />
+                            <Text size="xl" className="text-white">Create Student Profile</Text>
+                        </HStack>
+                    </Pressable>
+                    </>
+                }
             </VStack>
 
             <VStack space="sm">

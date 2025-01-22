@@ -17,10 +17,13 @@ import TakeAttendance from "@/components/TakeAttendance";
 import ModalDialog from "@/components/ModalDialog";
 import { enrollmentService } from "@/services/enrollment";
 import { EnrollmentResponse } from "@/constants/types";
+import { useApp } from "@/hooks/appContext";
+import { Text } from "@/components/ui/text";
 
 
 export default function Home() {
     const { user } = useSession();
+    const { profile } = useApp();
     const [showDialog, setShowDialog] = useState(false);
     const [ action, setAction ] = useState<string>('');
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
@@ -72,28 +75,44 @@ export default function Home() {
                 </Heading>
             </HStack>
 
-            <HStack className="justify-between items-center w-full gap-x-2">
-                <Button variant="outline" className="" size="xl" onPress={() => {
-                    setShowDialog(true);
-                    setAction('register');
-                }}>
-                    <Ionicons name="add-outline" size={34} color="#D6BD98" />
-                    <ButtonText className="text-secondary-0">Register Course</ButtonText>
-                </Button>
+            {
+                profile ?
+                <>
+                <HStack className="justify-between items-center w-full gap-x-2">
+                    <Button variant="outline" className="" size="xl" onPress={() => {
+                        setShowDialog(true);
+                        setAction('register');
+                    }}>
+                        <Ionicons name="add-outline" size={34} color="#D6BD98" />
+                        <ButtonText className="text-secondary-0">Register Course</ButtonText>
+                    </Button>
 
-                <Button variant="outline" className="" size="xl" onPress={() => {
-                    setShowDialog(true);
-                    setAction('attendance');
-                }}>
-                    <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
-                    <ButtonText className="text-secondary-0">Take Attedance</ButtonText>
-                </Button>
-            </HStack>
+                    <Button variant="outline" className="" size="xl" onPress={() => {
+                        setShowDialog(true);
+                        setAction('attendance');
+                    }}>
+                        <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
+                        <ButtonText className="text-secondary-0">Take Attedance</ButtonText>
+                    </Button>
+                </HStack>
 
-            <CourseList
-            courses={enrolledCourses}
-            onDeleteCourses={handleDeleteCourses}
-            />
+                    <CourseList
+                    courses={enrolledCourses}
+                    onDeleteCourses={handleDeleteCourses}
+                    />
+                </>
+                :
+                <>
+                <Text>You don't have a profile!</Text>
+                <Button variant="outline" className="gap-x-2" size="xl" onPress={() => {
+                        setShowDialog(true);
+                        setAction('attendance');
+                    }}>
+                        <FontAwesome6 name="user" size={28} color="#D6BD98" />
+                        <ButtonText className="text-secondary-0">Create profile to continue</ButtonText>
+                </Button>
+                </>
+            }
 
             <ModalDialog
                 isOpen={showDialog}
