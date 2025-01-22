@@ -146,3 +146,15 @@ export interface StudentProfile {
     phoneNumber: string;
     profileImageUrl: string;
 }
+
+export interface ErrorResponse {
+    message: string;
+    code?: string;
+    details?: any;
+}
+
+export interface ServiceResponse<T> {
+    data?: T;
+    error?: ErrorResponse;
+    success: boolean;
+}

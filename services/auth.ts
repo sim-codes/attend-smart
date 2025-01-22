@@ -7,58 +7,27 @@ import type { LoginCredentials,
 } from '@/constants/types';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { ServiceHandler } from './serviceHandler';
 
 export const authService = {
     async login(credentials: LoginCredentials) {
-        try {
-            return await apiClient.post<LoginResponse>(
-                API_ENDPOINTS.authentication.login,
-                credentials
-            );
-        } catch (error) {
-            console.error("Error during login request:", error);
-            if (axios.isAxiosError(error)) {
-                console.log('Network Error Details:', {
-                    message: error.message,
-                    code: error.code,
-                    // @ts-ignore
-                    response: error.response?.data,
-                    // @ts-ignore
-                    status: error.response?.status,
-                    url: error.config?.url
-                });
-            }
-            throw error;
-        }
+        return ServiceHandler.execute<LoginResponse>(() =>
+            apiClient.post(API_ENDPOINTS.authentication.login, credentials)
+        );
     },
 
-    async signup(credentials: SignUpCredentials): Promise<number> {
-        try{
-            const response = await apiClient.post<SignupResponse>(
-                API_ENDPOINTS.authentication.register,
-                credentials
-            );
-            return response.status;
-        } catch (error) {
-            console.error("Error during signup request:", error);
-            if (axios.isAxiosError(error)) {
-                console.log('Network Error Details:', {
-                    message: error.message,
-                    code: error.code,
-                    response: error.response?.data,
-                    status: error.response?.status,
-                    url: error.config?.url
-                });
-            }
-            throw error;
-        }
+    async signup(credentials: SignUpCredentials) {
+        const response = await ServiceHandler.execute<SignupResponse>(() =>
+            apiClient.post(API_ENDPOINTS.authentication.register, credentials)
+        );
+
+        return response.data?.status;
     },
 
     async getCurrentUser() {
-        return await apiClient.get<UserProfile>(
-            API_ENDPOINTS.student.getSingle.replace('{id}', 'me')
+        return ServiceHandler.execute<UserProfile>(() =>
+            apiClient.get(API_ENDPOINTS.student.getSingle.replace('{id}', 'me'))
         );
-        return;
     },
 
     async getStoredUserData(): Promise<UserProfile | null> {

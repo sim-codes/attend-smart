@@ -2,25 +2,12 @@ import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import axios from 'axios';
 import { EnrollmentResponse } from '@/constants/types';
+import { ServiceHandler } from './serviceHandler';
 
 export const enrollmentService = {
     async getEnrolledCourses(studentId: string) {
-        try {
-            return await apiClient.get<EnrollmentResponse[]>(
-                API_ENDPOINTS.enrollment.getAll.replace('{studentId}', studentId)
-            );
-        } catch (error) {
-            console.error("Error during get enrolled courses request:", error);
-            if (axios.isAxiosError(error)) {
-                console.log('Network Error Details:', {
-                    message: error.message,
-                    code: error.code,
-                    response: error.response?.data,
-                    status: error.response?.status,
-                    url: error.config?.url
-                });
-            }
-            throw error;
-        }
+        return ServiceHandler.execute<EnrollmentResponse>(() =>
+            apiClient.get(API_ENDPOINTS.enrollment.getAll.replace('{studentId}', studentId))
+        );
     }
 }

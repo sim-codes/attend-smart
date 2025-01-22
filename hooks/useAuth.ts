@@ -66,9 +66,9 @@ export function useAuth() {
         try {
             dispatch({ type: 'SET_LOADING' });
             const response = await authService.login(credentials);
-            await setTokens(response.token);
-            await setUser(response.user);
-            dispatch({ type: 'SET_USER', payload: response.user });
+            await setTokens(response.data?.token!);
+            await setUser(response.data?.user!);
+            dispatch({ type: 'SET_USER', payload: response.data?.user! });
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Login failed';
             dispatch({ type: 'SET_ERROR', payload: errorMessage });

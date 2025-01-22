@@ -15,12 +15,12 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         if (!user?.id) return;
 
         async function getStudentProfile() {
-            try {
-                const response = await studentService.getStudentProfile(user?.id!);
-                setProfile(response);
-            } catch (error) {
+            const { data, error, success } = await studentService.getStudentProfile(user?.id!)
+            if (success) {
+                setProfile(data!)
+            } else {
                 setProfile(null);
-                console.error("Error fetching student profile:", error);
+                console.error("Error fetching student profile:", error?.message);
             }
         }
 
