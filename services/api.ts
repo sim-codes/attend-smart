@@ -63,6 +63,8 @@ class ApiClient {
         if (error.response?.status === 401 && !isPublicEndpoint && !originalRequest._retry) {
           originalRequest._retry = true;
 
+          console.log('Refreshing...')
+
           try {
             const accessToken = await SecureStore.getItemAsync('auth.token.access');
             const refreshToken = await SecureStore.getItemAsync('auth.token.refresh');
@@ -76,6 +78,8 @@ class ApiClient {
               refreshToken: refreshToken
             }
 
+
+            console.log('Refresh called')
             // Call refresh endpoint
             const response = await axios.post<LoginResponse>(
               `${BASE_URL}${API_ENDPOINTS.authentication.refreshToken}`,
@@ -93,6 +97,7 @@ class ApiClient {
             return this.client(originalRequest);
           } catch (refreshError) {
             // Clear tokens on refresh failure
+            console.log('We have error', refreshError);
             await setStorageItemAsync('auth.token.access', null);
             await setStorageItemAsync('auth.token.refresh', null);
             return Promise.reject(refreshError);

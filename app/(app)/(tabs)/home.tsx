@@ -1,7 +1,6 @@
 import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { useState, useEffect } from 'react';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import {
     Avatar,
     AvatarFallbackText,
@@ -18,45 +17,61 @@ import ModalDialog from "@/components/ModalDialog";
 import { enrollmentService } from "@/services/enrollment";
 import { EnrollmentResponse } from "@/constants/types";
 import { useApp } from "@/hooks/appContext";
-import { Image } from "@/components/ui/image";
 import NoProfileHome from "@/components/NoProfileHome";
+import Toast from 'react-native-toast-message';
 
 
 export default function Home() {
     const { user } = useSession();
     const { profile } = useApp();
     const [showDialog, setShowDialog] = useState(false);
-    const [ action, setAction ] = useState<string>('');
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
 
     useEffect(() => {
         if (!profile) return;
-
-        async function fetchEnrolledCourses() {
-            const { data, success, error } = await enrollmentService.getEnrolledCourses(user?.id!);
-            if (success) {
-                setEnrolledCourses(data!)
-            } else {
-                console.error("Error fetching enrolled courses:", error?.message);
-            }
-        };
-
         fetchEnrolledCourses();
     }, []);
 
     const handleDeleteCourses = async (courseIds: string[]) => {
+        if (!user?.id) return;
+    
         try {
-          // Make your API call here
-          await fetch('your-api-endpoint', {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ courseIds }),
-          });
-          // Update your local course list accordingly
+            await Promise.all(
+                courseIds.map(courseId => enrollmentService.removeEnrolledCourse(user.id, courseId))
+            );
+
+            Toast.show({
+                type: 'success',
+                text1: 'Courses Removed',
+                text2: 'You have successfully unenrolled from the selected courses!',
+            });
         } catch (error) {
-          console.error('Error:', error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Failed to remove some or all courses. Please try again.',
+            });
+            console.error("Error removing courses:", error);
+        }
+    };
+
+
+    async function fetchEnrolledCourses() {
+        const { data, success, error } = await enrollmentService.getEnrolledCourses(user?.id!);
+        if (success) {
+            setEnrolledCourses(data!)
+            Toast.show({
+                type: 'success',
+                text1: 'Enrolled Courses Fetched',
+                text2: 'Enrolled courses list refrehed successfully!'
+            });
+        } else {
+            Toast.show({
+                type: 'error',
+                text1: 'Enrolled Courses Fetched',
+                text2: 'Something went wrong!'
+            });
+            console.error("Error fetching enrolled courses:", error?.message);
         }
     };
 
@@ -82,25 +97,15 @@ export default function Home() {
                 profile ?
                 <>
                 <HStack className="justify-between items-center w-full gap-x-2">
-                    <RegisterCourse />
-                    {/* <Button variant="outline" className="" size="xl" onPress={() => {
-                        setShowDialog(true);
-                        setAction('register');
-                    }}>
-                        <Ionicons name="add-outline" size={34} color="#D6BD98" />
-                        <ButtonText className="text-secondary-0">Register Course</ButtonText>
-                    </Button> */}
-
-                    <Button variant="outline" className="" size="xl" onPress={() => {
-                        setShowDialog(true);
-                        setAction('attendance');
-                    }}>
+                    <RegisterCourse refreshEnrolledCourses={fetchEnrolledCourses} />
+                    <Button variant="outline" className="" size="xl" onPress={() => setShowDialog(true)}>
                         <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
                         <ButtonText className="text-secondary-0">Take Attedance</ButtonText>
                     </Button>
                 </HStack>
 
                     <CourseList
+                    refreshList={fetchEnrolledCourses}
                     courses={enrolledCourses}
                     onDeleteCourses={handleDeleteCourses}
                     />
@@ -113,11 +118,11 @@ export default function Home() {
                 isOpen={showDialog}
                 onClose={() => setShowDialog(false)}
                 onAction={() => {}}
-                title={action === 'register' ? 'Register Course' : 'Take Attendance'}
-                actionText={action === 'register' ? 'Register' : 'Take Attendance'}
+                title='Take Attendance'
+                actionText='Take Attendance'
                 cancelText="Cancel"
             >
-                {action === 'register' ? <RegisterCourse /> : <TakeAttendance />}
+                <TakeAttendance />
             </ModalDialog>
 
         </VStack>

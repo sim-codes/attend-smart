@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Button } from '@/components/ui/button';
+import { Button, ButtonText } from '@/components/ui/button';
 import { CourseListProps, EnrollmentResponse } from '@/constants/types';
 import CustomCheckbox from '@/components/CheckBox';
 import { VStack } from '@/components/ui/vstack';
 import { Text } from '@/components/ui/text';
 import { HStack } from '@/components/ui/hstack';
 
-const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps) => {
+const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: CourseListProps) => {
     const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -40,6 +40,7 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
         } finally {
             setIsDeleting(false);
         }
+        refreshList();
     };
 
     const renderItem = ({ item }: { item: EnrollmentResponse }) => (
@@ -63,10 +64,13 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
     );
 
     const renderEmptyComponent = () => (
-        <VStack className="flex-1 justify-center items-center p-4">
+        <VStack className="flex-1 gap-y-2 justify-center items-center p-4">
             <Text className="text-tertiary-100 text-center" size="lg">
                 You have not registered for any courses yet.
             </Text>
+            <Button variant='outline' onPress={() => refreshList()}>
+                <ButtonText className='text-white'>Refresh List</ButtonText>
+            </Button>
         </VStack>
     );
 

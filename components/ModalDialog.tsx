@@ -9,10 +9,9 @@ import {
 import { Button, ButtonText } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
-import { ReactNode } from 'react';
 import { ModalDialogProps } from "@/constants/types";
 
-const ModalDialog: React.FC<ModalDialogProps> = ({
+const ModalDialog = ({
     isOpen,
     onClose,
     onAction,
@@ -24,7 +23,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({
     isLoading = false,
     closeOnAction = false,
     preventCloseOnAction = false,
-}) => {
+}: ModalDialogProps) => {
     const handleAction = async () => {
         try {
             await onAction();

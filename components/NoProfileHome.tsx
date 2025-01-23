@@ -215,10 +215,10 @@ export default function NoProfileHome() {
       <Heading className="text-white text-center" size="xl">
         You haven't set up your student profile yet
       </Heading>
-      <Button 
-        variant="outline" 
-        className="w-full gap-x-2" 
-        size="xl" 
+      <Button
+        variant="outline"
+        className="w-full gap-x-2"
+        size="xl"
         onPress={() => setShowDialog(true)}
       >
         <FontAwesome6 name="user" size={28} color="#D6BD98" />

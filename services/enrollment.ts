@@ -14,5 +14,14 @@ export const enrollmentService = {
         return ServiceHandler.execute<CourseApiResponse>(() =>
             apiClient.post(API_ENDPOINTS.enrollment.create.replace('{studentId}', studentId), payload)
         );
+    },
+
+    async removeEnrolledCourse(studentId: string, courseId: string ) {
+        return ServiceHandler.execute(() =>
+            apiClient.delete(API_ENDPOINTS.enrollment.delete
+                .replace('{studentId}', studentId)
+                .replace('{courseId}', courseId)
+            )
+        );
     }
 }

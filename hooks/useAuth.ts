@@ -98,6 +98,7 @@ export function useAuth() {
                 dispatch({ type: 'LOGOUT' });
             }
         }
+        dispatch({ type: 'LOGOUT' });
     }, [tokensLoading]);
 
     return {

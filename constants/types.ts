@@ -144,6 +144,7 @@ export interface Course {
 }
 export interface CourseListProps {
     courses: EnrollmentResponse[];
+    refreshList: () => void;
     onDeleteCourses?: (courseIds: string[]) => Promise<void>;
 }
 
@@ -159,16 +160,6 @@ export interface ModalDialogProps {
     isLoading?: boolean;
     closeOnAction?: boolean;
     preventCloseOnAction?: boolean;
-}
-
-export interface ConfirmDialogProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onAction: () => void;
-    title?: string;
-    actionText?: string;
-    cancelText?: string;
-    children: ReactNode;
 }
 
 export interface EnrollmentResponse {

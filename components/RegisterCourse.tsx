@@ -27,7 +27,7 @@ interface PaginationMetadata {
     hasNext: boolean;
 }
 
-export default function RegisterCourse() {
+export default function RegisterCourse({refreshEnrolledCourses}: {refreshEnrolledCourses: () => void}) {
     const { user } = useSession()
     // Form state
     const [showDialog, setShowDialog] = useState(false);
@@ -172,6 +172,7 @@ export default function RegisterCourse() {
             const { data, success } = await enrollmentService.enrollStudentInCourse(user?.id!, payload);
             if (success) {
                 setShowDialog(false);
+                refreshEnrolledCourses();
                 Toast.show({
                     type: 'success',
                     text1: 'Course Enrolled',
