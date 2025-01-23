@@ -17,6 +17,7 @@ import { createOptionsFromResponse } from "@/hooks/createOptions";
 import { CourseEnrollmentField, CourseEnrollmentFieldId } from '@/constants/types';
 import { studentService } from "@/services/student";
 import Toast from 'react-native-toast-message';
+import { useSession } from "@/hooks/ctx";
 
 interface PaginationMetadata {
     currentPage: number;
@@ -28,6 +29,7 @@ interface PaginationMetadata {
 }
 
 export default function RegisterCourse() {
+    const { user } = useSession()
     // Form state
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -105,11 +107,14 @@ export default function RegisterCourse() {
             const response = await courseService.getCoursesByDepartment(departmentId);
             if (response.success) {
                 setCoursesData(response.data!);
+                console.log(response.data)
+                console.log(JSON.parse(response.headers))
                 // Extract pagination metadata from headers
                 // const paginationHeader = response.headers['X-Pagination'];
                 // if (paginationHeader) {
                 //     const metadata = JSON.parse(paginationHeader);
                 //     setCoursesPagination(metadata);
+                //     console.log(metadata);
                 // }
             }
         } catch (error) {
@@ -132,7 +137,7 @@ export default function RegisterCourse() {
             courseOptions
         );
         setFormFields(fields!);
-        console.log(coursesData);
+        console.log('Sets course data:', coursesData)
     };
 
     const handleChange = (id: CourseEnrollmentFieldId) => (value: string) => {
@@ -186,6 +191,7 @@ export default function RegisterCourse() {
         } finally {
             setIsSubmitting(false);
         }
+        setFormData({faculty: "", department: "", course: ""})
     };
 
     return (

@@ -102,7 +102,8 @@ export function useAuth() {
 
     return {
         user: state.user,
-        loading: state.loading || tokensLoading,
+        loading: state.loading,
+        isTokenLoading: tokensLoading,
         error: state.error,
         login,
         signup,

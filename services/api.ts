@@ -96,37 +96,42 @@ class ApiClient {
     );
   }
 
-  // Generic request method with type safety
-  private async request<T>(config: AxiosRequestConfig): Promise<T> {
+  private async request<T, H = undefined>(
+    config: AxiosRequestConfig,
+    includeHeaders?: boolean
+  ): Promise<H extends undefined ? T : { data: T; headers: any }> {
     try {
-      const response: AxiosResponse<T> = await this.client(config);
-      return response.data;
+      const response = await this.client(config);
+      return (includeHeaders
+        ? { data: response.data, headers: response.headers }
+        : response.data) as H extends undefined ? T : { data: T; headers: any };
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Handle specific API errors
-        const errorMessage = error.response?.data?.message || error.message;
-        throw new Error(errorMessage);
-      }
-      throw error;
+      throw axios.isAxiosError(error)
+        ? new Error(error.response?.data?.message || error.message)
+        : error;
     }
   }
 
-  // HTTP verbs with type safety
-  async get<T>(url: string, params?: object): Promise<T> {
-    return this.request<T>({
-      method: 'GET',
-      url,
-      params,
-    });
+  async get<T, H = undefined>(
+    url: string,
+    params?: object,
+    includeHeaders?: boolean
+  ): Promise<H extends undefined ? T : { data: T; headers: any }> {
+    return this.request<T, H>({ method: 'GET', url, params }, includeHeaders);
   }
 
-  async post<T>(url: string, data?: object, config?: AxiosRequestConfig): Promise<T> {
-    return this.request<T>({
+  async post<T, H = undefined>(
+    url: string,
+    data?: object,
+    config?: AxiosRequestConfig,
+    includeHeaders?: boolean
+  ): Promise<H extends undefined ? T : { data: T; headers: any }> {
+    return this.request<T, H>({
       method: 'POST',
       url,
       data,
       ...config,
-    });
+    }, includeHeaders);
   }
 
   async put<T>(url: string, data?: object, config?: AxiosRequestConfig): Promise<T> {

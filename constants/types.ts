@@ -202,6 +202,7 @@ export interface ServiceResponse<T> {
     data?: T;
     error?: ErrorResponse;
     success: boolean;
+    headers?: any
 }
 
 export interface FacultyAndDepartmentApiResponse{

@@ -9,10 +9,10 @@ export const unstable_settings = {
 
 
 export default function AppLayout() {
-    const { loading, isAuthenticated, user } = useSession();
+    const { isTokenLoading, isAuthenticated, user } = useSession();
     const router = useRouter();
 
-    if (loading) {
+    if (isTokenLoading) {
         return <Text>Loading...</Text>
     }
 

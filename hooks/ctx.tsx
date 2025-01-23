@@ -5,9 +5,10 @@ import type { SignUpCredentials, UserProfile } from '@/constants/types';
 interface AuthContextType {
     user: UserProfile | null;
     loading: boolean;
+    isTokenLoading: boolean;
     error: string | null;
     login: (credentials: { username: string; password: string }) => Promise<void>;
-    signup: (credetials: SignUpCredentials) => Promise<number>;
+    signup: (credetials: SignUpCredentials) => Promise<number | undefined>;
     logout: () => Promise<void>;
     isAuthenticated: boolean;
 }
@@ -15,6 +16,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>({
     user: null,
     loading: false,
+    isTokenLoading: false,
     error: null,
     login: async () => {},
     signup: async () => 0,
