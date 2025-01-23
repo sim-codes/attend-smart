@@ -6,7 +6,7 @@ import ModalDialog from "./ModalDialog";
 import FormFieldComponent from "./FormFieldComponent";
 import {
     FacultyAndDepartmentApiResponse,
-    CourseApiResponse
+    CourseApiResponse, CourseEnrollmentField, CourseEnrollmentFieldId
 } from "@/constants/types";
 import { courseEnrollmentFormFields } from '../constants/forms';
 import { facultyService } from "@/services/faculty";
@@ -14,7 +14,6 @@ import { departmentService } from "@/services/department";
 import { courseService } from "@/services/course";
 import { Text } from "./ui/text";
 import { createOptionsFromResponse } from "@/hooks/createOptions";
-import { CourseEnrollmentField, CourseEnrollmentFieldId } from '@/constants/types';
 import { studentService } from "@/services/student";
 import Toast from 'react-native-toast-message';
 import { useSession } from "@/hooks/ctx";
@@ -106,16 +105,13 @@ export default function RegisterCourse() {
         try {
             const response = await courseService.getCoursesByDepartment(departmentId);
             if (response.success) {
-                setCoursesData(response.data!);
-                console.log(response.data)
-                console.log(JSON.parse(response.headers))
+                setCoursesData(response.data?.data!);
                 // Extract pagination metadata from headers
-                // const paginationHeader = response.headers['X-Pagination'];
-                // if (paginationHeader) {
-                //     const metadata = JSON.parse(paginationHeader);
-                //     setCoursesPagination(metadata);
-                //     console.log(metadata);
-                // }
+                const paginationHeader = response.data?.headers['x-paginationz'];
+                if (paginationHeader) {
+                    const metadata = JSON.parse(paginationHeader);
+                    setCoursesPagination(metadata);
+                }
             }
         } catch (error) {
             console.error("Error loading courses:", error);
@@ -137,7 +133,6 @@ export default function RegisterCourse() {
             courseOptions
         );
         setFormFields(fields!);
-        console.log('Sets course data:', coursesData)
     };
 
     const handleChange = (id: CourseEnrollmentFieldId) => (value: string) => {

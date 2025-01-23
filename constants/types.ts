@@ -63,6 +63,11 @@ export interface CourseApiResponse extends Course {
     levelId: string;
 }
 
+export interface ApiResponseWithHeader<T> {
+    data?: T[];
+    headers?: any;
+}
+
 export interface SignupFormField extends BaseFormField {
     id: SignupFieldId;
 }
@@ -202,7 +207,6 @@ export interface ServiceResponse<T> {
     data?: T;
     error?: ErrorResponse;
     success: boolean;
-    headers?: any
 }
 
 export interface FacultyAndDepartmentApiResponse{

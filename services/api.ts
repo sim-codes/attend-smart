@@ -58,6 +58,7 @@ class ApiClient {
         const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
           endpoint => originalRequest.url?.includes(endpoint)
         );
+        console.log(error.response?.status)
 
         if (error.response?.status === 401 && !isPublicEndpoint && !originalRequest._retry) {
           originalRequest._retry = true;
@@ -70,11 +71,18 @@ class ApiClient {
               throw new Error('No tokens available');
             }
 
+            const payload = {
+              accessToken: accessToken,
+              refreshToken: refreshToken
+            }
+
             // Call refresh endpoint
             const response = await axios.post<LoginResponse>(
               `${BASE_URL}${API_ENDPOINTS.authentication.refreshToken}`,
-              { accessToken, refreshToken }
+              payload
             );
+
+            console.log('Token Refreshed:', response);
 
             // Store new tokens
             await setStorageItemAsync('auth.token.access', response.data.token.accessToken);
@@ -102,9 +110,15 @@ class ApiClient {
   ): Promise<H extends undefined ? T : { data: T; headers: any }> {
     try {
       const response = await this.client(config);
-      return (includeHeaders
-        ? { data: response.data, headers: response.headers }
-        : response.data) as H extends undefined ? T : { data: T; headers: any };
+
+      if (includeHeaders) {
+        return {
+          data: response.data,
+          headers: response.headers
+        } as H extends undefined ? T : { data: T; headers: any };
+      }
+
+      return response.data as H extends undefined ? T : { data: T; headers: any };
     } catch (error) {
       throw axios.isAxiosError(error)
         ? new Error(error.response?.data?.message || error.message)
