@@ -20,9 +20,11 @@ import { createOptionsFromResponse } from "@/hooks/createOptions";
 import { ProfileCreationFormFields } from '../constants/types';
 import { studentService } from "@/services/student";
 import { useSession } from "@/hooks/ctx";
+import { useApp } from "@/hooks/appContext";
 
 export default function NoProfileHome() {
     const { user } = useSession();
+    const { updateProfile } = useApp()
     // Form state
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +61,6 @@ export default function NoProfileHome() {
         },
         matriculationNumber: (value: string) => {
             if (!value) return "Matriculation number is required";
-            if (!/^\d{7}$/.test(value)) return "Matriculation number must be 7 digits";
         return "";
         }
     };
@@ -157,50 +158,48 @@ export default function NoProfileHome() {
     return Object.keys(newErrors).length === 0;
     };
 
-  const handleNext = () => {
-    if (validateStep()) {
-      if (currentStep === 'faculty') {
-        setCurrentStep('details');
-      }
-    }
-  };
+    const handleNext = () => {
+        if (validateStep()) {
+        if (currentStep === 'faculty') {
+            setCurrentStep('details');
+        }
+        }
+    };
 
-  const handleBack = () => {
-    if (currentStep === 'details') {
-      setCurrentStep('faculty');
-    }
-  };
+    const handleBack = () => {
+        if (currentStep === 'details') {
+        setCurrentStep('faculty');
+        }
+    };
 
-  const handleSubmit = async () => {
-    if (!validateStep()) return;
+    const handleSubmit = async () => {
+        if (!validateStep()) return;
 
-    setIsSubmitting(true);
-    try {
-      const payload = {
-        matriculationNumber: formData.matriculationNumber,
-        levelId: formData.level,
-        departmentId: formData.department
-      };
+        setIsSubmitting(true);
+        try {
+        const payload = {
+            matriculationNumber: formData.matriculationNumber,
+            levelId: formData.level,
+            departmentId: formData.department
+        };
 
-      // Replace with your actual API call
-      await studentService.createStudentProfile(user?.id!, payload);
-      
-      setShowDialog(false);
-      // Handle success (e.g., show toast, redirect, etc.)
-    } catch (error) {
-      console.error("Error submitting profile:", error);
-      // Handle error (e.g., show error message)
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+        const { data } = await studentService.createStudentProfile(user?.id!, payload);
+        updateProfile(data!);
+
+        setShowDialog(false);
+        } catch (error) {
+        console.error("Error submitting profile:", error)
+        } finally {
+        setIsSubmitting(false);
+        }
+    };
 
   return (
     <VStack className="flex-1 justify-center" space="lg">
-      <Image 
-        source={require('@/assets/images/student.png')} 
-        size="full" 
-        className="self-center aspect-[384/384] h-2/3" 
+      <Image
+        source={require('@/assets/images/student.png')}
+        size="full"
+        className="self-center aspect-[384/384] h-2/3"
         alt="Student profile setup"
       />
       <Heading className="text-white text-center" size="xl">
