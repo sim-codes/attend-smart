@@ -14,7 +14,7 @@ import { departmentService } from "@/services/department";
 import { courseService } from "@/services/course";
 import { Text } from "./ui/text";
 import { createOptionsFromResponse } from "@/hooks/createOptions";
-import { studentService } from "@/services/student";
+import { enrollmentService } from "@/services/enrollment";
 import Toast from 'react-native-toast-message';
 import { useSession } from "@/hooks/ctx";
 
@@ -169,13 +169,15 @@ export default function RegisterCourse() {
                 courseId: formData.course
             };
 
-            // await studentService.enrollInCourse(user?.id!, payload);
-            setShowDialog(false);
-            Toast.show({
-                type: 'success',
-                text1: 'Course Enrolled',
-                text2: 'You have successfully enrolled in the course!'
-            });
+            const { data, success } = await enrollmentService.enrollStudentInCourse(user?.id!, payload);
+            if (success) {
+                setShowDialog(false);
+                Toast.show({
+                    type: 'success',
+                    text1: 'Course Enrolled',
+                    text2: 'You have successfully enrolled in the course!'
+                });
+                }
         } catch (error) {
             Toast.show({
                 type: 'error',

@@ -33,7 +33,7 @@ export default function RootLayout() {
       <AppContextProvider>
         <GluestackUIProvider>
           <Slot />
-          <Toast config={toastConfig} />
+          <Toast />
         </GluestackUIProvider>
       </AppContextProvider>
     </SessionProvider>

@@ -224,3 +224,7 @@ export interface LevelApiResponse {
     id: string;
     name: string;
 }
+
+export interface EnrollmentPayload {
+    courseId: string;
+}
