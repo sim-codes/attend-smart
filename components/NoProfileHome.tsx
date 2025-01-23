@@ -21,6 +21,7 @@ import { ProfileCreationFormFields } from '../constants/types';
 import { studentService } from "@/services/student";
 import { useSession } from "@/hooks/ctx";
 import { useApp } from "@/hooks/appContext";
+import Toast from 'react-native-toast-message';
 
 export default function NoProfileHome() {
     const { user } = useSession();
@@ -185,9 +186,18 @@ export default function NoProfileHome() {
 
         const { data } = await studentService.createStudentProfile(user?.id!, payload);
         updateProfile(data!);
-
         setShowDialog(false);
+        Toast.show({
+          type: 'success',
+          text1: 'Profile Created',
+          text2: 'Your profile was created successfully👋'
+        });
         } catch (error) {
+          Toast.show({
+            type: 'error',
+            text1: 'Something went wrong',
+            text2: 'Profile crationg was not successfull, try again later.'
+          });
         console.error("Error submitting profile:", error)
         } finally {
         setIsSubmitting(false);

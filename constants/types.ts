@@ -51,6 +51,18 @@ export interface LoginFormField extends BaseFormField {
     id: LoginFieldId;
 }
 
+export type CourseEnrollmentFieldId = "faculty" | "department" | "course"
+
+export interface CourseEnrollmentField extends BaseFormField {
+    id:  CourseEnrollmentFieldId;
+}
+
+export interface CourseApiResponse extends Course {
+    name: string;
+    departmentId: string;
+    levelId: string;
+}
+
 export interface SignupFormField extends BaseFormField {
     id: SignupFieldId;
 }
@@ -120,7 +132,7 @@ export type CalendarScheduleProps = {
 };
 
 export interface Course {
-    id: number;
+    id: string;
     title: string;
     courseCode: string;
     creditUnits: number;

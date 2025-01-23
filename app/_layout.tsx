@@ -6,6 +6,8 @@ import { useFonts, Nunito_400Regular, Nunito_900Black } from "@expo-google-fonts
 import * as SplashScreen from 'expo-splash-screen';
 import { SessionProvider } from "@/hooks/ctx";
 import { AppContextProvider } from "@/hooks/appContext";
+import Toast from 'react-native-toast-message';
+import toastConfig from "@/toastConfig";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,6 +33,7 @@ export default function RootLayout() {
       <AppContextProvider>
         <GluestackUIProvider>
           <Slot />
+          <Toast config={toastConfig} />
         </GluestackUIProvider>
       </AppContextProvider>
     </SessionProvider>

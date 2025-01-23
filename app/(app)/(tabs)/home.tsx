@@ -82,13 +82,14 @@ export default function Home() {
                 profile ?
                 <>
                 <HStack className="justify-between items-center w-full gap-x-2">
-                    <Button variant="outline" className="" size="xl" onPress={() => {
+                    <RegisterCourse />
+                    {/* <Button variant="outline" className="" size="xl" onPress={() => {
                         setShowDialog(true);
                         setAction('register');
                     }}>
                         <Ionicons name="add-outline" size={34} color="#D6BD98" />
                         <ButtonText className="text-secondary-0">Register Course</ButtonText>
-                    </Button>
+                    </Button> */}
 
                     <Button variant="outline" className="" size="xl" onPress={() => {
                         setShowDialog(true);

@@ -1,4 +1,7 @@
-import { LoginFormField, SignupFormFields, ProfileCreationFormFields, Option } from "@/constants/types";
+import { LoginFormField, SignupFormFields,
+    ProfileCreationFormFields, Option,
+    CourseEnrollmentField
+} from "@/constants/types";
 
 
 export const signupSteps: SignupFormFields = {
@@ -131,16 +134,40 @@ export const createProfileSteps = (
                 label: "Department",
                 placeholder: "Select your department",
                 type: "select",
-                options: [
-                    { value: "computer_science", label: "Computer Science" },
-                    { value: "electrical_engineering", label: "Electrical Engineering" },
-                    { value: "mechanical_engineering", label: "Mechanical Engineering" },
-                    { value: "civil_engineering", label: "Civil Engineering" },
-                    { value: "chemical_engineering", label: "Chemical Engineering" }
-                ],
+                options: departments,
                 isRequired: true
             }
         ]
     }
-})
-;
+});
+
+export const courseEnrollmentFormFields = (
+    faculties: Option[],
+    departments: Option[],
+    courses: Option[]
+): CourseEnrollmentField[] => ([
+    {
+        id: "faculty",
+        label: "Faculty",
+        placeholder: "Select your faculty",
+        type: "select",
+        options: faculties,
+        isRequired: true
+    },
+    {
+        id: "department",
+        label: "Department",
+        placeholder: "Select your department",
+        type: "select",
+        options: departments,
+        isRequired: true
+    },
+    {
+        id: "course",
+        label: "Course",
+        placeholder: "Select your course",
+        type: "select",
+        options: courses,
+        isRequired: true
+    }
+]);
