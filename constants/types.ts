@@ -41,6 +41,12 @@ export interface ProfileCreationFormFields {
     }
 }
 
+export interface ProfileCreationCredentials {
+    matriculationNumber: string;
+    levelId: string;
+    departmentId: string;
+}
+
 export interface LoginFormField extends BaseFormField {
     id: LoginFieldId;
 }
@@ -124,6 +130,20 @@ export interface CourseListProps {
     onDeleteCourses?: (courseIds: string[]) => Promise<void>;
 }
 
+export interface ModalDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onAction: () => void | Promise<void>;
+    title?: string;
+    actionText?: string;
+    cancelText?: string;
+    children: ReactNode;
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'full';
+    isLoading?: boolean;
+    closeOnAction?: boolean;
+    preventCloseOnAction?: boolean;
+}
+
 export interface ConfirmDialogProps {
     isOpen: boolean;
     onClose: () => void;
@@ -132,7 +152,6 @@ export interface ConfirmDialogProps {
     actionText?: string;
     cancelText?: string;
     children: ReactNode;
-    size?: 'xs' | 'sm' | 'md' | 'lg' | 'full';
 }
 
 export interface EnrollmentResponse {
@@ -173,8 +192,18 @@ export interface ServiceResponse<T> {
     success: boolean;
 }
 
-export interface FacultyApiResponse{
+export interface FacultyAndDepartmentApiResponse{
     id: string;
     name: string;
     code: string;
+}
+
+export interface Option {
+    value: string;
+    label: string;
+}
+
+export interface LevelApiResponse {
+    id: string;
+    name: string;
 }

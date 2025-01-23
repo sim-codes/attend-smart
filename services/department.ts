@@ -3,10 +3,10 @@ import { API_ENDPOINTS } from '@/constants/endpoints';
 import { ServiceHandler } from './serviceHandler';
 import { FacultyAndDepartmentApiResponse } from '@/constants/types';
 
-export const facultyService = {
-    async getFaculties() {
+export const departmentService = {
+    async getDepartmentsByFaculty(facultyId: string) {
         return ServiceHandler.execute<FacultyAndDepartmentApiResponse[]>(() =>
-            apiClient.get(API_ENDPOINTS.faculty.getAll)
+            apiClient.get(API_ENDPOINTS.department.getAll.replace("{facultyId}", facultyId))
         );
     }
 }

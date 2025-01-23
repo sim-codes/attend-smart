@@ -53,7 +53,7 @@ export const API_ENDPOINTS = {
     student: {
         getAll: '/students',
         getSingle: '/students/{id}',
-        create: '/students',
+        create: '/students/{id}',
         update: '/students/{id}',
     },
     attendance: {

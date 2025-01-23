@@ -1,4 +1,4 @@
-import { LoginFormField, SignupFormFields, ProfileCreationFormFields } from "@/constants/types";
+import { LoginFormField, SignupFormFields, ProfileCreationFormFields, Option } from "@/constants/types";
 
 
 export const signupSteps: SignupFormFields = {
@@ -90,20 +90,20 @@ export const loginFormFields: LoginFormField[] = [
     }
 ];
 
-export const profileSteps: ProfileCreationFormFields = {
+export const createProfileSteps = (
+    faculties: Option[],
+    departments: Option[],
+    levels: Option[]
+): ProfileCreationFormFields => ({
     faculty: {
         title: "",
         fields: [
             {
                 id: "faculty",
-                label: "Level",
+                label: "Faculty",
                 placeholder: "Select your faculty",
                 type: "select",
-                options: [
-                    { value: "fos", label: "Faculty of Science" },
-                    { value: "foa", label: "Faculty of Arts" },
-                    { value: "foe", label: "Faculty of Engineering" }
-                ],
+                options: faculties,
                 isRequired: true
             }
         ]
@@ -123,13 +123,7 @@ export const profileSteps: ProfileCreationFormFields = {
                 label: "Level",
                 placeholder: "Select your level",
                 type: "select",
-                options: [
-                    { value: "100", label: "100 Level" },
-                    { value: "200", label: "200 Level" },
-                    { value: "300", label: "300 Level" },
-                    { value: "400", label: "400 Level" },
-                    { value: "500", label: "500 Level" }
-                ],
+                options: levels,
                 isRequired: true
             },
             {
@@ -148,4 +142,5 @@ export const profileSteps: ProfileCreationFormFields = {
             }
         ]
     }
-}
+})
+;

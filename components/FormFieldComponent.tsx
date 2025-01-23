@@ -12,12 +12,7 @@ import {
 import { Input, InputField } from '@/components/ui/input';
 import Feather from '@expo/vector-icons/Feather';
 import Dropdown from '@/components/Dropdown';
-
-interface Option {
-    value: string;
-    label: string;
-}
-
+import { Option } from "@/constants/types";
 interface EnhancedFormFieldProps extends FormFieldProps {
     options?: Option[];
 }
@@ -68,10 +63,16 @@ const FormFieldComponent = ({
                 </Input>
             )}
 
-            {helperText && !isInvalid && (
+            {helperText && (
                 <FormControlHelper>
                     <FormControlHelperText>{helperText}</FormControlHelperText>
                 </FormControlHelper>
+            )}
+            {isInvalid && (
+                <FormControlError>
+                    <FormControlErrorIcon as={AlertCircleIcon} />
+                    <FormControlErrorText>{errorText}</FormControlErrorText>
+                </FormControlError>
             )}
         </FormControl>
     );
