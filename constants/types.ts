@@ -16,6 +16,12 @@ isDisabled?: boolean;
 isReadOnly?: boolean;
 }
 
+export type ChangePasswordFieldId = 'email' | 'currentPassword' | 'newPassword' | 'confirmPassword';
+
+export interface ChangePasswordFormField extends BaseFormField {
+    id: ChangePasswordFieldId;
+}
+
 export type LoginFieldId = 'username' | 'password';
 export type SignupFieldId = LoginFieldId | 'email' | 'confirmPassword' | 'firstname' | 'lastname' | 'phonenumber' | 'roles';
 
@@ -25,6 +31,7 @@ interface BaseFormField {
     type: 'text' | 'password' | 'select';
     options?: { value: string; label: string; }[];
     helperText?: string;
+    isReadOnly?: boolean;
     isRequired?: boolean;
 }
 export type ProfileStep = 'faculty' | 'details';

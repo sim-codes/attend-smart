@@ -9,6 +9,7 @@ import { Avatar, AvatarFallbackText, AvatarImage } from "@/components/ui/avatar"
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import ModalDialog from "@/components/ModalDialog";
+import ChangePassword from "@/components/ChangePassword";
 import { useApp } from "@/hooks/appContext";
 
 export default function Profile() {
@@ -91,22 +92,18 @@ export default function Profile() {
                         </VStack>
                     </HStack>
                     </> : <>
-                    <Pressable onPress={() => setShowAlertDialog(true)}>
-                        <HStack space="sm" className="items-end">
-                            <FontAwesome name="user-o" size={28} color="#677D6A" />
-                            <Text size="xl" className="text-white">Create Student Profile</Text>
-                        </HStack>
-                    </Pressable>
+                    <HStack space="sm" className="items-end">
+                        <FontAwesome name="user-o" size={28} color="#677D6A" />
+                        <Text size="xl" className="text-white">Create Student profile on home screen</Text>
+                    </HStack>
                     </>
                 }
             </VStack>
 
             <VStack space="sm">
                 <Heading size="md" className="text-secondary-0">Settings</Heading>
-                <HStack space="sm" className="items-end">
-                    <Ionicons name="lock-open-outline" size={28} color="#677D6A" />
-                    <Text size="xl" className="text-white">Change Password</Text>
-                </HStack>
+
+                <ChangePassword />
 
                 <HStack space="sm" className="items-end">
                     <Ionicons name="person-add-outline" size={28} color="#677D6A" />

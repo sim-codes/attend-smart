@@ -1,6 +1,7 @@
 import { LoginFormField, SignupFormFields,
     ProfileCreationFormFields, Option,
-    CourseEnrollmentField
+    CourseEnrollmentField,
+    ChangePasswordFormField
 } from "@/constants/types";
 
 
@@ -88,6 +89,38 @@ export const loginFormFields: LoginFormField[] = [
         id: 'password',
         label: "Password",
         placeholder: "Enter your password",
+        type: "password",
+        isRequired: true
+    }
+];
+
+export const changePasswordFormFields: ChangePasswordFormField[] = [
+    {
+        id: 'email',
+        label: "Email",
+        placeholder: "Enter your email",
+        type: "text",
+        isReadOnly: true,
+        isRequired: true
+    },
+    {
+        id: 'currentPassword',
+        label: "Current Password",
+        placeholder: "Enter your current password",
+        type: "password",
+        isRequired: true
+    },
+    {
+        id: 'newPassword',
+        label: "New Password",
+        placeholder: "Enter your new password",
+        type: "password",
+        isRequired: true
+    },
+    {
+        id: 'confirmPassword',
+        label: "Confirm Password",
+        placeholder: "Confirm your password",
         type: "password",
         isRequired: true
     }
