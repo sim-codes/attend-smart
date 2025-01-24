@@ -118,6 +118,12 @@ export default function ChangePassword() {
                         />
                     ))
                 }
+
+                {formError && (
+                    <Text size="md" className="text-red-700 text-center" bold>
+                        {formError}
+                    </Text>
+                )}
             </ModalDialog>
         </Pressable>
     )
