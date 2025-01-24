@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from '@/constants/endpoints';
 import type { LoginCredentials,
     LoginResponse, UserProfile,
     SignUpCredentials,
-    SignupResponse
+    CodeResponse, ChangePasswordCredentials
 } from '@/constants/types';
 import * as SecureStore from 'expo-secure-store';
 import { ServiceHandler } from './serviceHandler';
@@ -16,11 +16,17 @@ export const authService = {
     },
 
     async signup(credentials: SignUpCredentials) {
-        const response = await ServiceHandler.execute<SignupResponse>(() =>
+        const response = await ServiceHandler.execute<CodeResponse>(() =>
             apiClient.post(API_ENDPOINTS.authentication.register, credentials)
         );
 
         return response.data?.status;
+    },
+
+    async changeStudentPassword(credentials: ChangePasswordCredentials) {
+        return await ServiceHandler.execute<CodeResponse>(() =>
+            apiClient.post(API_ENDPOINTS.authentication.changePassword, credentials)
+        );
     },
 
     async getCurrentUser() {

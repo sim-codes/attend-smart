@@ -22,6 +22,12 @@ export interface ChangePasswordFormField extends BaseFormField {
     id: ChangePasswordFieldId;
 }
 
+export interface ChangePasswordCredentials {
+    email: string;
+    currentPassword: string;
+    newPassword: string;
+}
+
 export type LoginFieldId = 'username' | 'password';
 export type SignupFieldId = LoginFieldId | 'email' | 'confirmPassword' | 'firstname' | 'lastname' | 'phonenumber' | 'roles';
 
@@ -123,7 +129,7 @@ export interface SignUpCredentials {
     roles: string[];
 }
 
-export interface SignupResponse {
+export interface CodeResponse {
     status: number;
 }
 

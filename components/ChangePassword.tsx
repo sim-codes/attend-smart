@@ -8,10 +8,13 @@ import { useSession } from "@/hooks/ctx";
 import FormFieldComponent from "@/components/FormFieldComponent";
 import { ChangePasswordFieldId, ChangePasswordFormField } from "@/constants/types";
 import { changePasswordFormFields } from "@/constants/forms";
+import { authService } from "@/services/auth";
+import Toast from "react-native-toast-message";
 
 export default function ChangePassword() {
     const { user } = useSession();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const [formError, setFormError] = useState<string | null>(null);
     const [errors, setErrors] = useState<Partial<Record<ChangePasswordFieldId, string>>>({});
     const [formData, setFormData] = useState<Record<ChangePasswordFieldId, string>>({
@@ -28,6 +31,65 @@ export default function ChangePassword() {
         }
     };
 
+    const handleSubmit = async () => {
+        if (!validateForm()) return;
+        setIsLoading(true);
+
+        const payload = {
+            email: formData.email,
+            currentPassword: formData.currentPassword,
+            newPassword: formData.newPassword
+        }
+
+        try {
+            const response = await authService.changeStudentPassword(payload);
+
+            console.log("Change password response:", response);
+            if (response.success) {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Password Changed',
+                    text2: 'Your password has been successfully updated!',
+                });
+                setShowAlertDialog(false);
+            }
+        } catch (error) {
+            setFormError('Failed to update password. Please try again.');
+            console.error("Error updating password:", error);
+        }
+        setFormData({ email: user?.email!, currentPassword: '', newPassword: '', confirmPassword: '' });
+        setIsLoading(false);
+    };
+
+    const validateForm = (): boolean => {
+        const newErrors: Partial<Record<ChangePasswordFieldId, string>> = {};
+        let isValid = true;
+
+        if (!formData.currentPassword) {
+            newErrors.currentPassword = 'Current password is required';
+            isValid = false;
+        }
+
+        if (!formData.newPassword) {
+            newErrors.newPassword = 'New password is required';
+            isValid = false;
+        } else if (formData.newPassword.length < 6) {
+            newErrors.newPassword = 'Password must be at least 6 characters';
+            isValid = false;
+        }
+
+        if (!formData.confirmPassword) {
+            newErrors.confirmPassword = 'Confirm password is required';
+            isValid = false;
+        } else if (formData.confirmPassword !== formData.newPassword) {
+            newErrors.confirmPassword = 'Passwords do not match';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    }
+
     return (
         <Pressable onPress={() => setShowAlertDialog(true)}>
             <HStack space="sm" className="items-end">
@@ -38,10 +100,11 @@ export default function ChangePassword() {
             <ModalDialog
                 isOpen={showAlertDialog}
                 onClose={() => setShowAlertDialog(false)}
-                onAction={() => {}}
+                onAction={handleSubmit}
                 title="Change Password"
                 actionText="Proceed"
                 cancelText="Cancel"
+                isLoading={isLoading}
             >
                 {
                     changePasswordFormFields.map(field => (

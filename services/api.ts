@@ -1,7 +1,7 @@
 // services/api.ts
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { API_ENDPOINTS, PUBLIC_ENDPOINTS } from '@/constants/endpoints';
-import { LoginResponse } from '@/constants/types';
+import { TokenDto } from '@/constants/types';
 import * as SecureStore from 'expo-secure-store';
 import { setStorageItemAsync } from './storage';
 import { API_CONFIG } from '@/constants/config';
@@ -56,14 +56,13 @@ class ApiClient {
         const originalRequest = error.config;
 
         const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
-          endpoint => originalRequest.url?.includes(endpoint)
-        );
+          endpoint => originalRequest.url === endpoint
+      );
+
         console.log(error.response?.status)
 
         if (error.response?.status === 401 && !isPublicEndpoint && !originalRequest._retry) {
           originalRequest._retry = true;
-
-          console.log('Refreshing...')
 
           try {
             const accessToken = await SecureStore.getItemAsync('auth.token.access');
@@ -78,22 +77,18 @@ class ApiClient {
               refreshToken: refreshToken
             }
 
-
-            console.log('Refresh called')
             // Call refresh endpoint
-            const response = await axios.post<LoginResponse>(
+            const response = await axios.post<TokenDto>(
               `${BASE_URL}${API_ENDPOINTS.authentication.refreshToken}`,
               payload
             );
 
-            console.log('Token Refreshed:', response);
-
             // Store new tokens
-            await setStorageItemAsync('auth.token.access', response.data.token.accessToken);
-            await setStorageItemAsync('auth.token.refresh', response.data.token.refreshToken);
+            await setStorageItemAsync('auth.token.access', response.data.accessToken);
+            await setStorageItemAsync('auth.token.refresh', response.data.refreshToken);
 
             // Update authorization header
-            originalRequest.headers.Authorization = `Bearer ${response.data.token.accessToken}`;
+            originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
             return this.client(originalRequest);
           } catch (refreshError) {
             // Clear tokens on refresh failure

@@ -78,7 +78,7 @@ const FormFieldComponent = ({
     );
 
     function AlertCircleIcon(props: any) {
-        return <Feather name="alert-circle" {...props} />;
+        return <Feather name="alert-circle" color='#8B0000' {...props} />;
     }
 };
 
