@@ -11,7 +11,7 @@ import { changePasswordFormFields } from "@/constants/forms";
 import { authService } from "@/services/auth";
 import Toast from "react-native-toast-message";
 
-export default function ChangePassword() {
+export default function UpdateProfile() {
     const { user } = useSession();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
@@ -92,15 +92,15 @@ export default function ChangePassword() {
     return (
         <Pressable onPress={() => setShowAlertDialog(true)}>
             <HStack space="sm" className="items-end">
-                <Ionicons name="lock-open-outline" size={28} color="#677D6A" />
-                <Text size="xl" className="text-white">Change Password</Text>
+                <Ionicons name="person-outline" size={28} color="#677D6A" />
+                <Text size="xl" className="text-white">Update Profile</Text>
             </HStack>
 
             <ModalDialog
                 isOpen={showAlertDialog}
                 onClose={() => setShowAlertDialog(false)}
                 onAction={handleSubmit}
-                title="Change Password"
+                title="Update Your Profile"
                 actionText="Proceed"
                 cancelText="Cancel"
                 isLoading={isLoading}

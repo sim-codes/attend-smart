@@ -11,6 +11,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import ModalDialog from "@/components/ModalDialog";
 import ChangePassword from "@/components/ChangePassword";
 import { useApp } from "@/hooks/appContext";
+import UpdateProfile from "@/components/UpdateProfile";
 
 export default function Profile() {
     const { user, logout } = useSession();
@@ -104,11 +105,7 @@ export default function Profile() {
                 <Heading size="md" className="text-secondary-0">Settings</Heading>
 
                 <ChangePassword />
-
-                <HStack space="sm" className="items-end">
-                    <Ionicons name="person-add-outline" size={28} color="#677D6A" />
-                    <Text size="xl" className="text-white">Update Profile Details</Text>
-                </HStack>
+                <UpdateProfile />
 
                 <Pressable onPress={() => setShowAlertDialog(true)}>
                 <HStack space="sm" className="items-end">

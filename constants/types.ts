@@ -28,6 +28,20 @@ export interface ChangePasswordCredentials {
     newPassword: string;
 }
 
+export type ProfileUpdateFieldId = 'firstname' | 'email' | 'lastname' | 'phonenumber' | 'profileImageUrl' | "matriculationNumber" | "level" | "department" | "faculty";
+export type ProfileUpdateStep = 'additionalDetails' | 'personalInfo' | 'faculty';
+
+export interface ProfileUpdateFormField extends BaseFormField {
+    id: ProfileUpdateFieldId;
+}
+
+export interface ProfileUpdateFormFields {
+    [key: string]: {
+        fields: ProfileUpdateFormField[];
+        title: string;
+    }
+}
+
 export type LoginFieldId = 'username' | 'password';
 export type SignupFieldId = LoginFieldId | 'email' | 'confirmPassword' | 'firstname' | 'lastname' | 'phonenumber' | 'roles';
 
@@ -184,13 +198,7 @@ export interface EnrollmentResponse {
     enrollmentDate: string;
 }
 
-export interface AppContextType {
-    profile: StudentProfile | null;
-    updateProfile: (newProfile: StudentProfile) => void;
-}
-
-export interface StudentProfile {
-    userId: string;
+export interface BaseStudentProfile {
     matriculationNumber: string;
     level: string;
     department: string;
@@ -199,6 +207,15 @@ export interface StudentProfile {
     email: string;
     phoneNumber: string;
     profileImageUrl: string;
+}
+
+export interface AppContextType {
+    profile: StudentProfile | null;
+    updateProfile: (newProfile: StudentProfile) => void;
+}
+
+export interface StudentProfile extends BaseStudentProfile {
+    userId: string;
 }
 
 export interface ErrorResponse {

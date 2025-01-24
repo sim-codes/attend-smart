@@ -1,7 +1,8 @@
 import { LoginFormField, SignupFormFields,
     ProfileCreationFormFields, Option,
     CourseEnrollmentField,
-    ChangePasswordFormField
+    ChangePasswordFormField,
+    ProfileUpdateFormFields
 } from "@/constants/types";
 
 
@@ -168,6 +169,94 @@ export const createProfileSteps = (
                 placeholder: "Select your department",
                 type: "select",
                 options: departments,
+                isRequired: true
+            }
+        ]
+    }
+});
+
+export const createProfileUpdateSteps = (
+    faculties: Option[],
+    departments: Option[],
+    levels: Option[]
+): ProfileUpdateFormFields => ({
+    faculty: {
+        title: "",
+        fields: [
+            {
+                id: "faculty",
+                label: "Faculty",
+                placeholder: "Select your faculty",
+                type: "select",
+                options: faculties,
+                isRequired: true
+            },
+            {
+                id: "department",
+                label: "Department",
+                placeholder: "Select your department",
+                type: "select",
+                options: departments,
+                isRequired: true
+            },
+            {
+                id: "level",
+                label: "Level",
+                placeholder: "Select your level",
+                type: "select",
+                options: levels,
+                isRequired: true
+            }
+        ]
+    },
+    personalInfo: {
+        title: "",
+        fields: [
+            {
+                id: "firstname",
+                label: "First Name",
+                placeholder: "Enter your first name",
+                type: "text",
+                isRequired: true
+            },
+            {
+                id: "lastname",
+                label: "Last Name",
+                placeholder: "Enter your last name",
+                type: "text",
+                isRequired: true
+            },
+            {
+                id: "email",
+                label: "Email",
+                placeholder: "Enter your email address",
+                type: "text",
+                isRequired: true
+            },
+            {
+                id: "phonenumber",
+                label: "Phone Number",
+                placeholder: "Enter your phone number",
+                type: "text",
+                isRequired: true
+            }
+        ]
+    },
+    additionalDetails: {
+        title: "",
+        fields: [
+            {
+                id: "matriculationNumber",
+                label: "Matriculation Number",
+                placeholder: "Enter your matriculation number",
+                type: "text",
+                isRequired: true
+            },
+            {
+                id: "profileImageUrl",
+                label: "Profile Image",
+                placeholder: "Upload your profile image",
+                type: "text",
                 isRequired: true
             }
         ]
