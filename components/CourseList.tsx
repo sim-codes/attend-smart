@@ -30,7 +30,6 @@ const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: Co
 
     const handleDeleteSelected = async () => {
         if (selectedCourses.size === 0) return;
-
         try {
             setIsDeleting(true);
             await onDeleteCourses(Array.from(selectedCourses));
@@ -40,14 +39,13 @@ const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: Co
         } finally {
             setIsDeleting(false);
         }
-        refreshList();
     };
 
     const renderItem = ({ item }: { item: EnrollmentResponse }) => (
         <TouchableOpacity
-            onPress={() => toggleCourseSelection(item.id)}
+            onPress={() => toggleCourseSelection(item.courseId)}
             className={`p-4 border-b border-primary-700 ${
-                selectedCourses.has(item.id) ? 'bg-secondary-0/20' : ''
+                selectedCourses.has(item.courseId) ? 'bg-secondary-0/20' : ''
             }`}
         >
             <HStack className="justify-between items-start">
@@ -58,7 +56,7 @@ const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: Co
                         Credits: {item.creditUnits}
                     </Text>
                 </VStack>
-                <CustomCheckbox isChecked={selectedCourses.has(item.id)} />
+                <CustomCheckbox isChecked={selectedCourses.has(item.courseId)} />
             </HStack>
         </TouchableOpacity>
     );
@@ -68,9 +66,6 @@ const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: Co
             <Text className="text-tertiary-100 text-center" size="lg">
                 You have not registered for any courses yet.
             </Text>
-            <Button variant='outline' onPress={() => refreshList()}>
-                <ButtonText className='text-white'>Refresh List</ButtonText>
-            </Button>
         </VStack>
     );
 
@@ -100,6 +95,10 @@ const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: Co
                 ListEmptyComponent={renderEmptyComponent}
                 contentContainerStyle={{ flexGrow: 1 }}
             />
+
+            <Button variant='outline' onPress={() => refreshList()}>
+                <ButtonText className='text-white'>Refresh List</ButtonText>
+            </Button>
 
             {/* Footer with Delete Button */}
             <View className="p-4 border-t border-gray-200">

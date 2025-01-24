@@ -33,8 +33,8 @@ export default function Home() {
     }, []);
 
     const handleDeleteCourses = async (courseIds: string[]) => {
-        if (!user?.id) return;
-    
+        if (!user?.id || courseIds.length === 0) return;
+
         try {
             await Promise.all(
                 courseIds.map(courseId => enrollmentService.removeEnrolledCourse(user.id, courseId))
@@ -45,6 +45,7 @@ export default function Home() {
                 text1: 'Courses Removed',
                 text2: 'You have successfully unenrolled from the selected courses!',
             });
+            setEnrolledCourses(enrolledCourses.filter(course => !courseIds.includes(course.courseId)));
         } catch (error) {
             Toast.show({
                 type: 'error',
