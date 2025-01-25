@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-    BASE_URL: 'https://dcv7qtf3-5039.uks1.devtunnels.ms/api',
+    BASE_URL: process.env.EXPO_PUBLIC_API_URL,
     TIMEOUT: 20000,
     RETRY_ATTEMPTS: 3,
 };
