@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { Text } from './ui/text';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,34 +13,43 @@ import {
   isSameDay,
   isSameMonth,
   addDays,
-  getDay
+  getDay,
+  getDate
 } from 'date-fns';
 import { CalendarScheduleProps } from '@/constants/types';
 
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-const CalendarSchedule = ({schedules, onSchedulePress}: CalendarScheduleProps) => {
+const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [scheduleHeight] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    // Automatically select current date on component mount
+    const today = new Date();
+    handleDatePress(today);
+  }, []);
 
   const getDaysInMonth = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
     const startDate = startOfWeek(monthStart);
-    const endDate = addDays(monthEnd, 6 - getDay(monthEnd)); // Align last row properly
+    const endDate = addDays(monthEnd, 6 - getDay(monthEnd));
 
-    const days = eachDayOfInterval({ start: startDate, end: endDate });
-
-    return days;
+    return eachDayOfInterval({ start: startDate, end: endDate });
   };
 
-  const formatDateKey = (date: Date) => format(date, 'yyyy-MM-dd');
-
   const getSchedulesForDate = (date: Date) => {
-    const dateKey = formatDateKey(date);
-    return schedules[dateKey] || [];
+    const dayOfWeek = WEEKDAYS[date.getDay()];
+    return schedules.filter(schedule =>
+      schedule.dayOfWeek === dayOfWeek && isSameMonth(date, currentMonth)
+    ).map(schedule => ({
+      id: schedule.id,
+      time: `${schedule.startTime} - ${schedule.endTime}`,
+      title: `${schedule.courseId} - ${schedule.levelId}`,
+      description: `Classroom: ${schedule.classroomId}`
+    }));
   };
 
   const handleDatePress = (date: Date) => {
@@ -87,30 +96,33 @@ const CalendarSchedule = ({schedules, onSchedulePress}: CalendarScheduleProps) =
       <View className="flex-row justify-around py-2 bg-tertiary-500">
         {WEEKDAYS.map((day) => (
           <Text key={day} className="text-center w-10 text-white">
-            {day}
+            {day.substring(0, 3)}
           </Text>
         ))}
       </View>
 
       {/* Calendar Grid */}
       <View className="w-full flex-wrap flex-row gap-x-2 items-center">
-        {getDaysInMonth().map((date, index) => {
+        {getDaysInMonth().map((date) => {
           const hasSchedule = getSchedulesForDate(date).length > 0;
           const isSelected = selectedDate && isSameDay(date, selectedDate);
           const isCurrentMonth = isSameMonth(date, currentMonth);
+          const isToday = isSameDay(date, new Date());
 
           return (
             <TouchableOpacity
               key={date.toString()}
               onPress={() => handleDatePress(date)}
               className={`w-14 h-14 justify-center items-center ${
+                isToday ? 'bg-tertiary-100 rounded-lg' : 
                 isSelected ? 'bg-tertiary-200 rounded-lg' : ''
               }`}
             >
               <Text size='lg'
                 className={`text-center ${
                   !isCurrentMonth ? 'text-tertiary-100' :
-                  hasSchedule ? 'text-white font-bold' : 'text-secondary-0'
+                  hasSchedule ? 'text-white font-bold' : 
+                  isToday ? 'text-white font-bold' : 'text-secondary-0'
                 }`}
               >
                 {format(date, 'd')}

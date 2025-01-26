@@ -1,37 +1,7 @@
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
 import CalendarSchedule from "@/components/calendarSchedule";
-
-const scheduleData = {
-    '2025-01-17': [
-        {
-            id: '1',
-            time: '11:00 PM',
-            title: 'Team Meeting',
-            description: 'Weekly sync with the development team'
-        },
-        {
-            id: '2',
-            time: '02:00 PM',
-            title: 'Client Call',
-            description: 'Project status update'
-        }
-    ],
-    '2025-01-20': [
-        {
-            id: '1',
-            time: '12:00 AM',
-            title: 'Team Meeting',
-            description: 'Weekly sync with the development team'
-        },
-        {
-            id: '2',
-            time: '02:00 PM',
-            title: 'Client Call',
-            description: 'Project status update'
-        }
-    ]
-};
+import { scheduleData } from "@/constants/data";
 
 export default function Schedules() {
     const handleSchedulePress = (schedule: any ) => {

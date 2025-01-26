@@ -155,12 +155,24 @@ export type Schedule = {
     description?: string;
 };
 
+export type ScheduleApiResponse = {
+    id: string;
+    dayOfWeek: string;
+    startTime: string;
+    endTime: string;
+    sessionId: string;
+    courseId: string;
+    levelId: string;
+    departmentId: string;
+    classroomId: string;
+};
+
 export type ScheduleMap = {
     [date: string]: Schedule[];
 };
 
 export type CalendarScheduleProps = {
-    schedules: ScheduleMap;
+    schedules: ScheduleApiResponse[];
     onSchedulePress?: (schedule: Schedule) => void;
 };
 

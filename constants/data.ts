@@ -1,62 +1,131 @@
 export const courses = [
+  {
+    id: 1,
+    name: "Introduction to Computer Science",
+    courseCode: "CSC 101",
+    creditUnits: 3,
+  },
+  {
+    id: 2,
+    name: "Data Structures and Algorithms",
+    courseCode: "CSC 201",
+    creditUnits: 3,
+  },
+  {
+    id: 3,
+    name: "Software Engineering",
+    courseCode: "CSC 301",
+    creditUnits: 3,
+  },
+  {
+    id: 4,
+    name: "Operating Systems",
+    courseCode: "CSC 401",
+    creditUnits: 3,
+  },
+  {
+    id: 5,
+    name: "System Analysis and Design",
+    courseCode: "CSC 501",
+    creditUnits: 3,
+  },
+  {
+    id: 6,
+    name: "Computer Networks",
+    courseCode: "CSC 601",
+    creditUnits: 3,
+  },
+  {
+    id: 7,
+    name: "Database Management Systems",
+    courseCode: "CSC 701",
+    creditUnits: 3,
+  },
+  {
+    id: 8,
+    name: "Web Development",
+    courseCode: "CSC 801",
+    creditUnits: 3,
+  },
+  {
+    id: 9,
+    name: "Mobile App Development",
+    courseCode: "CSC 901",
+    creditUnits: 3,
+  },
+  {
+    id: 10,
+    name: "Cloud Computing",
+    courseCode: "CSC 1001",
+    creditUnits: 3,
+  },
+];
+
+export const scheduleData = [
     {
-        id: 1,
-        name: "Introduction to Computer Science",
-        courseCode: "CSC 101",
-        creditUnits: 3
+        id: "9e0dd263-aaf5-44d7-5a79-08dd3e3b5e92",
+        dayOfWeek: "Friday",
+        startTime: "09:30:00",
+        endTime: "11:30:00",
+        sessionId: "e57b0fbb-6159-4263-91ef-08dd3e3bde3d",
+        courseId: "021ca3c1-0deb-4afd-ae94-2159a8479811",
+        levelId: "d4d4c053-49b6-410c-bc78-2d54a9991870",
+        departmentId: "3d490a70-94ce-4d15-9494-5248280c2ce3",
+        classroomId: "c9d4c053-49b6-410c-bc78-2d54a9991870",
     },
     {
-        id: 2,
-        name: "Data Structures and Algorithms",
-        courseCode: "CSC 201",
-        creditUnits: 3
+        id: "09b54756-7052-444e-5a74-08dd3e3b5e92",
+        dayOfWeek: "Monday",
+        startTime: "08:00:00",
+        endTime: "10:00:00",
+        sessionId: "e57b0fbb-6159-4263-91ef-08dd3e3bde3d",
+        courseId: "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+        levelId: "d4d4c053-49b6-410c-bc78-2d54a9991870",
+        departmentId: "3d490a70-94ce-4d15-9494-5248280c2ce3",
+        classroomId: "c9d4c053-49b6-410c-bc78-2d54a9991870",
     },
     {
-        id: 3,
-        name: "Software Engineering",
-        courseCode: "CSC 301",
-        creditUnits: 3
+        id: "756cc682-f007-4068-5a75-08dd3e3b5e92",
+        dayOfWeek: "Monday",
+        startTime: "10:30:00",
+        endTime: "12:30:00",
+        sessionId: "e57b0fbb-6159-4263-91ef-08dd3e3bde3d",
+        courseId: "86dba8c0-d178-41e7-938c-ed49778fb52c",
+        levelId: "d4d4c053-49b6-410c-bc78-2d54a9991870",
+        departmentId: "3d490a70-94ce-4d15-9494-5248280c2ce3",
+        classroomId: "c9d4c053-49b6-410c-bc78-2d54a9991870",
     },
     {
-        id: 4,
-        name: "Operating Systems",
-        courseCode: "CSC 401",
-        creditUnits: 3
+        id: "6ae20558-3931-4d8a-5a78-08dd3e3b5e92",
+        dayOfWeek: "Thursday",
+        startTime: "10:00:00",
+        endTime: "12:00:00",
+        sessionId: "e57b0fbb-6159-4263-91ef-08dd3e3bde3d",
+        courseId: "86dba8c0-d178-41e7-938c-ed49778fb52c",
+        levelId: "d4d4c053-49b6-410c-bc78-2d54a9991870",
+        departmentId: "3d490a70-94ce-4d15-9494-5248280c2ce3",
+        classroomId: "c9d4c053-49b6-410c-bc78-2d54a9991870",
     },
     {
-        id: 5,
-        name: "System Analysis and Design",
-        courseCode: "CSC 501",
-        creditUnits: 3
+        id: "077fb5f1-68c2-4b5a-5a76-08dd3e3b5e92",
+        dayOfWeek: "Tuesday",
+        startTime: "09:00:00",
+        endTime: "11:00:00",
+        sessionId: "e57b0fbb-6159-4263-91ef-08dd3e3bde3d",
+        courseId: "021ca3c1-0deb-4afd-ae94-2159a8479811",
+        levelId: "d4d4c053-49b6-410c-bc78-2d54a9991870",
+        departmentId: "3d490a70-94ce-4d15-9494-5248280c2ce3",
+        classroomId: "c9d4c053-49b6-410c-bc78-2d54a9991870",
     },
     {
-        id: 6,
-        name: "Computer Networks",
-        courseCode: "CSC 601",
-        creditUnits: 3
+        id: "9407fa3d-14ac-4947-5a77-08dd3e3b5e92",
+        dayOfWeek: "Wednesday",
+        startTime: "08:30:00",
+        endTime: "10:30:00",
+        sessionId: "e57b0fbb-6159-4263-91ef-08dd3e3bde3d",
+        courseId: "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+        levelId: "d4d4c053-49b6-410c-bc78-2d54a9991870",
+        departmentId: "3d490a70-94ce-4d15-9494-5248280c2ce3",
+        classroomId: "c9d4c053-49b6-410c-bc78-2d54a9991870",
     },
-    {
-        id: 7,
-        name: "Database Management Systems",
-        courseCode: "CSC 701",
-        creditUnits: 3
-    },
-    {
-        id: 8,
-        name: "Web Development",
-        courseCode: "CSC 801",
-        creditUnits: 3
-    },
-    {
-        id: 9,
-        name: "Mobile App Development",
-        courseCode: "CSC 901",
-        creditUnits: 3
-    },
-    {
-        id: 10,
-        name: "Cloud Computing",
-        courseCode: "CSC 1001",
-        creditUnits: 3
-    }
-]
+];
