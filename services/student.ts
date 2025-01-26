@@ -1,6 +1,6 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import { StudentProfile, ProfileCreationCredentials, CodeResponse } from '@/constants/types';
+import { StudentProfile, ProfileCreationCredentials, CodeResponse, StudentProfileUpdateCredentials } from '@/constants/types';
 import { ServiceHandler } from './serviceHandler';
 
 export const studentService = {
@@ -16,9 +16,9 @@ export const studentService = {
         );
     },
 
-    async updateStudentProfile(userId: string, payload: ProfileCreationCredentials) {
+    async updateStudentProfile(userId: string, payload: StudentProfileUpdateCredentials) {
         return ServiceHandler.execute<CodeResponse>(() =>
-            apiClient.post(API_ENDPOINTS.student.update.replace("{id}", userId), payload)
+            apiClient.put(API_ENDPOINTS.student.update.replace("{id}", userId), payload)
         );
     }
 }

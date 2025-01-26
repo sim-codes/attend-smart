@@ -15,13 +15,13 @@ import { levelService } from "@/services/level";
 import { departmentService } from "@/services/department";
 import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
+import { studentService } from "@/services/student";
 
-export default function UpdateProfile() {
+export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: string }) {
     const { user } = useSession();
     const { profile, updateProfile } = useApp();
 
        // Form state
-    const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [currentStep, setCurrentStep] = useState<ProfileUpdateStep>('faculty');
 
@@ -188,6 +188,50 @@ export default function UpdateProfile() {
 
     const handleSubmit = async () => {
 
+        if (profileImageUrl == undefined) {
+            Toast.show({
+                type: 'error',
+                text1: 'Profile Image Required',
+                text2: 'Profile image is a required field!',
+            });
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        const payload = {
+            matriculationNumber: formData.matriculationNumber,
+            levelId: formData.level,
+            departmentId: formData.department,
+            firstName: formData.firstname,
+            lastName: formData.lastname,
+            email: formData.email,
+            phoneNumber: formData.phonenumber,
+            profileImageUrl: profileImageUrl
+        }
+
+        console.log('Student ID:', profile?.userId);
+        console.log('Payload :', payload);
+
+        await studentService.updateStudentProfile(profile?.userId!, payload)
+        .then(()=> {
+            Toast.show({
+                type: 'success',
+                text1: 'Profile Update',
+                text2: 'Your profile details has been updated successully',
+            });
+        })
+        .catch((errors)=> {
+            Toast.show({
+                type: 'error',
+                text1: 'Profile Image Required',
+                text2: 'Profile image is a required field!',
+            });
+            console.error('Profile update failed!');
+        }
+        )
+
+        setIsSubmitting(false)
     };
 
     return (
@@ -225,6 +269,7 @@ export default function UpdateProfile() {
 
                 <Button className="w-full rounded-full self-center" size="xl"
                     onPress={currentStep === 'personalInfo' ? handleSubmit : handleNext}
+                    isDisabled={isSubmitting}
                     variant="solid">
                     <ButtonText size="xl">
                         {currentStep === 'personalInfo' ? 'Submit' : 'Next'}

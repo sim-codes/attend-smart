@@ -8,8 +8,10 @@ import cloudinaryService from "@/services/cloudinary";
 import { Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import UpdateProfile from "@/components/UpdateProfile";
+import { useApp } from "@/hooks/appContext";
 
 export default function UpdateProfileModal() {
+    const { profile } = useApp();
     const [image, setImage] = useState<string | undefined>(undefined);
     const handleUpload = async () => {
         const imageUrl = await cloudinaryService.handleImageUpload();
@@ -31,7 +33,7 @@ export default function UpdateProfileModal() {
                         <AvatarFallbackText>Avatar</AvatarFallbackText>
                         <AvatarImage
                             source={{
-                            uri: image,
+                            uri: image ?? profile?.profileImageUrl
                         }}
                         />
                     </Avatar>
@@ -41,7 +43,7 @@ export default function UpdateProfileModal() {
                     <Text size="xl" className="text-center" bold>Click Upload Image</Text>
                 </Pressable>
 
-                <UpdateProfile />
+                <UpdateProfile profileImageUrl={image} />
             </VStack>
         </VStack>
     )
