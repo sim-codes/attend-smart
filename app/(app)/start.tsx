@@ -32,18 +32,18 @@ export default function Index() {
       <Heading size="3xl">Hello!</Heading>
       <Text size="3xl" bold>Create your acount and if you have one login</Text>
 
-      <Center className="gap-y-8">
+      <Center className="gap-y-4">
         <Text size="3xl" bold>
           Get Started?
         </Text>
 
-        <Button className="w-full rounded-full self-center mt-4" size="xl"
+        <Button className="w-full rounded-full self-center" size="xl"
         onPress={() => handleSubmit("login")}
         variant="solid">
           <ButtonText size="xl">Login</ButtonText>
         </Button>
 
-        <Button className="w-full rounded-full self-center mt-4" size="xl"
+        <Button className="w-full rounded-full self-center" size="xl"
         onPress={() => handleSubmit("signup")}
         variant="outline">
           <ButtonText size="xl">Sign Up</ButtonText>

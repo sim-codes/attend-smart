@@ -28,8 +28,8 @@ export interface ChangePasswordCredentials {
     newPassword: string;
 }
 
-export type ProfileUpdateFieldId = 'firstname' | 'email' | 'lastname' | 'phonenumber' | 'profileImageUrl' | "matriculationNumber" | "level" | "department" | "faculty";
-export type ProfileUpdateStep = 'additionalDetails' | 'personalInfo' | 'faculty';
+export type ProfileUpdateFieldId = 'firstname' | 'email' | 'lastname' | 'phonenumber' | "matriculationNumber" | "level" | "department" | "faculty";
+export type ProfileUpdateStep = 'personalInfo' | 'faculty';
 
 export interface ProfileUpdateFormField extends BaseFormField {
     id: ProfileUpdateFieldId;

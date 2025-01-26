@@ -184,6 +184,13 @@ export const createProfileUpdateSteps = (
         title: "",
         fields: [
             {
+                id: "matriculationNumber",
+                label: "Matriculation Number",
+                placeholder: "Enter your matriculation number",
+                type: "text",
+                isRequired: true
+            },
+            {
                 id: "faculty",
                 label: "Faculty",
                 placeholder: "Select your faculty",
@@ -237,25 +244,6 @@ export const createProfileUpdateSteps = (
                 id: "phonenumber",
                 label: "Phone Number",
                 placeholder: "Enter your phone number",
-                type: "text",
-                isRequired: true
-            }
-        ]
-    },
-    additionalDetails: {
-        title: "",
-        fields: [
-            {
-                id: "matriculationNumber",
-                label: "Matriculation Number",
-                placeholder: "Enter your matriculation number",
-                type: "text",
-                isRequired: true
-            },
-            {
-                id: "profileImageUrl",
-                label: "Profile Image",
-                placeholder: "Upload your profile image",
                 type: "text",
                 isRequired: true
             }

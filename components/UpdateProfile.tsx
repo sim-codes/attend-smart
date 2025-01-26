@@ -3,18 +3,18 @@ import { Pressable } from "react-native";
 import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
 import { Ionicons } from "@expo/vector-icons";
-import ModalDialog from "@/components/ModalDialog";
 import { useSession } from "@/hooks/ctx";
 import FormFieldComponent from "@/components/FormFieldComponent";
-import { ChangePasswordFieldId, ProfileUpdateFormFields, FacultyAndDepartmentApiResponse, ProfileUpdateStep, ProfileUpdateFieldId } from "@/constants/types";
-import { changePasswordFormFields, createProfileUpdateSteps } from "@/constants/forms";
-import { authService } from "@/services/auth";
+import { ProfileUpdateFormFields, FacultyAndDepartmentApiResponse, ProfileUpdateStep, ProfileUpdateFieldId } from "@/constants/types";
+import { createProfileUpdateSteps } from "@/constants/forms";
 import Toast from "react-native-toast-message";
 import { useApp } from "@/hooks/appContext";
 import { createOptionsFromResponse } from "@/hooks/createOptions";
 import { facultyService } from "@/services/faculty";
 import { levelService } from "@/services/level";
 import { departmentService } from "@/services/department";
+import { VStack } from "@/components/ui/vstack";
+import { Button, ButtonText } from "@/components/ui/button";
 
 export default function UpdateProfile() {
     const { user } = useSession();
@@ -42,7 +42,6 @@ export default function UpdateProfile() {
         lastname: profile?.lastName!,
         email: profile?.email!,
         phonenumber: profile?.phoneNumber!,
-        profileImageUrl: profile?.profileImageUrl!,
     });
 
     // validation rules
@@ -75,10 +74,6 @@ export default function UpdateProfile() {
             if (!value) return "Phone number is required";
             return "";
         },
-        profileImageUrl: (value: string) => {
-            if (!value) return "Profile image is required";
-            return "";
-        },
         matriculationNumber: (value: string) => {
             if (!value) return "Matriculation number is required";
             return "";
@@ -87,10 +82,8 @@ export default function UpdateProfile() {
 
     // Load initial data
     useEffect(() => {
-        if (showDialog) {
-            loadInitialData();
-        }
-    }, [showDialog]);
+        loadInitialData();
+    }, []);
 
     // Load departments when faculty changes
     useEffect(() => {
@@ -163,7 +156,7 @@ export default function UpdateProfile() {
         const validateStep = (): boolean => {
                 const currentFields = steps?.[currentStep].fields || [];
                 const newErrors: Partial<Record<ProfileUpdateFieldId, string>> = {};
-        
+
                 currentFields.forEach(field => {
                 const validationRule = validationRules[field.id];
                 if (validationRule) {
@@ -179,19 +172,15 @@ export default function UpdateProfile() {
             };
 
             const handleNext = () => {
-                if (validateStep()) {
-                    if (currentStep === 'faculty') {
-                        setCurrentStep('personalInfo');
-                    } else if (currentStep === 'personalInfo') {
-                        setCurrentStep('additionalDetails');
-                    }
+                if (!validateStep()) return;
+
+                if (currentStep === 'faculty') {
+                    setCurrentStep('personalInfo');
                 }
             };
 
             const handleBack = () => {
                 if (currentStep === 'personalInfo') {
-                setCurrentStep('faculty');
-                } else if (currentStep === 'additionalDetails') {
                 setCurrentStep('faculty');
                 }
             };
@@ -202,22 +191,9 @@ export default function UpdateProfile() {
     };
 
     return (
-        <Pressable onPress={() => setShowDialog(true)}>
-            <HStack space="sm" className="items-end">
-                <Ionicons name="person-outline" size={28} color="#677D6A" />
-                <Text size="xl" className="text-white">Update Profile</Text>
-            </HStack>
+        <VStack className="flex-1" space="sm">
 
-            <ModalDialog
-                isOpen={showDialog}
-                onClose={currentStep === 'faculty' ? () => setShowDialog(false) : handleBack}
-                onAction={currentStep === 'additionalDetails' ? handleSubmit : handleNext}
-                title="Create your student profile"
-                actionText={currentStep === 'additionalDetails' ? 'Submit' : 'Next'}
-                cancelText={currentStep === 'faculty' ? 'Cancel' : 'Back'}
-                isLoading={isSubmitting}
-            >
-                {steps ? (
+            {steps ? (
                 steps[currentStep].fields.map(field => (
                     <FormFieldComponent
                     key={field.id}
@@ -235,9 +211,26 @@ export default function UpdateProfile() {
                     />
                 ))
                 ) : (
-                <Text>Loading form fields...</Text>
-                )}
-            </ModalDialog>
-        </Pressable>
+                <Text size="xl" bold>Loading form fields...</Text>
+            )}
+
+            <VStack space="xl">
+                {currentStep !== 'faculty' && (
+                        <Button className="w-full border-primary-500 rounded-full self-center mt-4" size="xl"
+                            onPress={handleBack}
+                            variant="outline">
+                            <ButtonText size="xl">Back</ButtonText>
+                        </Button>
+                    )}
+
+                <Button className="w-full rounded-full self-center" size="xl"
+                    onPress={currentStep === 'personalInfo' ? handleSubmit : handleNext}
+                    variant="solid">
+                    <ButtonText size="xl">
+                        {currentStep === 'personalInfo' ? 'Submit' : 'Next'}
+                    </ButtonText>
+                </Button>
+            </VStack>
+        </VStack>
     )
 }

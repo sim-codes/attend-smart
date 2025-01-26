@@ -33,22 +33,18 @@ const Dropdown = ({
             <TouchableOpacity
                 onPress={() => !disabled && setIsOpen(true)}
                 className={`
-                h-16 p-4 border-primary-800 border rounded-lg bg-white justify-center
-                ${disabled ? 'bg-gray-100' : 'active:bg-gray-50'}
-                ${error ? 'border-red-500' : 'border-gray-300'}
+                h-16 p-4 border-primary-800 border rounded-lg bg-transparent justify-center
+                ${disabled ? 'bg-tertiary-100' : 'active:bg-gray-50'}
+                ${error ? 'border-red-700' : 'border-gray-300'}
                 `}
             >
                 <Text size='xl' className={`
-                ${!selectedOption ? 'text-gray-400' : 'text-gray-900'}
-                ${disabled ? 'text-gray-400' : ''}
+                ${!selectedOption ? 'text-primary-900' : 'text-gray-900'}
+                ${disabled ? 'text-primary-700' : ''}
                 `}>
                 {selectedOption?.label || placeholder}
                 </Text>
             </TouchableOpacity>
-
-            {error && (
-                <Text className="mt-1 text-red-500 text-sm">{error}</Text>
-            )}
 
             <Modal
                 visible={isOpen}
