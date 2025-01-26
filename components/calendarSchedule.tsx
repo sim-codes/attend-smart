@@ -46,7 +46,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
       schedule.dayOfWeek === dayOfWeek && isSameMonth(date, currentMonth)
     ).map(schedule => ({
       id: schedule.id,
-      time: `${schedule.startTime} - ${schedule.endTime}`,
+      time: `Time: ${schedule.startTime} - ${schedule.endTime}`,
       title: `${schedule.courseId} - ${schedule.levelId}`,
       description: `Classroom: ${schedule.classroomId}`
     }));
@@ -78,7 +78,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
   };
 
   return (
-    <View className="bg-primary-700 rounded-3xl">
+    <View className="bg-primary-700 rounded-xl pb-2">
       {/* Calendar Header */}
       <View className="flex-row justify-between rounded-3xl items-center p-4 bg-primary-700">
         <TouchableOpacity onPress={() => navigateMonth('prev')}>
@@ -102,7 +102,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
       </View>
 
       {/* Calendar Grid */}
-      <View className="w-full flex-wrap flex-row gap-x-2 items-center">
+      <View className="w-full flex-wrap flex-row gap-x-2 items-center p-2">
         {getDaysInMonth().map((date) => {
           const hasSchedule = getSchedulesForDate(date).length > 0;
           const isSelected = selectedDate && isSameDay(date, selectedDate);
@@ -114,14 +114,14 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
               key={date.toString()}
               onPress={() => handleDatePress(date)}
               className={`w-14 h-14 justify-center items-center ${
-                isToday ? 'bg-tertiary-100 rounded-lg' : 
+                isToday ? 'bg-tertiary-100 rounded-lg' :
                 isSelected ? 'bg-tertiary-200 rounded-lg' : ''
               }`}
             >
               <Text size='lg'
                 className={`text-center ${
                   !isCurrentMonth ? 'text-tertiary-100' :
-                  hasSchedule ? 'text-white font-bold' : 
+                  hasSchedule ? 'text-white font-bold' :
                   isToday ? 'text-white font-bold' : 'text-secondary-0'
                 }`}
               >
