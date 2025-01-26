@@ -1,4 +1,3 @@
-import { MediaType } from './../node_modules/expo-image-picker/build/ImagePicker.types.d';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 
@@ -26,7 +25,7 @@ class CloudinaryService {
     const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ['images'],
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [4, 4],
         quality: 1,
     });
 
@@ -41,20 +40,19 @@ class CloudinaryService {
       name: 'upload.jpg'
     } as any);
     formData.append('upload_preset', this.uploadPreset);
+    console.log('Form data:', formData);
+    console.log('Cloudinary URL:', this.cloudinaryUrl);
 
     try {
       const response = await axios.post<CloudinaryUploadResponse>(
         this.cloudinaryUrl,
-        formData, 
+        formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
           }
         }
       );
-      console.log('Form data:', formData);
-      console.log('Cloudinary URL:', this.cloudinaryUrl);
-        console.log('Cloudinary response:', response.data);
 
       return response.data.secure_url;
     } catch (error) {
@@ -73,10 +71,9 @@ class CloudinaryService {
   }
 }
 
-// Usage example
 const cloudinaryService = new CloudinaryService(
-    process.env.CLOUDINARY_CLOUD_NAME!,
-    process.env.CLOUDINARY_UPLOAD_PRESET!
+    process.env.EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME!,
+    process.env.EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
 );
 
 export default cloudinaryService;

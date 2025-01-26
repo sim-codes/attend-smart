@@ -18,8 +18,6 @@ export default function Index() {
       // Use the imageUrl (e.g., save to state, send to backend)
       console.log('Uploaded Image URL:', imageUrl);
     }
-
-    console.log('Something went wrong with the image upload', imageUrl);
   };
 
 
