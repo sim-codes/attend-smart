@@ -63,12 +63,12 @@ export default function Login() {
 
   return (
     <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
-      <VStack className="my-6 p-6">
+      <VStack className="my-8 p-6">
         <Text size="4xl" className="text-secondary-0">Welcome Back,</Text>
         <Text size="4xl" className="text-secondary-0" bold>Log In!</Text>
       </VStack>
 
-      <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-14 py-12 px-4">
+      <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
 
       {loginFormFields.map(field => (
           <FormFieldComponent

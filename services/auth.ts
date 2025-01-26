@@ -16,11 +16,9 @@ export const authService = {
     },
 
     async signup(credentials: SignUpCredentials) {
-        const response = await ServiceHandler.execute<CodeResponse>(() =>
+        return ServiceHandler.execute<CodeResponse>(() =>
             apiClient.post(API_ENDPOINTS.authentication.register, credentials)
         );
-
-        return response.data?.status;
     },
 
     async changeStudentPassword(credentials: ChangePasswordCredentials) {

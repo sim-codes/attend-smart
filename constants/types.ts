@@ -140,6 +140,7 @@ export interface SignUpCredentials {
     email: string;
     password: string;
     phoneNumber: string;
+    profileImageUrl: string;
     roles: string[];
 }
 

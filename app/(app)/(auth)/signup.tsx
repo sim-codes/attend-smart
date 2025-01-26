@@ -7,10 +7,15 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { signupSteps } from "@/constants/forms";
 import { SignupStep, SignupFieldId } from '@/constants/types';
 import { useSession } from "@/hooks/ctx";
+import { Avatar, AvatarImage, AvatarFallbackText } from "@/components/ui/avatar";
+import cloudinaryService from "@/services/cloudinary";
+import { Pressable } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function SignUp() {
     const { loading, error, signup } = useSession();
-      const [formError, setFormError] = useState<string | null>(null);
+    const [image, setImage] = useState<string | undefined>(undefined);
+
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState<SignupStep>('personal');
     const [formData, setFormData] = useState<Record<SignupFieldId, string>>({
@@ -25,33 +30,59 @@ export default function SignUp() {
     });
     const [errors, setErrors] = useState<Partial<Record<SignupFieldId, string>>>({});
 
+    const handleUpload = async () => {
+        const imageUrl = await cloudinaryService.handleImageUpload();
+        if (imageUrl) {
+            setImage(imageUrl);
+        }
+    };
+
     const handleSubmit = async () => {
         if (!validateStep(currentStep)) return;
 
+        if (!image) {
+            Toast.show({
+                type: 'error',
+                text1: 'Image Required',
+                text2: 'Please upload an image'
+            });
+            return;
+        }
+
+        const payload = {
+            firstName: formData.firstname,
+            lastName: formData.lastname,
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+            phoneNumber: formData.phonenumber,
+            profileImageUrl: image,
+            roles: [
+                "Student"
+            ]
+        }
 
         try {
-            const statusCode = await signup({
-                firstName: formData.firstname,
-                lastName: formData.lastname,
-                username: formData.username,
-                email: formData.email,
-                password: formData.password,
-                phoneNumber: formData.phonenumber,
-                roles: [
-                    "Student"
-                ]
-            })
+            const response = await signup(payload);
 
-            if (statusCode === 201) {
+            if (response.success) {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Success',
+                    text2: 'Account created successfully'
+                })
+
                 router.push("/(app)/(auth)/login");
             }
 
-            console.log(statusCode)
         } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'An error occurred. Please try again later'
+            })
             throw error;
         }
-
-        router.push("/login");
     }
 
     const handleChange = (id: SignupFieldId) => (value: string) => {
@@ -121,12 +152,27 @@ export default function SignUp() {
 
     return (
     <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
-        <VStack className="my-6 p-6">
+        <VStack className="my-8 p-6">
             <Text size="4xl" className="text-secondary-0">Welcome,</Text>
             <Text size="4xl" className="text-secondary-0" bold>Sign up!</Text>
         </VStack>
 
-        <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-14 py-12 px-4">
+        <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
+
+            <VStack className="justify-start items-center w-full gap-y-2">
+                <Avatar size="2xl" className=" absolute -top-28 border-4 border-white/20">
+                    <AvatarFallbackText>Avatar</AvatarFallbackText>
+                    <AvatarImage
+                        source={{
+                        uri: image
+                    }}
+                    />
+                </Avatar>
+            </VStack>
+
+            <Pressable onPress={handleUpload} className="p-1">
+                <Text size="xl" className="text-center" bold>Click Upload Image</Text>
+            </Pressable>
 
         <Text className="text-center text-primary-500 uppercase" size="3xl" bold>{signupSteps[currentStep].title}</Text>
             {signupSteps[currentStep].fields.map(field => (
