@@ -5,21 +5,11 @@ import { Center } from "@/components/ui/center";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
-import cloudinaryService from '@/services/cloudinary';
-import { TouchableOpacity } from 'react-native';
 
 type AuthType = 'login' | 'signup';
 
 export default function Index() {
   const router = useRouter();
-  const handleUpload = async () => {
-    const imageUrl = await cloudinaryService.handleImageUpload();
-    if (imageUrl) {
-      // Use the imageUrl (e.g., save to state, send to backend)
-      console.log('Uploaded Image URL:', imageUrl);
-    }
-  };
-
 
   const navigateToNextPage = (type: AuthType) => {
     if (type === "login") {
@@ -38,10 +28,6 @@ export default function Index() {
   return (
     <VStack className="h-full w-full p-4 justify-center" space="sm">
       <Image source={require('@/assets/images/student.png')} size="full" className="self-center aspect-[384/384] h-1/2" alt="alt"/>
-
-      <TouchableOpacity onPress={handleUpload}>
-        <Text>Upload Image</Text>
-      </TouchableOpacity>
 
       <Heading size="3xl">Hello!</Heading>
       <Text size="3xl" bold>Create your acount and if you have one login</Text>

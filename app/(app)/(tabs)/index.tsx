@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TabBarIcon } from '@/components/TabBarIcon';
 import Home from '@/app/(app)/(tabs)/home';
@@ -13,6 +13,7 @@ return (
         initialRouteName='home'
         tabBarPosition='bottom'
         keyboardDismissMode='on-drag'
+        initialLayout={{ width: Dimensions.get('window').width }}
         style={styles.test}
         screenOptions={{
             tabBarActiveTintColor: '#D6BD98',

@@ -23,8 +23,15 @@ export default function AppLayout() {
         <Stack.Screen name="(auth)" options={{
             headerTitle: "",
             headerTransparent: true,
-            headerBackImageSource: require("@/assets/images/arrow-back-cream.png"),
+            headerTintColor: '#677D6A',
         }} />
+        <Stack.Screen name="update-profile" options={{
+            headerTitle: "",
+            headerTintColor: '#677D6A',
+            headerTransparent: true,
+            presentation: "containedModal",
+            animation: "slide_from_bottom",
+            }} />
     </Stack>
     )
 }

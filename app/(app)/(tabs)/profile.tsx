@@ -11,12 +11,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import ModalDialog from "@/components/ModalDialog";
 import ChangePassword from "@/components/ChangePassword";
 import { useApp } from "@/hooks/appContext";
-import UpdateProfile from "@/components/UpdateProfile";
+import { useRouter } from "expo-router";
 
 export default function Profile() {
     const { user, logout } = useSession();
     const { profile } = useApp();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
+    const router = useRouter();
 
     return (
         <VStack className="h-full w-full bg-primary-500 py-10 px-6" space="4xl">
@@ -105,7 +106,13 @@ export default function Profile() {
                 <Heading size="md" className="text-secondary-0">Settings</Heading>
 
                 <ChangePassword />
-                <UpdateProfile />
+
+                <Pressable onPress={() => router.push('/update-profile')}>
+                    <HStack space="sm" className="items-end">
+                        <FontAwesome name="edit" size={28} color="#677D6A" />
+                        <Text size="xl" className="text-white">Update Profile</Text>
+                    </HStack>
+                </Pressable>
 
                 <Pressable onPress={() => setShowAlertDialog(true)}>
                 <HStack space="sm" className="items-end">
