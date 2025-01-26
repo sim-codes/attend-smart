@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import { Pressable } from "react-native";
-import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
-import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useSession } from "@/hooks/ctx";
 import FormFieldComponent from "@/components/FormFieldComponent";
 import { ProfileUpdateFormFields, FacultyAndDepartmentApiResponse, ProfileUpdateStep, ProfileUpdateFieldId } from "@/constants/types";
@@ -18,7 +16,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { studentService } from "@/services/student";
 
 export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: string }) {
-    const { user } = useSession();
+    const router = useRouter();
     const { profile, updateProfile } = useApp();
 
        // Form state
@@ -210,26 +208,23 @@ export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: 
             profileImageUrl: profileImageUrl
         }
 
-        console.log('Student ID:', profile?.userId);
-        console.log('Payload :', payload);
+        const response = await studentService.updateStudentProfile(profile?.userId!, payload);
 
-        await studentService.updateStudentProfile(profile?.userId!, payload)
-        .then(()=> {
+        if (response.success) {
             Toast.show({
                 type: 'success',
                 text1: 'Profile Update',
                 text2: 'Your profile details has been updated successully',
             });
-        })
-        .catch((errors)=> {
+            router.push('/')
+        } else  {
             Toast.show({
                 type: 'error',
-                text1: 'Profile Image Required',
-                text2: 'Profile image is a required field!',
+                text1: 'Failed Request',
+                text2: 'Your profile detials was not updated'
             });
             console.error('Profile update failed!');
         }
-        )
 
         setIsSubmitting(false)
     };

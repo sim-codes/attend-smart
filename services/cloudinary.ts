@@ -40,8 +40,6 @@ class CloudinaryService {
       name: 'upload.jpg'
     } as any);
     formData.append('upload_preset', this.uploadPreset);
-    console.log('Form data:', formData);
-    console.log('Cloudinary URL:', this.cloudinaryUrl);
 
     try {
       const response = await axios.post<CloudinaryUploadResponse>(
@@ -64,8 +62,6 @@ class CloudinaryService {
   async handleImageUpload(): Promise<string | null> {
     const localUri = await this.pickImage();
     if (!localUri) return null;
-    console.log('Local URI:', localUri);
-
 
     return this.uploadToCloudinary(localUri);
   }
