@@ -11,6 +11,7 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import authReducer from './slices/authSlice';
+import profileReducer from './slices/profileSlice';
 
 const persistConfig = {
     key: 'root',
@@ -18,11 +19,19 @@ const persistConfig = {
     whitelist: ['auth'], // Only persist auth state
 };
 
+const profilePersistConfig = {
+    key: 'profile',
+    storage: AsyncStorage,
+};
+
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedProfileReducer = persistReducer(profilePersistConfig, profileReducer);
+
 
 export const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
+        profile: persistedProfileReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

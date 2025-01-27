@@ -3,6 +3,7 @@ import { API_ENDPOINTS } from '@/constants/endpoints';
 import { StudentProfile, ProfileCreationCredentials, CodeResponse, StudentProfileUpdateCredentials } from '@/constants/types';
 import { ServiceHandler } from './serviceHandler';
 
+
 export const studentService = {
     async getStudentProfile(studentId: string) {
         return ServiceHandler.execute<StudentProfile>(() =>

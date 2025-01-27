@@ -1,6 +1,6 @@
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pressable } from "react-native";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
@@ -12,17 +12,23 @@ import ChangePassword from "@/components/ChangePassword";
 import { useRouter } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/authSlice";
+import { fetchProfile, clearProfile } from "@/store/slices/profileSlice";
 
 export default function Profile() {
     // const { user, logout } = useSession();
-    const { isLoading, error,user } = useAppSelector((state) => state.auth);
-    const profile = useState(null);
+    const { user, } = useAppSelector((state) => state.auth);
+    const { data: profile, error } = useAppSelector((state) => state.profile);
     const dispatch = useAppDispatch();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
     const router = useRouter();
 
+    useEffect(() => {
+        dispatch(fetchProfile(user?.id!));
+    }, [dispatch]);
+
     const handleLogout = () => {
         dispatch(logout());
+        dispatch(clearProfile());
     };
 
     return (
@@ -71,7 +77,7 @@ export default function Profile() {
                 </HStack>
             </VStack>
 
-            {/* <VStack space="sm">
+            <VStack space="sm">
                 <Heading size="md" className="text-secondary-0">Student Details</Heading>
                 {
                     profile ?
@@ -106,7 +112,7 @@ export default function Profile() {
                     </HStack>
                     </>
                 }
-            </VStack> */}
+            </VStack>
 
             <VStack space="sm">
                 <Heading size="md" className="text-secondary-0">Settings</Heading>

@@ -19,10 +19,11 @@ import { EnrollmentResponse } from "@/constants/types";
 import { useApp } from "@/hooks/appContext";
 import NoProfileHome from "@/components/NoProfileHome";
 import Toast from 'react-native-toast-message';
+import { useAppSelector } from "@/store/hooks";
 
 
 export default function Home() {
-    const { user } = useSession();
+    const { isLoading, error, user } = useAppSelector((state) => state.auth);
     // const { profile } = useApp();
     const [showDialog, setShowDialog] = useState(false);
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);

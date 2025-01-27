@@ -11,11 +11,11 @@ import { Avatar, AvatarImage, AvatarFallbackText } from "@/components/ui/avatar"
 import cloudinaryService from "@/services/cloudinary";
 import { Pressable } from "react-native";
 import Toast from "react-native-toast-message";
+import { authService } from "@/services/auth";
 
 export default function SignUp() {
-    const { loading, error, signup } = useSession();
     const [image, setImage] = useState<string | undefined>(undefined);
-
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState<SignupStep>('personal');
     const [formData, setFormData] = useState<Record<SignupFieldId, string>>({
@@ -49,6 +49,8 @@ export default function SignUp() {
             return;
         }
 
+        setLoading(true);
+
         const payload = {
             firstName: formData.firstname,
             lastName: formData.lastname,
@@ -63,18 +65,14 @@ export default function SignUp() {
         }
 
         try {
-            const response = await signup(payload);
+            await authService.signup(payload);
+            Toast.show({
+                type: 'success',
+                text1: 'Success',
+                text2: 'Account created successfully'
+            })
 
-            if (response.success) {
-                Toast.show({
-                    type: 'success',
-                    text1: 'Success',
-                    text2: 'Account created successfully'
-                })
-
-                router.push("/(app)/(auth)/login");
-            }
-
+            router.push("/(app)/(auth)/login");
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -83,6 +81,8 @@ export default function SignUp() {
             })
             throw error;
         }
+
+        setLoading(false);
     }
 
     const handleChange = (id: SignupFieldId) => (value: string) => {

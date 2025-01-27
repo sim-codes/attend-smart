@@ -251,6 +251,12 @@ export interface StudentProfile extends BaseStudentProfile {
     userId: string;
 }
 
+export interface ProfileState {
+    data: StudentProfile | null;
+    isLoading: boolean;
+    error: string | null;
+}
+
 export interface ErrorResponse {
     message: string;
     code?: string;
