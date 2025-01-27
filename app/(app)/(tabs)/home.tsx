@@ -19,19 +19,20 @@ import { EnrollmentResponse } from "@/constants/types";
 import { useApp } from "@/hooks/appContext";
 import NoProfileHome from "@/components/NoProfileHome";
 import Toast from 'react-native-toast-message';
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { fetchProfile } from "@/store/slices/profileSlice";
 
 
 export default function Home() {
     const { isLoading, error, user } = useAppSelector((state) => state.auth);
-    // const { profile } = useApp();
     const [showDialog, setShowDialog] = useState(false);
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
+    const { data: profile, error: profileError } = useAppSelector((state) => state.profile);
+    const dispatch = useAppDispatch();
 
-    // useEffect(() => {
-    //     if (!profile) return;
-    //     fetchEnrolledCourses();
-    // }, []);
+    useEffect(() => {
+        dispatch(fetchProfile(user?.id!));
+    }, [dispatch]);
 
     const handleDeleteCourses = async (courseIds: string[]) => {
         if (!user?.id || courseIds.length === 0) return;
@@ -95,7 +96,7 @@ export default function Home() {
                 </Heading>
             </HStack>
 
-            {/* {
+            {
                 profile ?
                 <>
                 <HStack className="justify-between items-center w-full gap-x-2">
@@ -114,7 +115,7 @@ export default function Home() {
                 </>
                 :
                 <NoProfileHome />
-            } */}
+            }
 
             <ModalDialog
                 isOpen={showDialog}

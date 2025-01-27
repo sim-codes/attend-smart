@@ -19,13 +19,15 @@ import { Text } from "./ui/text";
 import { createOptionsFromResponse } from "@/hooks/createOptions";
 import { ProfileCreationFormFields } from '../constants/types';
 import { studentService } from "@/services/student";
-import { useSession } from "@/hooks/ctx";
-import { useApp } from "@/hooks/appContext";
 import Toast from 'react-native-toast-message';
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchProfile } from "@/store/slices/profileSlice";
 
 export default function NoProfileHome() {
-    const { user } = useSession();
-    const { updateProfile } = useApp()
+    const { isLoading, error, user } = useAppSelector((state) => state.auth);
+    const { data: profile, error: profileError } = useAppSelector((state) => state.profile);
+    const dispatch = useAppDispatch();
+
     // Form state
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -185,7 +187,7 @@ export default function NoProfileHome() {
         };
 
         const { data } = await studentService.createStudentProfile(user?.id!, payload);
-        updateProfile(data!);
+        dispatch(fetchProfile(user?.id!))
         setShowDialog(false);
         Toast.show({
           type: 'success',

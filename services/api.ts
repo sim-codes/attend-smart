@@ -1,9 +1,8 @@
-// services/api.ts
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { API_ENDPOINTS, PUBLIC_ENDPOINTS } from '@/constants/endpoints';
 import { TokenDto } from '@/constants/types';
-import * as SecureStore from 'expo-secure-store';
-import { setStorageItemAsync } from './storage';
+import { store } from '@/store/store';
+import { updateToken, logout } from '@/store/slices/authSlice';
 import { API_CONFIG } from '@/constants/config';
 
 const BASE_URL = API_CONFIG.BASE_URL;
@@ -28,14 +27,14 @@ class ApiClient {
     // Request interceptor
     this.client.interceptors.request.use(
       async (config) => {
-
-
         const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
           endpoint => config.url?.includes(endpoint)
         );
 
         if (!isPublicEndpoint) {
-          const accessToken = await SecureStore.getItemAsync('auth.token.access');
+          const state = store.getState();
+          const accessToken = state.auth.accessToken;
+
           if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`;
           }
@@ -52,21 +51,19 @@ class ApiClient {
     this.client.interceptors.response.use(
       (response) => response,
       async (error) => {
-
         const originalRequest = error.config;
 
         const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
           endpoint => originalRequest.url === endpoint
-      );
-
-        console.log(error.response?.status)
+        );
 
         if (error.response?.status === 401 && !isPublicEndpoint && !originalRequest._retry) {
           originalRequest._retry = true;
 
           try {
-            const accessToken = await SecureStore.getItemAsync('auth.token.access');
-            const refreshToken = await SecureStore.getItemAsync('auth.token.refresh');
+            const state = store.getState();
+            const accessToken = state.auth.accessToken;
+            const refreshToken = state.auth.refreshToken;
 
             if (!accessToken || !refreshToken) {
               throw new Error('No tokens available');
@@ -75,7 +72,7 @@ class ApiClient {
             const payload = {
               accessToken: accessToken,
               refreshToken: refreshToken
-            }
+            };
 
             // Call refresh endpoint
             const response = await axios.post<TokenDto>(
@@ -83,18 +80,15 @@ class ApiClient {
               payload
             );
 
-            // Store new tokens
-            await setStorageItemAsync('auth.token.access', response.data.accessToken);
-            await setStorageItemAsync('auth.token.refresh', response.data.refreshToken);
+            // Update token in Redux store
+            store.dispatch(updateToken({ accessToken: response.data.accessToken }));
 
             // Update authorization header
             originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
             return this.client(originalRequest);
           } catch (refreshError) {
-            // Clear tokens on refresh failure
-            console.log('We have error', refreshError);
-            await setStorageItemAsync('auth.token.access', null);
-            await setStorageItemAsync('auth.token.refresh', null);
+            // Clear auth state on refresh failure
+            store.dispatch(logout());
             return Promise.reject(refreshError);
           }
         }
@@ -126,6 +120,7 @@ class ApiClient {
     }
   }
 
+  // Rest of the methods remain the same
   async get<T, H = undefined>(
     url: string,
     params?: object,
@@ -174,7 +169,6 @@ class ApiClient {
     });
   }
 
-  // Form data method for file uploads
   async postForm<T>(url: string, formData: FormData, config?: AxiosRequestConfig): Promise<T> {
     return this.request<T>({
       method: 'POST',
@@ -187,10 +181,9 @@ class ApiClient {
     });
   }
 
-  // Method to upload multiple files
   async uploadFiles<T>(url: string, files: File[], additionalData?: object): Promise<T> {
     const formData = new FormData();
-    
+
     files.forEach((file, index) => {
       formData.append(`file${index}`, file);
     });
@@ -205,8 +198,5 @@ class ApiClient {
   }
 }
 
-// Export singleton instance
 export const apiClient = new ApiClient();
-
-// Export type for use in services
 export type ApiClientType = InstanceType<typeof ApiClient>;

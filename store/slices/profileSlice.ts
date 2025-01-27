@@ -50,6 +50,7 @@ export const {
 export const fetchProfile = (userId: string) => async (dispatch: AppDispatch) => {
 
     const response = await studentService.getStudentProfile(userId);
+
     if (response.success) {
         dispatch(fetchProfileSuccess(response.data!));
     } else {
