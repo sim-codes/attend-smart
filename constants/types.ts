@@ -123,6 +123,15 @@ export interface UserProfile {
     roles: string[];
 }
 
+export interface AuthState {
+    user: UserProfile | null;
+    accessToken: string | null;
+    refreshToken: string | null;
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    error: string | null;
+}
+
 export interface LoginResponse {
     token: TokenDto;
     user: UserProfile;

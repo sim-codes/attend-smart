@@ -7,11 +7,15 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { loginFormFields } from "@/constants/forms";
 import { LoginFieldId } from "@/constants/types";
 import { useSession } from "@/hooks/ctx";
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { loginStart, loginSuccess, loginFailure } from '@/store/slices/authSlice';
+import { authService } from "@/services/auth";
+import Toast from "react-native-toast-message";
 
 export default function Login() {
   const router = useRouter();
-  const { login, loading } = useSession();
-  const [formError, setFormError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector((state) => state.auth);
 
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
     username: '',
@@ -27,18 +31,34 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleLogin = async () => {
     if (!validateForm()) return;
+    dispatch(loginStart());
 
-    try {
-        await login(formData);
-        router.push('/');
-    } catch (error) {
-        console.error('Login failed', error);
-        setFormError('Login failed. Please try again.');
-        return;
+    const {data, success, error} = await authService.login(formData);
+
+    if (success) {
+      dispatch(loginSuccess({
+        user: data?.user!,
+        accessToken: data?.token.accessToken!,
+        refreshToken: data?.token.refreshToken!,
+      }));
+      Toast.show({
+        type: 'success',
+        text1: 'Login Successful',
+        text2: 'You have successfully logged in!',
+      });
+      router.push('/');
+      return;
     }
-  }
+
+    dispatch(loginFailure(error?.message!));
+    Toast.show({
+      type: 'error',
+      text1: 'Login Failed',
+      text2: error?.message!,
+    });
+  };
 
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<LoginFieldId, string>> = {};
@@ -81,9 +101,9 @@ export default function Login() {
           />
       ))}
 
-      {formError && (
+      {error && (
           <Text size="md" className="text-red-700 text-center" bold>
-              {formError}
+              {error}
           </Text>
       )}
       <Link href="/(app)/(auth)/forget-password"
@@ -93,9 +113,9 @@ export default function Login() {
       </Link>
 
       <Button className="w-full rounded-full self-center mt-4" size="xl"
-        onPress={() => handleSubmit()}
-        variant="solid" isDisabled={loading}>
-        <ButtonText size="xl">Log In</ButtonText>
+        onPress={() => handleLogin()}
+        variant="solid" isDisabled={isLoading}>
+        <ButtonText size="xl">{isLoading ? "Loading..." : "Login"}</ButtonText>
       </Button>
 
       <Text className="text-center text-primary-500" size="lg">

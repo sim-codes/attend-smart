@@ -1,6 +1,5 @@
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
-import { useSession } from "@/hooks/ctx";
 import { useState } from 'react';
 import { Pressable } from "react-native";
 import { Heading } from "@/components/ui/heading";
@@ -10,14 +9,21 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import ModalDialog from "@/components/ModalDialog";
 import ChangePassword from "@/components/ChangePassword";
-import { useApp } from "@/hooks/appContext";
 import { useRouter } from "expo-router";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { logout } from "@/store/slices/authSlice";
 
 export default function Profile() {
-    const { user, logout } = useSession();
-    const { profile } = useApp();
+    // const { user, logout } = useSession();
+    const { isLoading, error,user } = useAppSelector((state) => state.auth);
+    const profile = useState(null);
+    const dispatch = useAppDispatch();
     const [showAlertDialog, setShowAlertDialog] = useState(false)
     const router = useRouter();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
     return (
         <VStack className="h-full w-full bg-primary-500 py-10 px-6" space="4xl">
@@ -65,7 +71,7 @@ export default function Profile() {
                 </HStack>
             </VStack>
 
-            <VStack space="sm">
+            {/* <VStack space="sm">
                 <Heading size="md" className="text-secondary-0">Student Details</Heading>
                 {
                     profile ?
@@ -100,7 +106,7 @@ export default function Profile() {
                     </HStack>
                     </>
                 }
-            </VStack>
+            </VStack> */}
 
             <VStack space="sm">
                 <Heading size="md" className="text-secondary-0">Settings</Heading>
@@ -125,7 +131,7 @@ export default function Profile() {
             <ModalDialog
                 isOpen={showAlertDialog}
                 onClose={() => setShowAlertDialog(false)}
-                onAction={logout}
+                onAction={handleLogout}
                 title="Sign Out"
                 actionText="Sign Out"
                 cancelText="Cancel"

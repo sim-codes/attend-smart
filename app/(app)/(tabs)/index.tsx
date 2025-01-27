@@ -7,7 +7,7 @@ import Schedules from './schedules';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function Index() {
+export default function MainAppTabs() {
 return (
     <Tab.Navigator
         initialRouteName='home'

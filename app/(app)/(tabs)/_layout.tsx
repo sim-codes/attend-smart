@@ -1,13 +1,9 @@
 import { Slot, Redirect } from "expo-router";
-import { useSession } from "@/hooks/ctx";
-import { Text } from "@/components/ui/text";
+import { useAppSelector } from "@/store/hooks";
+
 
 export default function TabLayout(){
-    const { loading, isAuthenticated } = useSession();
-
-    if (loading) {
-        return <Text>Loading from tabs...</Text>;
-    }
+    const { isAuthenticated } = useAppSelector(state => state.auth);
 
     if (!isAuthenticated) {
         return <Redirect href="/start" />;

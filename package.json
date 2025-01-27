@@ -30,8 +30,10 @@
     "@gluestack-ui/overlay": "^0.1.16",
     "@gluestack-ui/toast": "^1.0.8",
     "@legendapp/motion": "^2.4.0",
+    "@react-native-async-storage/async-storage": "^2.1.0",
     "@react-navigation/material-top-tabs": "^7.1.0",
     "@react-navigation/native": "^7.0.14",
+    "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
     "babel-plugin-module-resolver": "^5.0.2",
     "date-fns": "^4.1.0",
@@ -63,6 +65,8 @@
     "react-native-toast-message": "^2.2.1",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
+    "react-redux": "^9.2.0",
+    "redux-persist": "^6.0.0",
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {

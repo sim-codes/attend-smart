@@ -23,14 +23,14 @@ import Toast from 'react-native-toast-message';
 
 export default function Home() {
     const { user } = useSession();
-    const { profile } = useApp();
+    // const { profile } = useApp();
     const [showDialog, setShowDialog] = useState(false);
     const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
 
-    useEffect(() => {
-        if (!profile) return;
-        fetchEnrolledCourses();
-    }, []);
+    // useEffect(() => {
+    //     if (!profile) return;
+    //     fetchEnrolledCourses();
+    // }, []);
 
     const handleDeleteCourses = async (courseIds: string[]) => {
         if (!user?.id || courseIds.length === 0) return;
@@ -94,7 +94,7 @@ export default function Home() {
                 </Heading>
             </HStack>
 
-            {
+            {/* {
                 profile ?
                 <>
                 <HStack className="justify-between items-center w-full gap-x-2">
@@ -113,7 +113,7 @@ export default function Home() {
                 </>
                 :
                 <NoProfileHome />
-            }
+            } */}
 
             <ModalDialog
                 isOpen={showDialog}

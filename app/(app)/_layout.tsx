@@ -1,7 +1,4 @@
-import { Stack, Redirect } from "expo-router";
-import { useSession } from "@/hooks/ctx";
-import { Text } from "@/components/ui/text";
-import { Link, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 
 export const unstable_settings = {
     initialRouteName: '(tabs)',
@@ -9,13 +6,6 @@ export const unstable_settings = {
 
 
 export default function AppLayout() {
-    const { isTokenLoading, isAuthenticated, user } = useSession();
-    const router = useRouter();
-
-    if (isTokenLoading) {
-        return <Text>Loading...</Text>
-    }
-
     return (
     <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
