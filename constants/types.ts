@@ -193,7 +193,6 @@ export interface Course {
 }
 export interface CourseListProps {
     courses: EnrollmentResponse[];
-    refreshList: () => void;
     onDeleteCourses?: (courseIds: string[]) => Promise<void>;
 }
 
@@ -219,6 +218,12 @@ export interface EnrollmentResponse {
     creditUnits: number;
     enrollmentDate: string;
 }
+
+export interface CoursesState {
+    data: EnrollmentResponse[];
+    isLoading: boolean;
+    error: string | null;
+  }
 
 export interface BaseStudentProfile {
     matriculationNumber: string;

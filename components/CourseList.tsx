@@ -8,7 +8,7 @@ import { VStack } from '@/components/ui/vstack';
 import { Text } from '@/components/ui/text';
 import { HStack } from '@/components/ui/hstack';
 
-const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: CourseListProps) => {
+const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps) => {
     const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -96,7 +96,7 @@ const CourseList = ({courses, refreshList, onDeleteCourses = async () => {}}: Co
                 contentContainerStyle={{ flexGrow: 1 }}
             />
 
-            <Button variant='outline' onPress={() => refreshList()}>
+            <Button variant='outline' onPress={() => {}}>
                 <ButtonText className='text-white'>Refresh List</ButtonText>
             </Button>
 

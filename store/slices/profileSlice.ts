@@ -46,7 +46,6 @@ export const {
     clearProfile,
 } = profileSlice.actions;
 
-// Modified fetchProfile to accept userId parameter
 export const fetchProfile = (userId: string) => async (dispatch: AppDispatch) => {
 
     const response = await studentService.getStudentProfile(userId);

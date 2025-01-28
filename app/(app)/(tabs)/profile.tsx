@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/authSlice";
 import { fetchProfile, clearProfile } from "@/store/slices/profileSlice";
+import { clearCourses } from "@/store/slices/courseSlice";
 
 export default function Profile() {
     // const { user, logout } = useSession();
@@ -29,6 +30,7 @@ export default function Profile() {
     const handleLogout = () => {
         dispatch(logout());
         dispatch(clearProfile());
+        dispatch(clearCourses());
     };
 
     return (

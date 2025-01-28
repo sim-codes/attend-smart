@@ -21,17 +21,22 @@ import NoProfileHome from "@/components/NoProfileHome";
 import Toast from 'react-native-toast-message';
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { fetchProfile } from "@/store/slices/profileSlice";
+import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 
 
 export default function Home() {
     const { isLoading, error, user } = useAppSelector((state) => state.auth);
+    const { data: enrolledCourses } = useAppSelector((state) => state.courses);
     const [showDialog, setShowDialog] = useState(false);
-    const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
+    // const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
     const { data: profile, error: profileError } = useAppSelector((state) => state.profile);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(fetchProfile(user?.id!));
+        if (profile) {
+            dispatch(fetchEnrolledCourses(user?.id!));
+        }
     }, [dispatch]);
 
     const handleDeleteCourses = async (courseIds: string[]) => {
@@ -47,7 +52,7 @@ export default function Home() {
                 text1: 'Courses Removed',
                 text2: 'You have successfully unenrolled from the selected courses!',
             });
-            setEnrolledCourses(enrolledCourses.filter(course => !courseIds.includes(course.courseId)));
+            // dispatch(fetchEnrolledCourses(user?.id!));
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -55,26 +60,6 @@ export default function Home() {
                 text2: 'Failed to remove some or all courses. Please try again.',
             });
             console.error("Error removing courses:", error);
-        }
-    };
-
-
-    async function fetchEnrolledCourses() {
-        const { data, success, error } = await enrollmentService.getEnrolledCourses(user?.id!);
-        if (success) {
-            setEnrolledCourses(data!)
-            Toast.show({
-                type: 'success',
-                text1: 'Enrolled Courses Fetched',
-                text2: 'Enrolled courses list refrehed successfully!'
-            });
-        } else {
-            Toast.show({
-                type: 'error',
-                text1: 'Enrolled Courses Fetched',
-                text2: 'Something went wrong!'
-            });
-            console.error("Error fetching enrolled courses:", error?.message);
         }
     };
 
@@ -100,7 +85,7 @@ export default function Home() {
                 profile ?
                 <>
                 <HStack className="justify-between items-center w-full gap-x-2">
-                    <RegisterCourse refreshEnrolledCourses={fetchEnrolledCourses} />
+                    <RegisterCourse />
                     <Button variant="outline" className="" size="xl" onPress={() => setShowDialog(true)}>
                         <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
                         <ButtonText className="text-secondary-0">Take Attedance</ButtonText>
@@ -108,7 +93,6 @@ export default function Home() {
                 </HStack>
 
                     <CourseList
-                    refreshList={fetchEnrolledCourses}
                     courses={enrolledCourses}
                     onDeleteCourses={handleDeleteCourses}
                     />
