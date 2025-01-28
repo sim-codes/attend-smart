@@ -9,7 +9,7 @@ import { useAppSelector } from "@/store/hooks";
 
 export default function UpdateProfileModal() {
     const { data: profile } = useAppSelector((state) => state.profile);
-    const [image, setImage] = useState<string | undefined>(undefined);
+    const [image, setImage] = useState<string | undefined>(profile?.profileImageUrl);
     const handleUpload = async () => {
         const imageUrl = await cloudinaryService.handleImageUpload();
         if (imageUrl) {

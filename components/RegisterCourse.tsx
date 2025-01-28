@@ -16,7 +16,8 @@ import { Text } from "./ui/text";
 import { createOptionsFromResponse } from "@/hooks/createOptions";
 import { enrollmentService } from "@/services/enrollment";
 import Toast from 'react-native-toast-message';
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 
 interface PaginationMetadata {
     currentPage: number;
@@ -29,6 +30,7 @@ interface PaginationMetadata {
 
 export default function RegisterCourse() {
     const { user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
     // Form state
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -177,7 +179,9 @@ export default function RegisterCourse() {
                     text1: 'Course Enrolled',
                     text2: 'You have successfully enrolled in the course!'
                 });
-                }
+
+                dispatch(fetchEnrolledCourses(user?.id!));
+            }
         } catch (error) {
             Toast.show({
                 type: 'error',

@@ -13,12 +13,13 @@ import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
 import { studentService } from "@/services/student";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 
 export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: string }) {
     const router = useRouter();
     const { data: profile } = useAppSelector((state) => state.profile);
-
-       // Form state
+    const dispatch = useAppDispatch();
+    // Form state
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [currentStep, setCurrentStep] = useState<ProfileUpdateStep>('faculty');
 
@@ -215,6 +216,8 @@ export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: 
                 text1: 'Profile Update',
                 text2: 'Your profile details has been updated successully',
             });
+
+            dispatch(fetchEnrolledCourses(profile?.userId!));
             router.push('/')
         } else  {
             Toast.show({
