@@ -4,15 +4,16 @@ import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
 import { Ionicons } from "@expo/vector-icons";
 import ModalDialog from "@/components/ModalDialog";
-import { useSession } from "@/hooks/ctx";
 import FormFieldComponent from "@/components/FormFieldComponent";
 import { ChangePasswordFieldId } from "@/constants/types";
 import { changePasswordFormFields } from "@/constants/forms";
 import { authService } from "@/services/auth";
 import Toast from "react-native-toast-message";
+import { useAppSelector } from "@/store/hooks";
+
 
 export default function ChangePassword() {
-    const { user } = useSession();
+    const { user } = useAppSelector((state) => state.auth);
     const [showAlertDialog, setShowAlertDialog] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [formError, setFormError] = useState<string | null>(null);

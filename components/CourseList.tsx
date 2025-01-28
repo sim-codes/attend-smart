@@ -96,10 +96,6 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
                 contentContainerStyle={{ flexGrow: 1 }}
             />
 
-            <Button variant='outline' onPress={() => {}}>
-                <ButtonText className='text-white'>Refresh List</ButtonText>
-            </Button>
-
             {/* Footer with Delete Button */}
             <View className="p-4 border-t border-gray-200">
                 <Button size='xl'

@@ -16,7 +16,6 @@ import { fetchProfile, clearProfile } from "@/store/slices/profileSlice";
 import { clearCourses } from "@/store/slices/courseSlice";
 
 export default function Profile() {
-    // const { user, logout } = useSession();
     const { user, } = useAppSelector((state) => state.auth);
     const { data: profile, error } = useAppSelector((state) => state.profile);
     const dispatch = useAppDispatch();

@@ -1,9 +1,9 @@
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TabBarIcon } from '@/components/TabBarIcon';
 import Home from '@/app/(app)/(tabs)/home';
 import Profile from '@/app/(app)/(tabs)/profile';
-import Schedules from './schedules';
+import Schedules from '@/app/(app)/(tabs)/schedules';
 
 const Tab = createMaterialTopTabNavigator();
 

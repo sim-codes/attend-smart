@@ -7,7 +7,6 @@ import {
     AvatarImage,
 } from '@/components/ui/avatar';
 import { Heading } from "@/components/ui/heading";
-import { useSession } from "@/hooks/ctx";
 import { Button, ButtonText } from '@/components/ui/button';
 import { FontAwesome6 } from "@expo/vector-icons";
 import CourseList from "@/components/CourseList";
@@ -15,8 +14,6 @@ import RegisterCourse from "@/components/RegisterCourse";
 import TakeAttendance from "@/components/TakeAttendance";
 import ModalDialog from "@/components/ModalDialog";
 import { enrollmentService } from "@/services/enrollment";
-import { EnrollmentResponse } from "@/constants/types";
-import { useApp } from "@/hooks/appContext";
 import NoProfileHome from "@/components/NoProfileHome";
 import Toast from 'react-native-toast-message';
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
@@ -25,10 +22,9 @@ import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 
 
 export default function Home() {
-    const { isLoading, error, user } = useAppSelector((state) => state.auth);
+    const { user } = useAppSelector((state) => state.auth);
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);
     const [showDialog, setShowDialog] = useState(false);
-    // const [ enrolledCourses, setEnrolledCourses ] = useState<EnrollmentResponse[]>([]);
     const { data: profile, error: profileError } = useAppSelector((state) => state.profile);
     const dispatch = useAppDispatch();
 
@@ -52,7 +48,7 @@ export default function Home() {
                 text1: 'Courses Removed',
                 text2: 'You have successfully unenrolled from the selected courses!',
             });
-            // dispatch(fetchEnrolledCourses(user?.id!));
+            dispatch(fetchEnrolledCourses(user?.id!));
         } catch (error) {
             Toast.show({
                 type: 'error',
