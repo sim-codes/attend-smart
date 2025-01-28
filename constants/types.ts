@@ -169,6 +169,8 @@ export type ScheduleApiResponse = {
     dayOfWeek: string;
     startTime: string;
     endTime: string;
+    classroom: string;
+    courseTitle: string;
     sessionId: string;
     courseId: string;
     levelId: string;

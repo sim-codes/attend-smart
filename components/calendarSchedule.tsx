@@ -47,8 +47,8 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
     ).map(schedule => ({
       id: schedule.id,
       time: `Time: ${schedule.startTime} - ${schedule.endTime}`,
-      title: `${schedule.courseId} - ${schedule.levelId}`,
-      description: `Classroom: ${schedule.classroomId}`
+      title: `Course: ${schedule.courseTitle}`,
+      description: `Classroom: ${schedule.classroom}`
     }));
   };
 

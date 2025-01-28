@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
     },
     classSchedule: {
         getAll: '/class-schedules',
+        getAllByCourseIds: '/class-schedules/courses',
         getSingle: '/class-schedules/{id}',
         create: '/class-schedules',
         update: '/class-schedules/{id}',

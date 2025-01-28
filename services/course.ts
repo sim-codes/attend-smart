@@ -9,5 +9,11 @@ export const courseService = {
         return ServiceHandler.execute(() =>
             apiClient.get<ApiResponseWithHeader<CourseApiResponse>>(API_ENDPOINTS.course.getAllForDepartment.replace("{departmentId}", departmentId), {}, true)
         );
+    },
+
+    async getSchedulesByCourseIds(courseIds: {ids: string[]}) {
+        return ServiceHandler.execute(() =>
+            apiClient.get(API_ENDPOINTS.classSchedule.getAllByCourseIds, courseIds)
+        );
     }
 }
