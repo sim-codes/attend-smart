@@ -27,9 +27,9 @@ export default function Profile() {
     }, [dispatch]);
 
     const handleLogout = () => {
-        dispatch(logout());
         dispatch(clearProfile());
         dispatch(clearCourses());
+        dispatch(logout());
     };
 
     return (
