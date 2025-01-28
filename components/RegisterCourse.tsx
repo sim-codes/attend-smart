@@ -16,7 +16,7 @@ import { Text } from "./ui/text";
 import { createOptionsFromResponse } from "@/hooks/createOptions";
 import { enrollmentService } from "@/services/enrollment";
 import Toast from 'react-native-toast-message';
-import { useSession } from "@/hooks/ctx";
+import { useAppSelector } from "@/store/hooks";
 
 interface PaginationMetadata {
     currentPage: number;
@@ -28,7 +28,7 @@ interface PaginationMetadata {
 }
 
 export default function RegisterCourse() {
-    const { user } = useSession()
+    const { user } = useAppSelector((state) => state.auth);
     // Form state
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);

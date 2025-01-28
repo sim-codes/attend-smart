@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { Text } from "@/components/ui/text";
 import { useRouter } from "expo-router";
-import { useSession } from "@/hooks/ctx";
 import FormFieldComponent from "@/components/FormFieldComponent";
 import { ProfileUpdateFormFields, FacultyAndDepartmentApiResponse, ProfileUpdateStep, ProfileUpdateFieldId } from "@/constants/types";
 import { createProfileUpdateSteps } from "@/constants/forms";
 import Toast from "react-native-toast-message";
-import { useApp } from "@/hooks/appContext";
 import { createOptionsFromResponse } from "@/hooks/createOptions";
 import { facultyService } from "@/services/faculty";
 import { levelService } from "@/services/level";
@@ -14,10 +12,11 @@ import { departmentService } from "@/services/department";
 import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
 import { studentService } from "@/services/student";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: string }) {
     const router = useRouter();
-    const { profile, updateProfile } = useApp();
+    const { data: profile } = useAppSelector((state) => state.profile);
 
        // Form state
     const [isSubmitting, setIsSubmitting] = useState(false);
