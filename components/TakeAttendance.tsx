@@ -54,10 +54,11 @@ export default function TakeAttendance() {
     const isCurrentTimeWithinSchedule = (schedule: ScheduleApiResponse): boolean => {
         const now = new Date();
         const currentDay = WEEKDAYS[getDay(now)];
-        
+
         if (schedule.dayOfWeek !== currentDay) return false;
 
-        const currentTime = now.toLocaleTimeString('en-US', { hour12: false });
+        const currentTime = now.toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos', hour12: false });
+
         const scheduleStart = schedule.startTime;
         const scheduleEnd = schedule.endTime;
 
