@@ -1,19 +1,17 @@
 import { ReactNode } from 'react';
 
-export type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
-
 export interface FormFieldProps {
-label: string;
-placeholder: string;
-type?: 'text' | 'password' | 'select';
-value: string;
-onChange: (value: string) => void;
-helperText?: string;
-errorText?: string;
-isInvalid?: boolean;
-isRequired?: boolean;
-isDisabled?: boolean;
-isReadOnly?: boolean;
+    label: string;
+    placeholder: string;
+    type?: 'text' | 'password' | 'select';
+    value: string;
+    onChange: (value: string) => void;
+    helperText?: string;
+    errorText?: string;
+    isInvalid?: boolean;
+    isRequired?: boolean;
+    isDisabled?: boolean;
+    isReadOnly?: boolean;
 }
 
 export type ChangePasswordFieldId = 'email' | 'currentPassword' | 'newPassword' | 'confirmPassword';
@@ -178,10 +176,6 @@ export type ScheduleApiResponse = {
     classroomId: string;
 };
 
-export type ScheduleMap = {
-    [date: string]: Schedule[];
-};
-
 export type CalendarScheduleProps = {
     schedules: ScheduleApiResponse[];
     onSchedulePress?: (schedule: Schedule) => void;
@@ -225,7 +219,7 @@ export interface CoursesState {
     data: EnrollmentResponse[];
     isLoading: boolean;
     error: string | null;
-  }
+}
 
 export interface BaseStudentProfile {
     matriculationNumber: string;
@@ -247,11 +241,6 @@ export interface StudentProfileUpdateCredentials {
     email: string;
     phoneNumber: string;
     profileImageUrl: string;
-}
-
-export interface AppContextType {
-    profile: StudentProfile | null;
-    updateProfile: (newProfile: StudentProfile) => void;
 }
 
 export interface StudentProfile extends BaseStudentProfile {
