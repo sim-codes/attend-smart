@@ -19,7 +19,8 @@ import Toast from 'react-native-toast-message';
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { fetchProfile } from "@/store/slices/profileSlice";
 import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
-
+import { scheduleServices } from "@/services/schedule";
+import { ScheduleApiResponse } from "@/constants/types";
 
 export default function Home() {
     const { user } = useAppSelector((state) => state.auth);
@@ -28,12 +29,37 @@ export default function Home() {
     const { data: profile, error: profileError } = useAppSelector((state) => state.profile);
     const dispatch = useAppDispatch();
 
+    const [schedules, setSchedules] = useState<ScheduleApiResponse[]>([]);
+
+    const courseIds = enrolledCourses.map(course => course.courseId);
+
     useEffect(() => {
         dispatch(fetchProfile(user?.id!));
         if (profile) {
             dispatch(fetchEnrolledCourses(user?.id!));
         }
     }, [dispatch]);
+
+    const fetchCourseSchedules = async () => {
+        const { data, success, error } = await scheduleServices.getAllSchedules();
+
+            if (success && data) {
+                const filteredSchedules = data.filter(schedule => courseIds.includes(schedule.courseId));
+                setSchedules(filteredSchedules);
+                Toast.show({
+                    type: 'success',
+                    text1: 'Schedules Fetched',
+                    text2: 'Schedules have been successfully fetched!',
+                })
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: 'Failed to fetch schedules. Please try again.',
+                });
+                console.error('Error fetching schedules:', error);
+            }
+    };
 
     const handleDeleteCourses = async (courseIds: string[]) => {
         if (!user?.id || courseIds.length === 0) return;
@@ -81,11 +107,8 @@ export default function Home() {
                 profile ?
                 <>
                 <HStack className="justify-between items-center w-full gap-x-2">
-                    <RegisterCourse />
-                    <Button variant="outline" className="" size="xl" onPress={() => setShowDialog(true)}>
-                        <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
-                        <ButtonText className="text-secondary-0">Take Attedance</ButtonText>
-                    </Button>
+                        <RegisterCourse />
+                        <TakeAttendance />
                 </HStack>
 
                     <CourseList
@@ -96,17 +119,6 @@ export default function Home() {
                 :
                 <NoProfileHome />
             }
-
-            <ModalDialog
-                isOpen={showDialog}
-                onClose={() => setShowDialog(false)}
-                onAction={() => {}}
-                title='Take Attendance'
-                actionText='Take Attendance'
-                cancelText="Cancel"
-            >
-                <TakeAttendance />
-            </ModalDialog>
 
         </VStack>
     )

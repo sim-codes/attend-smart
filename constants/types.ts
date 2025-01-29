@@ -76,6 +76,12 @@ export interface LoginFormField extends BaseFormField {
     id: LoginFieldId;
 }
 
+export type AttendanceFieldId = "course" | "status"
+
+export interface AttendanceField extends BaseFormField {
+    id:  AttendanceFieldId;
+}
+
 export type CourseEnrollmentFieldId = "faculty" | "department" | "course"
 
 export interface CourseEnrollmentField extends BaseFormField {
@@ -208,6 +214,7 @@ export interface ModalDialogProps {
 
 export interface EnrollmentResponse {
     id: string;
+    name: string;
     courseId: string;
     courseTitle: string;
     courseCode: string;

@@ -2,7 +2,8 @@ import { LoginFormField, SignupFormFields,
     ProfileCreationFormFields, Option,
     CourseEnrollmentField,
     ChangePasswordFormField,
-    ProfileUpdateFormFields
+    ProfileUpdateFormFields,
+    AttendanceField
 } from "@/constants/types";
 
 
@@ -278,6 +279,32 @@ export const courseEnrollmentFormFields = (
         placeholder: "Select your course",
         type: "select",
         options: courses,
+        isRequired: true
+    }
+]);
+
+export const attendanceFormFields = (
+    schedules: Option[],
+): AttendanceField[] => ([
+    {
+        id: "course",
+        label: "Course Schedules",
+        placeholder: "Select your the course",
+        type: "select",
+        options: schedules,
+        isRequired: true
+    },
+    {
+        id: "status",
+        label: "Status",
+        placeholder: "Select your status",
+        type: "select",
+        options: [
+            { value: "Present", label: "Present"},
+            { value: "Absent", label: "Absent" },
+            { value: "Late", label: "Late" },
+            { value: "Excused", label: "Excused"}
+        ],
         isRequired: true
     }
 ]);
