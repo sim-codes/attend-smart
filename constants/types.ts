@@ -170,6 +170,7 @@ export type Schedule = {
 
 export type ScheduleApiResponse = {
     id: string;
+    name: string;
     dayOfWeek: string;
     startTime: string;
     endTime: string;
@@ -214,7 +215,6 @@ export interface ModalDialogProps {
 
 export interface EnrollmentResponse {
     id: string;
-    name: string;
     courseId: string;
     courseTitle: string;
     courseCode: string;
