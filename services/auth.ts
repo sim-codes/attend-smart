@@ -6,7 +6,7 @@ import type { LoginCredentials,
     CodeResponse, ChangePasswordCredentials
 } from '@/constants/types';
 import * as SecureStore from 'expo-secure-store';
-import { ServiceHandler } from './serviceHandler';
+import { ServiceHandler } from './utils/serviceHandler';
 
 export const authService = {
     async login(credentials: LoginCredentials) {

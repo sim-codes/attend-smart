@@ -16,7 +16,7 @@ import {
   getDay,
   getDate
 } from 'date-fns';
-import { CalendarScheduleProps } from '@/constants/types';
+import { CalendarScheduleProps } from '@/constants/types/schedule';
 
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 

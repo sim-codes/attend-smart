@@ -2,23 +2,17 @@ import { useState, useEffect } from "react";
 import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
 import ModalDialog from "./ModalDialog";
-import FormFieldComponent from "./FormFieldComponent";
-import {
-    ScheduleApiResponse,
-    CourseEnrollmentFieldId,
-    AttendanceField,
-    AttendanceFieldId
-} from "@/constants/types";
-import { attendanceFormFields } from '../constants/forms';
-import { Text } from "./ui/text";
-import { createOptionsFromResponse } from "@/hooks/createOptions";
-import { enrollmentService } from "@/services/enrollment";
+import FormFieldComponent from "./forms/FormFieldComponent";
+import { AttendanceField, AttendanceFieldId } from "@/constants/types/attendance";
+import { ScheduleApiResponse } from "@/constants/types/schedule";
+import { attendanceFormFields } from '@/constants/forms';
+import { Text } from "@/components/ui/text";
+import { createOptionsFromResponse } from "@/hooks/useCreateOptions";
 import Toast from 'react-native-toast-message';
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { scheduleServices } from "@/services/schedule";
-import { getDay, parse, isWithinInterval } from 'date-fns';
+import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
 
 export default function TakeAttendance() {

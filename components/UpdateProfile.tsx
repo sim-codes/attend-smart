@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Text } from "@/components/ui/text";
 import { useRouter } from "expo-router";
-import FormFieldComponent from "@/components/FormFieldComponent";
-import { ProfileUpdateFormFields, FacultyAndDepartmentApiResponse, ProfileUpdateStep, ProfileUpdateFieldId } from "@/constants/types";
+import FormFieldComponent from "@/components/forms/FormFieldComponent";
+import { FacultyAndDepartmentApiResponse } from "@/constants/types/api";
+import { ProfileUpdateFieldId, ProfileUpdateStep, ProfileUpdateFormFields } from "@/constants/types/profile";
 import { createProfileUpdateSteps } from "@/constants/forms";
 import Toast from "react-native-toast-message";
-import { createOptionsFromResponse } from "@/hooks/createOptions";
+import { createOptionsFromResponse } from "@/hooks/useCreateOptions";
 import { facultyService } from "@/services/faculty";
 import { levelService } from "@/services/level";
 import { departmentService } from "@/services/department";

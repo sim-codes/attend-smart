@@ -3,17 +3,19 @@ import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Ionicons } from "@expo/vector-icons";
 import ModalDialog from "./ModalDialog";
-import FormFieldComponent from "./FormFieldComponent";
+import FormFieldComponent from "./forms/FormFieldComponent";
 import {
-    FacultyAndDepartmentApiResponse,
-    CourseApiResponse, CourseEnrollmentField, CourseEnrollmentFieldId
+    CourseEnrollmentField, CourseEnrollmentFieldId
 } from "@/constants/types";
-import { courseEnrollmentFormFields } from '../constants/forms';
+import { CourseApiResponse } from "@/constants/types/course";
+import { FacultyAndDepartmentApiResponse } from "@/constants/types/api";
+
+import { courseEnrollmentFormFields } from '@/constants/forms';
 import { facultyService } from "@/services/faculty";
 import { departmentService } from "@/services/department";
 import { courseService } from "@/services/course";
 import { Text } from "./ui/text";
-import { createOptionsFromResponse } from "@/hooks/createOptions";
+import { createOptionsFromResponse } from "@/hooks/useCreateOptions";
 import { enrollmentService } from "@/services/enrollment";
 import Toast from 'react-native-toast-message';
 import { useAppSelector, useAppDispatch } from "@/store/hooks";

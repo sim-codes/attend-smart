@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { TabBarIcon } from '@/components/TabBarIcon';
+import { TabBarIcon } from '@/components/layouts/TabBarIcon';
 import Home from '@/app/(app)/(tabs)/home';
 import Profile from '@/app/(app)/(tabs)/profile';
 import Schedules from '@/app/(app)/(tabs)/schedules';

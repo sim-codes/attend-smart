@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
-import FormFieldComponent from '@/components/FormFieldComponent';
+import FormFieldComponent from '@/components/forms/FormFieldComponent';
 import { Link } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 

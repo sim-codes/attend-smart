@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Button, ButtonText } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { CourseListProps, EnrollmentResponse } from '@/constants/types';
-import CustomCheckbox from '@/components/CheckBox';
+import CustomCheckbox from '@/components/forms/CheckBox';
 import { VStack } from '@/components/ui/vstack';
 import { Text } from '@/components/ui/text';
 import { HStack } from '@/components/ui/hstack';

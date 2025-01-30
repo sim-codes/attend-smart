@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/form-control';
 import { Input, InputField } from '@/components/ui/input';
 import Feather from '@expo/vector-icons/Feather';
-import Dropdown from '@/components/Dropdown';
+import Dropdown from '@/components/forms/Dropdown';
 import { Option } from "@/constants/types";
 interface EnhancedFormFieldProps extends FormFieldProps {
     options?: Option[];

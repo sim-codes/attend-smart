@@ -1,6 +1,6 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import { ServiceHandler } from './serviceHandler';
+import { ServiceHandler } from './utils/serviceHandler';
 import { FacultyAndDepartmentApiResponse } from '@/constants/types';
 
 export const facultyService = {

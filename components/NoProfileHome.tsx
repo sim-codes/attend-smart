@@ -5,7 +5,7 @@ import { Heading } from "@/components/ui/heading";
 import { Button, ButtonText } from "@/components/ui/button";
 import { FontAwesome6 } from "@expo/vector-icons";
 import ModalDialog from "./ModalDialog";
-import FormFieldComponent from "./FormFieldComponent";
+import FormFieldComponent from "./forms/FormFieldComponent";
 import {
     ProfileStep,
     ProfileFieldId,
@@ -16,7 +16,7 @@ import { facultyService } from "@/services/faculty";
 import { levelService } from "@/services/level";
 import { departmentService } from "@/services/department";
 import { Text } from "./ui/text";
-import { createOptionsFromResponse } from "@/hooks/createOptions";
+import { createOptionsFromResponse } from "@/hooks/useCreateOptions";
 import { ProfileCreationFormFields } from '../constants/types';
 import { studentService } from "@/services/student";
 import Toast from 'react-native-toast-message';

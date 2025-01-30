@@ -1,7 +1,7 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import { EnrollmentResponse, CourseApiResponse, EnrollmentPayload } from '@/constants/types';
-import { ServiceHandler } from './serviceHandler';
+import { ServiceHandler } from './utils/serviceHandler';
 
 export const enrollmentService = {
     async getEnrolledCourses(studentId: string) {
