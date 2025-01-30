@@ -19,6 +19,7 @@ import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { scheduleServices } from "@/services/schedule";
 import { getDay, parse, isWithinInterval } from 'date-fns';
+import { attendanceService } from "@/services/attendance";
 
 export default function TakeAttendance() {
     const { user } = useAppSelector((state) => state.auth);
@@ -122,7 +123,7 @@ export default function TakeAttendance() {
     };
 
     const updateFormSteps = () => {
-        const courseOptions = createOptionsFromResponse(schedules, "id", "courseTitle");
+        const courseOptions = createOptionsFromResponse(schedules, "courseId", "courseTitle");
         const fields = attendanceFormFields(courseOptions);
         setFormFields(fields);
     };
@@ -154,25 +155,26 @@ export default function TakeAttendance() {
         }
 
         setIsSubmitting(true);
-        try {
-            // Add your submission logic here
-            // Example:
-            // await attendanceService.submitAttendance(formData);
-            
-            Toast.show({
-                type: 'success',
-                text1: 'Success',
-                text2: 'Attendance submitted successfully!',
-            });
-            setShowDialog(false);
-        } catch (error) {
+        const payload = {
+            status: formData.status,
+            courseId: formData.course,
+            studentLon: 2.3294,
+            studentLat: 6.5244,
+        }
+        const response = await attendanceService.submitAttendance(user?.id!, payload);
+        if (!response.success) {
             Toast.show({
                 type: 'error',
                 text1: 'Error',
                 text2: 'Failed to submit attendance. Please try again.',
             });
-        } finally {
-            setIsSubmitting(false);
+        } else {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Failed to submit attendance. Please try again.',
+            });
+            console.error('Error submitting attendance:', response.error);
         }
     };
 
@@ -208,7 +210,7 @@ export default function TakeAttendance() {
                             options={
                                 field.id === 'course' ? (
                                     enrolledCourses
-                                    ? createOptionsFromResponse(schedules, "id", "courseTitle")
+                                    ? createOptionsFromResponse(schedules, "courseId", "courseTitle")
                                     : []
                                 ) : field.options
                             }

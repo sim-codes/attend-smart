@@ -7,7 +7,7 @@ import { CourseApiResponse, ApiResponseWithHeader } from '@/constants/types';
 export const courseService = {
     async getCoursesByDepartment(departmentId: string) {
         return ServiceHandler.execute(() =>
-            apiClient.get<ApiResponseWithHeader<CourseApiResponse>>(API_ENDPOINTS.course.getAllForDepartment.replace("{departmentId}", departmentId), {}, true)
+            apiClient.get<ApiResponseWithHeader<CourseApiResponse>>(API_ENDPOINTS.course.getAllForDepartment(departmentId), {}, true)
         );
     },
 

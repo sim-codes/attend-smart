@@ -27,12 +27,6 @@ export const authService = {
         );
     },
 
-    async getCurrentUser() {
-        return ServiceHandler.execute<UserProfile>(() =>
-            apiClient.get(API_ENDPOINTS.student.getSingle.replace('{id}', 'me'))
-        );
-    },
-
     async getStoredUserData(): Promise<UserProfile | null> {
         const userData = await SecureStore.getItemAsync('auth.user');
         return userData ? JSON.parse(userData) : null;
