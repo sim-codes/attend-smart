@@ -1,6 +1,6 @@
-import { CourseId, DepartmentId, FacultyId, Id, StudentId } from './types';
+import { CourseId, DepartmentId, FacultyId, Id, StudentId } from '@/constants/types/api';
 
-// Define the actual endpoints object with type-safe functions
+
 export const API_ENDPOINTS = {
     faculty: {
         getAll: '/faculties',

@@ -1,4 +1,4 @@
-import { Option } from "@/constants/types";
+import { Option } from "@/constants/types/common";
 
 export const createOptionsFromResponse = <T extends { id: string; name: string }>(
     items: T[],

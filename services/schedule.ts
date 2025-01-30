@@ -1,7 +1,7 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import { ServiceHandler } from './utils/serviceHandler';
-import { ScheduleApiResponse } from '@/constants/types';
+import { ServiceHandler } from '@/services/utils/serviceHandler';
+import { ScheduleApiResponse } from '@/constants/types/schedule';
 
 export const scheduleServices = {
     async getAllSchedules() {

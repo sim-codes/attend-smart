@@ -27,3 +27,9 @@ export interface DropdownProps {
     error?: string;
     disabled?: boolean;
 }
+
+export interface ChangePasswordCredentials {
+    email: string;
+    currentPassword: string;
+    newPassword: string;
+}

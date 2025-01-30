@@ -1,6 +1,6 @@
 import { studentService } from '@/services/student';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StudentProfile, ProfileState } from '@/constants/types';
+import { StudentProfile, ProfileState } from '@/constants/types/student';
 import { AppDispatch } from '@/store/store';
 
 

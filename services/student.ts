@@ -1,7 +1,9 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import { StudentProfile, ProfileCreationCredentials, CodeResponse, StudentProfileUpdateCredentials } from '@/constants/types';
-import { ServiceHandler } from './utils/serviceHandler';
+import { CodeResponse } from '@/constants/types/api'
+import { StudentProfile, StudentProfileUpdateCredentials } from '@/constants/types/student';
+import { ProfileCreationCredentials } from '@/constants/types/profile';
+import { ServiceHandler } from '@/services/utils/serviceHandler';
 
 
 export const studentService = {

@@ -1,11 +1,8 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import type {
-    CodeResponse, ChangePasswordCredentials
-} from '@/constants/types';
+import { ChangePasswordCredentials } from '@/constants/types/forms';
 import { UserProfile, LoginResponse, LoginCredentials, SignUpCredentials } from '@/constants/types/auth';
-import {  } from '@/constants/types/auth';
-import * as SecureStore from 'expo-secure-store';
+import { CodeResponse } from '@/constants/types/api';
 import { ServiceHandler } from './utils/serviceHandler';
 
 export const authService = {
@@ -25,15 +22,5 @@ export const authService = {
         return await ServiceHandler.execute<CodeResponse>(() =>
             apiClient.post(API_ENDPOINTS.authentication.changePassword, credentials)
         );
-    },
-
-    async getStoredUserData(): Promise<UserProfile | null> {
-        const userData = await SecureStore.getItemAsync('auth.user');
-        return userData ? JSON.parse(userData) : null;
-    },
-
-    async isAuthenticated() {
-        const userData = await SecureStore.getItemAsync('auth.user');
-        return !!userData;
     }
 };

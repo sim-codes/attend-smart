@@ -1,6 +1,5 @@
-import { apiClient } from "@/services/api";
-import { AxiosError, AxiosResponse } from "axios";
-import { ServiceResponse, ErrorResponse } from "@/constants/types";
+import { AxiosError } from "axios";
+import { ServiceResponse, ErrorResponse } from "@/constants/types/common";
 
 export class ServiceHandler {
     static async execute<T>(

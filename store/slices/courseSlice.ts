@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EnrollmentResponse, CoursesState } from '@/constants/types';
+import { EnrollmentResponse, CoursesState } from '@/constants/types/course';
 import { AppDispatch } from '@/store/store';
 import { enrollmentService } from '@/services/enrollment';
 
