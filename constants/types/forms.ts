@@ -1,3 +1,6 @@
+import { Option } from "@/constants/types/common";
+
+
 export interface BaseFormField {
     label: string;
     placeholder: string;
@@ -14,4 +17,13 @@ export interface FormFieldProps extends BaseFormField {
     errorText?: string;
     isInvalid?: boolean;
     isDisabled?: boolean;
+}
+
+export interface DropdownProps {
+    options: Option[];
+    value?: string;
+    placeholder?: string;
+    onChange: (value: string) => void;
+    error?: string;
+    disabled?: boolean;
 }

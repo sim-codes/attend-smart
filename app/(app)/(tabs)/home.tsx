@@ -7,12 +7,9 @@ import {
     AvatarImage,
 } from '@/components/ui/avatar';
 import { Heading } from "@/components/ui/heading";
-import { Button, ButtonText } from '@/components/ui/button';
-import { FontAwesome6 } from "@expo/vector-icons";
 import CourseList from "@/components/CourseList";
 import RegisterCourse from "@/components/RegisterCourse";
 import TakeAttendance from "@/components/TakeAttendance";
-import ModalDialog from "@/components/ModalDialog";
 import { enrollmentService } from "@/services/enrollment";
 import NoProfileHome from "@/components/NoProfileHome";
 import Toast from 'react-native-toast-message';
@@ -20,7 +17,7 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { fetchProfile } from "@/store/slices/profileSlice";
 import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 import { scheduleServices } from "@/services/schedule";
-import { ScheduleApiResponse } from "@/constants/types";
+import { ScheduleApiResponse } from "@/constants/types/schedule";
 
 export default function Home() {
     const { user } = useAppSelector((state) => state.auth);

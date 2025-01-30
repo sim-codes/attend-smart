@@ -9,7 +9,7 @@ import {
 import { Button, ButtonText } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
-import { ModalDialogProps } from "@/constants/types";
+import { ModalDialogProps } from '@/constants/types/common';
 
 const ModalDialog = ({
     isOpen,

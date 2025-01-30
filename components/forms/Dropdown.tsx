@@ -2,20 +2,9 @@ import React, { useState } from 'react';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { View, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { Option } from '@/constants/types/common';
+import { DropdownProps } from '@/constants/types/forms';
 
-interface Option {
-    label: string;
-    value: string;
-}
-
-interface DropdownProps {
-    options: Option[];
-    value?: string;
-    placeholder?: string;
-    onChange: (value: string) => void;
-    error?: string;
-    disabled?: boolean;
-}
 
 const Dropdown = ({
     options,

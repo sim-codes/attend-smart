@@ -1,19 +1,5 @@
 import { ReactNode } from 'react';
 
-export interface FormFieldProps {
-    label: string;
-    placeholder: string;
-    type?: 'text' | 'password' | 'select';
-    value: string;
-    onChange: (value: string) => void;
-    helperText?: string;
-    errorText?: string;
-    isInvalid?: boolean;
-    isRequired?: boolean;
-    isDisabled?: boolean;
-    isReadOnly?: boolean;
-}
-
 export type ChangePasswordFieldId = 'email' | 'currentPassword' | 'newPassword' | 'confirmPassword';
 
 export interface ChangePasswordFormField extends BaseFormField {
@@ -26,19 +12,6 @@ export interface ChangePasswordCredentials {
     newPassword: string;
 }
 
-export type ProfileUpdateFieldId = 'firstname' | 'email' | 'lastname' | 'phonenumber' | "matriculationNumber" | "level" | "department" | "faculty";
-export type ProfileUpdateStep = 'personalInfo' | 'faculty';
-
-export interface ProfileUpdateFormField extends BaseFormField {
-    id: ProfileUpdateFieldId;
-}
-
-export interface ProfileUpdateFormFields {
-    [key: string]: {
-        fields: ProfileUpdateFormField[];
-        title: string;
-    }
-}
 
 export type LoginFieldId = 'username' | 'password';
 export type SignupFieldId = LoginFieldId | 'email' | 'confirmPassword' | 'firstname' | 'lastname' | 'phonenumber' | 'roles';
@@ -52,7 +25,6 @@ interface BaseFormField {
     isReadOnly?: boolean;
     isRequired?: boolean;
 }
-export type ProfileStep = 'faculty' | 'details';
 
 export type ProfileFieldId = "matriculationNumber" | "level" | "department"| "faculty";
 export interface ProfileCreationFormField extends BaseFormField {
@@ -74,12 +46,6 @@ export interface ProfileCreationCredentials {
 
 export interface LoginFormField extends BaseFormField {
     id: LoginFieldId;
-}
-
-export type CourseEnrollmentFieldId = "faculty" | "department" | "course"
-
-export interface CourseEnrollmentField extends BaseFormField {
-    id:  CourseEnrollmentFieldId;
 }
 
 export interface CourseApiResponse extends Course {
@@ -280,10 +246,6 @@ export interface Option {
 export interface LevelApiResponse {
     id: string;
     name: string;
-}
-
-export interface EnrollmentPayload {
-    courseId: string;
 }
 
 // Define base types

@@ -1,7 +1,8 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import { ServiceHandler } from './utils/serviceHandler';
-import { CourseApiResponse, ApiResponseWithHeader } from '@/constants/types';
+import { CourseApiResponse } from '@/constants/types/course';
+import { ApiResponseWithHeader } from '@/constants/types/common';
 
 
 export const courseService = {

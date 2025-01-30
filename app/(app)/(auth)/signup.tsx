@@ -5,7 +5,7 @@ import FormFieldComponent from '@/components/forms/FormFieldComponent';
 import { Link, useRouter } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { signupSteps } from "@/constants/forms";
-import { SignupStep, SignupFieldId } from '@/constants/types';
+import { SignupStep, SignupFieldId } from "@/constants/types/auth-forms";
 import { Avatar, AvatarImage, AvatarFallbackText } from "@/components/ui/avatar";
 import cloudinaryService from "@/services/cloudinary";
 import { Pressable } from "react-native";

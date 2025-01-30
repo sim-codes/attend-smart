@@ -1,6 +1,6 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import { EnrollmentResponse, CourseApiResponse, EnrollmentPayload } from '@/constants/types';
+import { EnrollmentResponse, CourseApiResponse, EnrollmentPayload } from '@/constants/types/course';
 import { ServiceHandler } from './utils/serviceHandler';
 
 export const enrollmentService = {

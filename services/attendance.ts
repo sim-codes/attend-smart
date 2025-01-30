@@ -1,7 +1,6 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import { ServiceHandler } from './utils/serviceHandler';
-import { FacultyAndDepartmentApiResponse } from '@/constants/types';
 
 interface AttendancePayload {
     status: string;

@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { API_ENDPOINTS, PUBLIC_ENDPOINTS } from '@/constants/endpoints';
-import { TokenDto } from '@/constants/types';
+import { TokenDto } from '@/constants/types/auth';
 import { store } from '@/store/store';
 import { updateToken, logout } from '@/store/slices/authSlice';
 import { API_CONFIG } from '@/constants/config';

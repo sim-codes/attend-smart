@@ -1,13 +1,11 @@
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
 import CalendarSchedule from "@/components/calendarSchedule";
-import { scheduleData } from "@/constants/data";
 import { scheduleServices } from "@/services/schedule";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
-import { ScheduleApiResponse } from "@/constants/types";
+import { ScheduleApiResponse } from "@/constants/types/schedule";
 import Toast from "react-native-toast-message";
-import { courseService } from "@/services/course";
 
 export default function Schedules() {
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);

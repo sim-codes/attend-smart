@@ -4,9 +4,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { Ionicons } from "@expo/vector-icons";
 import ModalDialog from "./ModalDialog";
 import FormFieldComponent from "./forms/FormFieldComponent";
-import {
-    CourseEnrollmentField, CourseEnrollmentFieldId
-} from "@/constants/types";
+import { CourseEnrollmentFieldId, CourseEnrollmentField } from "@/constants/types/course";
 import { CourseApiResponse } from "@/constants/types/course";
 import { FacultyAndDepartmentApiResponse } from "@/constants/types/api";
 

@@ -1,3 +1,5 @@
+import { BaseFormField } from "@/constants/types/forms";
+
 export interface Course {
     id: string;
     title: string;
@@ -24,6 +26,16 @@ export interface CoursesState {
     data: EnrollmentResponse[];
     isLoading: boolean;
     error: string | null;
+}
+
+export interface EnrollmentPayload {
+    courseId: string;
+}
+
+export type CourseEnrollmentFieldId = "faculty" | "department" | "course"
+
+export interface CourseEnrollmentField extends BaseFormField {
+    id:  CourseEnrollmentFieldId;
 }
 
 export interface CourseListProps {

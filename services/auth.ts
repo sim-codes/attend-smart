@@ -1,10 +1,10 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import type { LoginCredentials,
-    LoginResponse, UserProfile,
-    SignUpCredentials,
+import type {
     CodeResponse, ChangePasswordCredentials
 } from '@/constants/types';
+import { UserProfile, LoginResponse, LoginCredentials, SignUpCredentials } from '@/constants/types/auth';
+import {  } from '@/constants/types/auth';
 import * as SecureStore from 'expo-secure-store';
 import { ServiceHandler } from './utils/serviceHandler';
 

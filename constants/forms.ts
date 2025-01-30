@@ -1,10 +1,9 @@
-import { LoginFormField, SignupFormFields,
-    ProfileCreationFormFields, Option,
-    CourseEnrollmentField,
-    ChangePasswordFormField,
-    ProfileUpdateFormFields,
-    AttendanceField
-} from "@/constants/types";
+import { CourseEnrollmentField } from "@/constants/types/course";
+import { AttendanceField } from "@/constants/types/attendance";
+import { ChangePasswordFormField } from "@/constants/types/profile";
+import { Option } from "@/constants/types/common";
+import { ProfileCreationFormFields, ProfileUpdateFormFields } from "@/constants/types/profile";
+import { SignupFormFields, LoginFormField } from "@/constants/types/auth-forms";
 
 
 export const signupSteps: SignupFormFields = {
