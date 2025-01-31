@@ -1,50 +1,78 @@
-# Attend Smart 👋
+# AttendSmart - Mobile Application
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![AttendSmart Logo](https://your-logo-url.com/logo.png)  
+A smart attendance system for universities, integrating facial recognition and geofencing.
 
-## Get started
+## 📌 Features
+- 🔑 **Authentication** (Sign up, Login, Password Reset)
+- 📚 **Course Registration & Enrollment**
+- ✅ **Attendance Tracking**
+- 📍 **Geofencing for Location-Based Attendance**
+- 🏷️ **Facial Recognition for Verification**
+- 📅 **Class Schedule Management**
 
-1. Install dependencies
+## 🚀 Tech Stack
+- **Frontend**: React Native (Expo, TypeScript, Redux, Tailwind CSS)
+- **Backend**: ASP.NET Core API
+- **Cloud Storage**: Cloudinary (for profile images)
+- **Maps & Geolocation**: Google APIs
 
-   ```bash
-   npm install
-   ```
+## 🔧 Setup Instructions
+### Prerequisites
+Ensure you have the following installed:
+- Node.js & npm
+- Expo CLI (`npm install -g expo-cli`)
+- A device/emulator (Android/iOS)
 
-2. Start the app
+### Installation
+```sh
+# Clone the repository
+git clone https://github.com/sim-codes/attend-smart.git
+cd attend-smart
 
-   ```bash
-    npx expo start
-   ```
+# Install dependencies
+npm install
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+# Start the development server
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🛠️ Configuration
+Create a `.env` file in the root directory and add your API keys:
+```
+API_BASE_URL=https://your-api-url.com
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+```
 
-## Learn more
+## 📷 Screenshots
+| Login Screen | Home Screen | Attendance |
+|-------------|------------|------------|
+| ![Login](https://your-image-url.com/login.png) | ![Home](https://your-image-url.com/home.png) | ![Attendance](https://your-image-url.com/attendance.png) |
 
-To learn more about developing your project with Expo, look at the following resources:
+## 📂 Folder Structure
+```
+attend-smart/
+│-- src/
+│   ├── components/      # Reusable UI components
+│   ├── screens/         # App screens
+│   ├── redux/           # State management
+│   ├── utils/           # Helper functions
+│   ├── services/        # API calls
+│-- assets/              # Images and fonts
+│-- App.tsx              # Entry point
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🛠️ Contributing
+Feel free to open issues and pull requests!
 
-## Join the community
+## 📜 License
+This project is open-source under the [MIT License](LICENSE).
 
-Join our community of developers creating universal apps.
+## 📬 Contact
+👤 **Developer**: [Sim Codes](https://github.com/sim-codes)
+📂 GitHub Repository: [github.com/sim-codes/attend-smart](https://github.com/sim-codes/attend-smart)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+⭐ **Star this repo if you find it useful!** 🚀
