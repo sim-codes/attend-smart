@@ -37,21 +37,44 @@ export default function TakeAttendance() {
 
     const [location, setLocation] = useState<Location.LocationObject | null>(null);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [isLocationEnabled, setIsLocationEnabled] = useState(false);
 
     useEffect(() => {
-        async function getCurrentLocation() {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
+        checkAndRequestLocation();
+    }, []);
+
+    const checkAndRequestLocation = async () => {
+        try {
+            // First check if location services are enabled
+            const serviceEnabled = await Location.hasServicesEnabledAsync();
+            if (!serviceEnabled) {
+                setErrorMsg('Location services are disabled. Please enable them in your device settings.');
+                Toast.show({
+                    type: 'error',
+                    text1: 'Location Services Disabled',
+                    text2: 'Please enable location services to take attendance.',
+                });
                 return;
             }
 
-            let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Balanced});
-            setLocation(location);
-        }
+            // Request permissions
+            const { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                Toast.show({
+                    type: 'error',
+                    text1: 'Location Permission Denied',
+                    text2: 'Location access is required to take attendance.',
+                });
+                return;
+            }
 
-        getCurrentLocation();
-    }, []);
+            setIsLocationEnabled(true);
+        } catch (error) {
+            console.error('Error checking location permissions:', error);
+            setErrorMsg('Failed to check location permissions');
+        }
+    };
 
     useEffect(() => {
         if (showDialog) {
@@ -157,6 +180,26 @@ export default function TakeAttendance() {
         return isValid;
     };
 
+    const getCurrentLocation = async (): Promise<Location.LocationObject | null> => {
+        try {
+            const location = await Location.getCurrentPositionAsync({
+                accuracy: Location.Accuracy.High, // Using high accuracy for better precision
+                timeInterval: 5000, // Update every 5 seconds
+                distanceInterval: 5, // Update every 5 meters
+            });
+            setLocation(location);
+            return location;
+        } catch (error) {
+            console.error('Error getting current location:', error);
+            Toast.show({
+                type: 'error',
+                text1: 'Location Error',
+                text2: 'Failed to get your current location.',
+            });
+            return null;
+        }
+    };
+
     const handleSubmit = async () => {
         if (!validateForm()) {
             Toast.show({
@@ -167,28 +210,66 @@ export default function TakeAttendance() {
             return;
         }
 
-        setIsSubmitting(true);
-        const payload = {
-            status: formData.status,
-            courseId: formData.course,
-            studentLon: 2.3294,
-            studentLat: 6.5244,
+        if (!isLocationEnabled) {
+            Toast.show({
+                type: 'error',
+                text1: 'Location Required',
+                text2: 'Please enable location services to take attendance.',
+            });
+            return;
         }
+
+        setIsSubmitting(true);
         // const response = await attendanceService.submitAttendance(user?.id!, payload);
-        const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);
-        if (!response.success) {
+
+        try {
+            // Get fresh location data before submitting
+            const currentLocation = await getCurrentLocation();
+
+            if (!currentLocation) {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Location Error',
+                    text2: 'Unable to get your current location.',
+                });
+                setIsSubmitting(false);
+                return;
+            }
+
+            const payload = {
+                status: formData.status,
+                courseId: formData.course,
+                studentLon: currentLocation.coords.longitude,
+                studentLat: currentLocation.coords.latitude,
+            };
+
+            // const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);
+            console.log('Attendance payload:', payload);
+            const response = { success: true }; // Mock response
+
+            if (response.success) {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Success',
+                    text2: 'Attendance submitted successfully.',
+                });
+                setShowDialog(false);
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    // text2: response.error?.message || 'Failed to submit attendance. Please try again.',
+                });
+            }
+        } catch (error) {
+            console.error('Error submitting attendance:', error);
             Toast.show({
                 type: 'error',
                 text1: 'Error',
-                text2: 'Failed to submit attendance. Please try again.',
+                text2: 'An unexpected error occurred. Please try again.',
             });
-        } else {
-            Toast.show({
-                type: 'error',
-                text1: 'Error',
-                text2: 'Failed to submit attendance. Please try again.',
-            });
-            console.error('Error submitting attendance:', response.error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
