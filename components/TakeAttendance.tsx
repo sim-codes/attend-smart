@@ -243,9 +243,7 @@ export default function TakeAttendance() {
                 studentLat: currentLocation.coords.latitude,
             };
 
-            // const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);
-            console.log('Attendance payload:', payload);
-            const response = { success: true }; // Mock response
+            const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);
 
             if (response.success) {
                 Toast.show({
@@ -258,7 +256,7 @@ export default function TakeAttendance() {
                 Toast.show({
                     type: 'error',
                     text1: 'Error',
-                    // text2: response.error?.message || 'Failed to submit attendance. Please try again.',
+                    text2: response.error?.message || 'Failed to submit attendance. Please try again.',
                 });
             }
         } catch (error) {
@@ -272,8 +270,6 @@ export default function TakeAttendance() {
             setIsSubmitting(false);
         }
     };
-
-    console.log('location:', location);
 
     return (
         <VStack>
