@@ -14,12 +14,13 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
+import * as Location from 'expo-location';
 
 export default function TakeAttendance() {
     const { user } = useAppSelector((state) => state.auth);
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);
     const dispatch = useAppDispatch();
-    
+
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [schedules, setSchedules] = useState<ScheduleApiResponse[]>([]);
@@ -33,6 +34,24 @@ export default function TakeAttendance() {
         course: ""
     });
     const [errors, setErrors] = useState<Partial<Record<AttendanceFieldId, string>>>({});
+
+    const [location, setLocation] = useState<Location.LocationObject | null>(null);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function getCurrentLocation() {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Balanced});
+            setLocation(location);
+        }
+
+        getCurrentLocation();
+    }, []);
 
     useEffect(() => {
         if (showDialog) {
@@ -155,7 +174,8 @@ export default function TakeAttendance() {
             studentLon: 2.3294,
             studentLat: 6.5244,
         }
-        const response = await attendanceService.submitAttendance(user?.id!, payload);
+        // const response = await attendanceService.submitAttendance(user?.id!, payload);
+        const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);
         if (!response.success) {
             Toast.show({
                 type: 'error',
@@ -171,6 +191,8 @@ export default function TakeAttendance() {
             console.error('Error submitting attendance:', response.error);
         }
     };
+
+    console.log('location:', location);
 
     return (
         <VStack>

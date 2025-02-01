@@ -15,5 +15,11 @@ export const attendanceService = {
         return ServiceHandler.execute(() =>
             apiClient.post(API_ENDPOINTS.attendance.signWithoutLocation(studentId), payload)
         );
+    },
+
+    async submitAttendanceWithLocation(studentId: string, payload: AttendancePayload) {
+        return ServiceHandler.execute(() =>
+            apiClient.post(API_ENDPOINTS.attendance.sign(studentId), payload)
+        );
     }
 }
