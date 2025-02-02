@@ -11,6 +11,7 @@ import cloudinaryService from "@/services/cloudinary";
 import { Pressable } from "react-native";
 import Toast from "react-native-toast-message";
 import { authService } from "@/services/auth";
+import { ScrollView } from "react-native";
 
 export default function SignUp() {
     const [image, setImage] = useState<string | undefined>(undefined);
@@ -173,6 +174,7 @@ export default function SignUp() {
                 <Text size="xl" className="text-center" bold>Click Upload Image</Text>
             </Pressable>
 
+                <ScrollView className="flex-1 gap-y-2">
         <Text className="text-center text-primary-500 uppercase" size="3xl" bold>{signupSteps[currentStep].title}</Text>
             {signupSteps[currentStep].fields.map(field => (
                 <FormFieldComponent
@@ -193,7 +195,7 @@ export default function SignUp() {
                     </Button>
                 )}
 
-            <Button className="w-full rounded-full self-center" size="xl"
+            <Button className="w-full rounded-full self-center my-2" size="xl"
                 onPress={currentStep === 'contact' ? handleSubmit : handleNext}
                 variant="solid" isDisabled={loading}>
                 <ButtonText size="xl">
@@ -208,7 +210,8 @@ export default function SignUp() {
             >
                 Login
             </Link>
-            </Text>
+                    </Text>
+                    </ScrollView>
 
         </VStack>
     </VStack>

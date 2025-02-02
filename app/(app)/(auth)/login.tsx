@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { loginStart, loginSuccess, loginFailure } from '@/store/slices/authSlice';
 import { authService } from "@/services/auth";
 import Toast from "react-native-toast-message";
+import { ScrollView } from "react-native";
 
 export default function Login() {
   const router = useRouter();
@@ -89,6 +90,7 @@ export default function Login() {
 
       <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
 
+        <ScrollView className="flex-1 gap-y-2">
       {loginFormFields.map(field => (
           <FormFieldComponent
               key={field.id}
@@ -124,7 +126,8 @@ export default function Login() {
         >
           Sign up
         </Link>
-      </Text>
+          </Text>
+          </ScrollView>
 
       </VStack>
     </VStack>
