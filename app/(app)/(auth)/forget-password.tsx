@@ -14,8 +14,8 @@ export default function ForgetPassword() {
   return (
     <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
       <VStack className="my-6 p-6">
-        <Text size="4xl" className="text-secondary-0">Welcome Back,</Text>
-        <Text size="4xl" className="text-secondary-0" bold>Forgot password?</Text>
+        <Text size="3xl" className="text-secondary-0">Welcome Back,</Text>
+        <Text size="3xl" className="text-secondary-0" bold>Forgot password?</Text>
       </VStack>
 
       <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-14 py-12 px-4">
