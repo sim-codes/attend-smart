@@ -278,8 +278,8 @@ export default function TakeAttendance() {
                 size="xl"
                 onPress={() => setShowDialog(true)}
             >
-                <FontAwesome6 name="address-book" size={34} color="#D6BD98" />
-                <ButtonText className="text-secondary-0">Attendance</ButtonText>
+                <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
+                <ButtonText className="text-secondary-0" size="md">Attendance</ButtonText>
             </Button>
 
             <ModalDialog

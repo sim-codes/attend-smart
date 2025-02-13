@@ -50,7 +50,7 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
         >
             <HStack className="justify-between items-start">
                 <VStack className="flex-1">
-                    <Text size="lg" className="font-semibold text-white">{item.courseTitle}</Text>
+                    <Text size="md" className="font-semibold text-white">{item.courseTitle}</Text>
                     <Text className="text-secondary-100 mt-1">{item.courseCode}</Text>
                     <Text className="text-secondary-100 mt-1">
                         Credits: {item.creditUnits}
@@ -63,7 +63,7 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
 
     const renderEmptyComponent = () => (
         <VStack className="flex-1 gap-y-2 justify-center items-center p-4">
-            <Text className="text-tertiary-100 text-center" size="lg">
+            <Text className="text-tertiary-100 text-center" size="sm">
                 You have not registered for any courses yet.
             </Text>
         </VStack>
@@ -73,15 +73,15 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
         <View className="flex-1 bg-transparent">
             {/* Header */}
             <VStack className="p-4 border-b border-gray-200">
-                <Text className="text-white mb-2 text-center" size="2xl" bold>
+                <Text className="text-white mb-2 text-center" size="xl" bold>
                     {courses.length}
                     {" "}Registered Courses
                 </Text>
                 <HStack className="justify-between items-center">
-                    <Text size='lg' className="font-semibold text-secondary-0">
+                    <Text size='md' className="font-semibold text-secondary-0">
                         Total Units: {calculateTotalUnits()}
                     </Text>
-                    <Text size='lg' className="font-semibold text-secondary-0">
+                    <Text size='md' className="font-semibold text-secondary-0">
                         Selected: {selectedCourses.size}
                     </Text>
                 </HStack>

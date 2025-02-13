@@ -94,7 +94,7 @@ export default function Home() {
                     />
                 </Avatar>
 
-                <Heading size="3xl" className="text-white">
+                <Heading size="2xl" className="text-white">
                     Hello,{" "}
                     {user?.username}
                 </Heading>

@@ -202,8 +202,8 @@ export default function RegisterCourse() {
                 size="xl"
                 onPress={() => setShowDialog(true)}
             >
-                <Ionicons name="add-outline" size={34} color="#D6BD98" />
-                <ButtonText className="text-secondary-0">Course Registration</ButtonText>
+                <Ionicons name="add-outline" size={24} color="#D6BD98" />
+                <ButtonText className="text-secondary-0" size="md">Course Registration</ButtonText>
             </Button>
 
             <ModalDialog
