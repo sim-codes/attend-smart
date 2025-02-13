@@ -14,7 +14,7 @@ import {
   isSameMonth,
   addDays,
   getDay,
-  getDate
+  getDaysInMonth as getDaysInMonthUtil
 } from 'date-fns';
 import { CalendarScheduleProps } from '@/constants/types/schedule';
 
@@ -77,6 +77,35 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
     );
   };
 
+  const getWeeksInMonth = (date: Date) => {
+    const startOfMonthDate = startOfMonth(date);
+    const daysInMonth = getDaysInMonthUtil(date);
+    const startDay = getDay(startOfMonthDate);
+
+    const weeks: Date[][] = [];
+    let currentWeek: Date[] = Array(startDay).fill(null);
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const currentDate = addDays(startOfMonthDate, day - 1);
+      currentWeek.push(currentDate);
+
+      if (currentWeek.length === 7) {
+        weeks.push(currentWeek);
+        currentWeek = [];
+      }
+    }
+
+    if (currentWeek.length > 0) {
+      weeks.push(currentWeek);
+    }
+
+    return weeks;
+  };
+
+  const weeks = getWeeksInMonth(currentMonth);
+  const lastWeek = weeks[weeks.length - 1];
+  const shouldJustifyBetween = lastWeek.length <= 6;
+
   return (
     <View className="bg-primary-700 rounded-xl pb-2">
       {/* Calendar Header */}
@@ -102,38 +131,51 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
       </View>
 
       {/* Calendar Grid */}
-      <View className="w-full flex-wrap flex-row gap-x-2 items-center p-2">
-        {getDaysInMonth().map((date) => {
-          const hasSchedule = getSchedulesForDate(date).length > 0;
-          const isSelected = selectedDate && isSameDay(date, selectedDate);
-          const isCurrentMonth = isSameMonth(date, currentMonth);
-          const isToday = isSameDay(date, new Date());
+      <View className="w-full">
+      {weeks.map((week, weekIndex) => (
+        <View
+        key={weekIndex}
+        className={`flex-row gap-x-2 items-center p-2 ${
+          weekIndex === weeks.length - 1 && shouldJustifyBetween ? '' : 'justify-between'
+        }`}
+        >
+          {week.map((date, dayIndex) => {
+            if (!date) {
+              return <View key={dayIndex} className="w-10 h-10" />;
+            }
 
-          return (
-            <TouchableOpacity
-              key={date.toString()}
-              onPress={() => handleDatePress(date)}
-              className={`w-14 h-14 justify-center items-center ${
-                isToday ? 'bg-tertiary-100 rounded-lg' :
-                isSelected ? 'bg-tertiary-200 rounded-lg' : ''
-              }`}
-            >
-              <Text size='lg'
-                className={`text-center ${
-                  !isCurrentMonth ? 'text-tertiary-100' :
-                  hasSchedule ? 'text-white font-bold' :
-                  isToday ? 'text-white font-bold' : 'text-secondary-0'
+            const hasSchedule = getSchedulesForDate(date).length > 0;
+            const isSelected = selectedDate && isSameDay(date, selectedDate);
+            const isCurrentMonth = isSameMonth(date, currentMonth);
+            const isToday = isSameDay(date, new Date());
+
+            return (
+              <TouchableOpacity
+                key={date.toString()}
+                onPress={() => handleDatePress(date)}
+                className={`w-10 h-10 justify-center items-center ${
+                  isToday ? 'bg-tertiary-100 rounded-lg' :
+                  isSelected ? 'bg-tertiary-200 rounded-lg' : ''
                 }`}
               >
-                {format(date, 'd')}
-              </Text>
-              {hasSchedule && isCurrentMonth && (
-                <View className="w-1 h-1 bg-white rounded-full mt-1" />
-              )}
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+                <Text size='lg'
+                  className={`text-center ${
+                    !isCurrentMonth ? 'text-tertiary-100' :
+                    hasSchedule ? 'text-white font-bold' :
+                    isToday ? 'text-white font-bold' : 'text-secondary-0'
+                  }`}
+                >
+                  {format(date, 'd')}
+                </Text>
+                {hasSchedule && isCurrentMonth && (
+                  <View className="w-1 h-1 bg-white rounded-full mt-1" />
+                )}
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      ))}
+    </View>
 
       {/* Schedule List - Animated Section */}
       <Animated.View style={{ height: scheduleHeight }} className="overflow-hidden">
