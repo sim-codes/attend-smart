@@ -53,14 +53,13 @@ CLOUDINARY_API_KEY=your-api-key
 ## 📂 Folder Structure
 ```
 attend-smart/
-│-- src/
-│   ├── components/      # Reusable UI components
-│   ├── screens/         # App screens
-│   ├── redux/           # State management
-│   ├── utils/           # Helper functions
-│   ├── services/        # API calls
-│-- assets/              # Images and fonts
-│-- App.tsx              # Entry point
+│-- app/
+│-- assets/
+│-- components/
+│-- constants/
+│-- hooks/
+│-- services/
+│-- store/
 ```
 
 ## 🛠️ Contributing
@@ -73,6 +72,5 @@ This project is open-source under the [MIT License](LICENSE).
 👤 **Developer**: [Sim Codes](https://github.com/sim-codes)
 📂 GitHub Repository: [github.com/sim-codes/attend-smart](https://github.com/sim-codes/attend-smart)
 
----
 
 ⭐ **Star this repo if you find it useful!** 🚀
