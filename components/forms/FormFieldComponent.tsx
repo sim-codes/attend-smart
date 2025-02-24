@@ -41,7 +41,7 @@ const FormFieldComponent = ({
             isRequired={isRequired}
         >
             <FormControlLabel>
-                <FormControlLabelText size="xl">{label}</FormControlLabelText>
+                <FormControlLabelText size="lg">{label}</FormControlLabelText>
             </FormControlLabel>
 
             {type === 'select' ? (

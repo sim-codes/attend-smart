@@ -88,44 +88,44 @@ export default function Login() {
         <Text size="3xl" className="text-secondary-0" bold>Log In!</Text>
       </VStack>
 
-      <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
+      <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] mt-8 py-12 px-4" space="lg">
 
         <ScrollView className="flex-1 gap-y-2">
-      {loginFormFields.map(field => (
-          <FormFieldComponent
-              key={field.id}
-              {...field}
-              value={formData[field.id]}
-              onChange={handleChange(field.id)}
-              isInvalid={!!errors[field.id]}
-              errorText={errors[field.id]}
-          />
-      ))}
+          {loginFormFields.map(field => (
+              <FormFieldComponent
+                  key={field.id}
+                  {...field}
+                  value={formData[field.id]}
+                  onChange={handleChange(field.id)}
+                  isInvalid={!!errors[field.id]}
+                  errorText={errors[field.id]}
+              />
+          ))}
 
-      {error && (
-          <Text size="md" className="text-red-700 text-center" bold>
-              {error}
-          </Text>
-      )}
-      <Link href="/(app)/(auth)/forget-password"
-        className="self-end underline text-primary-500 font-bold text-lg"
-      >
-        Forgot Password?
-      </Link>
+          {error && (
+              <Text size="xs" className="text-red-700 text-center my-1" bold>
+                  Error: {error}
+              </Text>
+          )}
+          <Link href="/(app)/(auth)/forget-password"
+            className="self-end underline text-primary-500 font-bold"
+          >
+            Forgot Password?
+          </Link>
 
-      <Button className="w-full rounded-full self-center mt-4" size="xl"
-        onPress={() => handleLogin()}
-        variant="solid" isDisabled={isLoading}>
-        <ButtonText size="xl">{isLoading ? "Loading..." : "Login"}</ButtonText>
-      </Button>
+          <Button className="w-full rounded-full self-center mt-4" size="xl"
+            onPress={() => handleLogin()}
+            variant="solid" isDisabled={isLoading}>
+            <ButtonText size="xl">{isLoading ? "Loading..." : "Login"}</ButtonText>
+          </Button>
 
-      <Text className="text-center text-primary-500" size="lg">
-        Don't have an account?{" "}
-        <Link href="/(app)/(auth)/signup"
-          className="underline text-primary-500 font-bold text-lg"
-        >
-          Sign up
-        </Link>
+          <Text className="text-center text-primary-500">
+            Don't have an account?{" "}
+            <Link href="/(app)/(auth)/signup"
+              className="underline text-primary-500 font-bold"
+            >
+              Sign up
+            </Link>
           </Text>
           </ScrollView>
 

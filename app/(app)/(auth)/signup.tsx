@@ -157,59 +157,59 @@ export default function SignUp() {
             <Text size="3xl" className="text-secondary-0" bold>Sign up!</Text>
         </VStack>
 
-        <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
+            <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
+                <Pressable onPress={handleUpload} className="gap-y-6">
 
-            <VStack className="justify-start items-center w-full gap-y-2">
-                <Avatar size="2xl" className=" absolute -top-28 border-4 border-white/20">
-                    <AvatarFallbackText>Avatar</AvatarFallbackText>
-                    <AvatarImage
-                        source={{
-                        uri: image
-                    }}
-                    />
-                </Avatar>
-            </VStack>
+                    <VStack className="justify-start items-center w-full gap-y-2">
+                        <Avatar size="2xl" className=" absolute -top-28 border-4 border-white/20">
+                            <AvatarFallbackText>Avatar</AvatarFallbackText>
+                            <AvatarImage
+                                source={{
+                                uri: image
+                            }}
+                            />
+                        </Avatar>
+                    </VStack>
 
-            <Pressable onPress={handleUpload} className="p-1">
-                <Text size="xl" className="text-center" bold>Click Upload Image</Text>
-            </Pressable>
+                    <Text size="sm" className="text-center" bold>Click to Upload Image</Text>
+                </Pressable>
 
-                <ScrollView className="flex-1 gap-y-2">
-        <Text className="text-center text-primary-500 uppercase" size="3xl" bold>{signupSteps[currentStep].title}</Text>
-            {signupSteps[currentStep].fields.map(field => (
-                <FormFieldComponent
-                    key={field.id}
-                    {...field}
-                    value={formData[field.id]}
-                    onChange={handleChange(field.id)}
-                    isInvalid={!!errors[field.id]}
-                    errorText={errors[field.id]}
-                />
-            ))}
+                <ScrollView className="flex-1 gap-y-2" showsVerticalScrollIndicator={false}>
+                    <Text className="text-center text-primary-500 uppercase" size="xl" bold>{signupSteps[currentStep].title}</Text>
+                        {signupSteps[currentStep].fields.map(field => (
+                            <FormFieldComponent
+                                key={field.id}
+                                {...field}
+                                value={formData[field.id]}
+                                onChange={handleChange(field.id)}
+                                isInvalid={!!errors[field.id]}
+                                errorText={errors[field.id]}
+                            />
+                        ))}
 
-                {currentStep !== 'personal' && (
-                    <Button className="w-full border-primary-500 rounded-full self-center mt-4" size="xl"
-                        onPress={handleBack}
-                        variant="outline">
-                        <ButtonText size="xl">Back</ButtonText>
+                            {currentStep !== 'personal' && (
+                                <Button className="w-full border-primary-500 rounded-full self-center mt-4" size="xl"
+                                    onPress={handleBack}
+                                    variant="outline">
+                                    <ButtonText>Back</ButtonText>
+                                </Button>
+                            )}
+
+                    <Button className="w-full rounded-full self-center my-2" size="xl"
+                        onPress={currentStep === 'contact' ? handleSubmit : handleNext}
+                        variant="solid" isDisabled={loading}>
+                        <ButtonText>
+                            {currentStep === 'contact' ? 'Submit' : 'Next'}
+                        </ButtonText>
                     </Button>
-                )}
 
-            <Button className="w-full rounded-full self-center my-2" size="xl"
-                onPress={currentStep === 'contact' ? handleSubmit : handleNext}
-                variant="solid" isDisabled={loading}>
-                <ButtonText size="xl">
-                    {currentStep === 'contact' ? 'Submit' : 'Next'}
-                </ButtonText>
-            </Button>
-
-            <Text className="text-center text-primary-500" size="lg">
-            Have an account?{" "}
-            <Link href="/(app)/(auth)/login"
-                className="underline text-primary-500 font-bold text-lg"
-            >
-                Login
-            </Link>
+                    <Text className="text-center text-primary-500">
+                        Have an account?{" "}
+                        <Link href="/(app)/(auth)/login"
+                            className="underline text-primary-500 font-bold"
+                        >
+                            Login
+                    </Link>
                     </Text>
                     </ScrollView>
 
