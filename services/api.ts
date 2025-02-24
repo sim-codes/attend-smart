@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { API_ENDPOINTS, PUBLIC_ENDPOINTS } from '@/constants/endpoints';
 import { TokenDto } from '@/constants/types/auth';
-import { store } from '@/store/store';
+import { tokenHelperService } from './utils/tokenHelper';
 import { updateToken, logout } from '@/store/slices/authSlice';
 import { API_CONFIG } from '@/constants/config';
 
@@ -32,8 +32,7 @@ class ApiClient {
         );
 
         if (!isPublicEndpoint) {
-          const state = store.getState();
-          const accessToken = state.auth.accessToken;
+          const accessToken = tokenHelperService.getAccessToken();
 
           if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`;
@@ -61,9 +60,8 @@ class ApiClient {
           originalRequest._retry = true;
 
           try {
-            const state = store.getState();
-            const accessToken = state.auth.accessToken;
-            const refreshToken = state.auth.refreshToken;
+            const accessToken = tokenHelperService.getAccessToken();
+            const refreshToken = tokenHelperService.getRefreshToken();
 
             if (!accessToken || !refreshToken) {
               throw new Error('No tokens available');
@@ -81,14 +79,12 @@ class ApiClient {
             );
 
             // Update token in Redux store
-            store.dispatch(updateToken({ accessToken: response.data.accessToken }));
-
-            // Update authorization header
+            tokenHelperService.updateAccessToken(response.data.accessToken);
             originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
             return this.client(originalRequest);
+
           } catch (refreshError) {
-            // Clear auth state on refresh failure
-            store.dispatch(logout());
+            tokenHelperService.clearTokens();
             return Promise.reject(refreshError);
           }
         }
