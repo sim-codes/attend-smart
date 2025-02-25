@@ -9,17 +9,27 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { encryptTransform } from 'redux-persist-transform-encrypt';
 import authReducer from './slices/authSlice';
 import profileReducer from './slices/profileSlice';
 import courseReducer from './slices/courseSlice';
 import storage from '@/services/utils/storage';
 
+const encryptor = encryptTransform({
+    secretKey: process.env.EXPO_PUBLIC_AES_SECRET_KEY || 'fallback-secret-key',
+    onError: (error: unknown) => {
+        if (error instanceof Error) {
+            console.error('Encryption error:', error.message);
+        } else {
+            console.error('Unknown encryption error:', error);
+        }
+    }
+});
 
 const persistConfig = {
     key: 'root',
     storage: storage,
-    whitelist: ['auth'],
+    transforms: [encryptor],
 };
 
 const profilePersistConfig = {
