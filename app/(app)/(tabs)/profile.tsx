@@ -52,7 +52,7 @@ export default function Profile() {
                 </Heading>
             </VStack>
 
-            <ScrollView className="flex-1 gap-y-3" showsHorizontalScrollIndicator={false}>
+            <ScrollView className="flex-1 gap-y-3" showsVerticalScrollIndicator={false}>
                 <VStack space="sm">
                     <Heading size="md" className="text-secondary-0">Personal data</Heading>
                     <HStack space="sm" className="items-end">

@@ -13,21 +13,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import authReducer from './slices/authSlice';
 import profileReducer from './slices/profileSlice';
 import courseReducer from './slices/courseSlice';
+import storage from '@/services/utils/storage';
+
 
 const persistConfig = {
     key: 'root',
-    storage: AsyncStorage,
-    whitelist: ['auth'], // Only persist auth state
+    storage: storage,
+    whitelist: ['auth'],
 };
 
 const profilePersistConfig = {
     key: 'profile',
-    storage: AsyncStorage,
+    storage: storage,
 };
 
 const coursePersistConfig = {
     key: 'courses',
-    storage: AsyncStorage,
+    storage: storage,
 }
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);

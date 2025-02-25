@@ -9,6 +9,7 @@ import {
   startOfMonth,
   endOfMonth,
   startOfWeek,
+  endOfWeek,
   eachDayOfInterval,
   isSameDay,
   isSameMonth,
@@ -78,26 +79,22 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
   };
 
   const getWeeksInMonth = (date: Date) => {
-    const startOfMonthDate = startOfMonth(date);
-    const daysInMonth = getDaysInMonthUtil(date);
-    const startDay = getDay(startOfMonthDate);
+    const monthStart = startOfMonth(date);
+    const monthEnd = endOfMonth(date);
+    const startDate = startOfWeek(monthStart);
+    const endDate = endOfWeek(monthEnd);
 
-    const weeks: Date[][] = [];
-    let currentWeek: Date[] = Array(startDay).fill(null);
+    let days = eachDayOfInterval({ start: startDate, end: endDate });
+    let weeks: Date[][] = [];
+    let currentWeek: Date[] = [];
 
-    for (let day = 1; day <= daysInMonth; day++) {
-      const currentDate = addDays(startOfMonthDate, day - 1);
-      currentWeek.push(currentDate);
-
+    days.forEach((day) => {
+      currentWeek.push(day);
       if (currentWeek.length === 7) {
         weeks.push(currentWeek);
         currentWeek = [];
       }
-    }
-
-    if (currentWeek.length > 0) {
-      weeks.push(currentWeek);
-    }
+    });
 
     return weeks;
   };
@@ -135,9 +132,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
       {weeks.map((week, weekIndex) => (
         <View
         key={weekIndex}
-        className={`flex-row gap-x-2 items-center p-2 ${
-          weekIndex === weeks.length - 1 && shouldJustifyBetween ? '' : 'justify-between'
-        }`}
+        className={`flex-row gap-x-2 items-end p-2 justify-between`}
         >
           {week.map((date, dayIndex) => {
             if (!date) {
