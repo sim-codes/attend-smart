@@ -191,6 +191,7 @@ export default function RegisterCourse() {
             console.error("Error enrolling in course:", error);
         } finally {
             setIsSubmitting(false);
+            setShowDialog(false);
         }
         setFormData({faculty: "", department: "", course: ""})
     };
