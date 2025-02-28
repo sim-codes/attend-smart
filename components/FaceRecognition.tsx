@@ -44,7 +44,7 @@ export default function FaceRecognition() {
         setUri(photo?.uri);
     };
     return (
-        <VStack space="lg">
+        <VStack space="lg" className="h-96">
             {uri ? renderPicture() : renderCamera()}
             <Button onPress={uri ? () => setUri(undefined) : takePicture}>
                 <ButtonText>

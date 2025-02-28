@@ -270,7 +270,6 @@ export default function AttendanceVerification() {
     return (
         <VStack>
             <Button
-                className="w-full"
                 variant="outline"
                 size="xl"
                 onPress={() => setShowDialog(true)}
