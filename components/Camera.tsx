@@ -9,8 +9,9 @@ import { Button, Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { VStack } from "@/components/ui/vstack";
 
-export default function App() {
+export default function CameraScreen() {
     const [permission, requestPermission] = useCameraPermissions();
     const ref = useRef<CameraView>(null);
     const [uri, setUri] = useState<string | undefined>(undefined);
@@ -73,7 +74,7 @@ export default function App() {
     const renderCamera = () => {
         return (
             <CameraView
-            style={styles.camera}
+            // style={styles.camera}
             ref={ref}
             // mode={mode}
             facing={facing}
@@ -119,18 +120,19 @@ export default function App() {
     };
 
     return (
-        <View style={styles.container}>
-            {uri ? renderPicture() : renderCamera()}
-        </View>
+        <VStack style={styles.container} className="bg-black">
+            <Text>Camera</Text>
+            {/* {uri ? renderPicture() : renderCamera()} */}
+        </VStack>
     );
 }
 
 const styles = StyleSheet.create({
 container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+        flex: 1,
+    // backgroundColor: "#fff",
+    // alignItems: "center",
+    // justifyContent: "center",
 },
 camera: {
     flex: 1,

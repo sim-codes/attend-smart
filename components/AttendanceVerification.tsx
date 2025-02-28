@@ -14,7 +14,10 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
+import CameraScreen from "./camera";
 import * as Location from 'expo-location';
+import { CameraView } from "expo-camera";
+import FaceRecognition from "./FaceRecognition";
 
 export default function AttendanceVerification() {
     const { user } = useAppSelector((state) => state.auth);
@@ -76,11 +79,11 @@ export default function AttendanceVerification() {
         }
     };
 
-    useEffect(() => {
-        if (showDialog) {
-            fetchCourseSchedules();
-        }
-    }, [showDialog]);
+    // useEffect(() => {
+    //     if (showDialog) {
+    //         fetchCourseSchedules();
+    //     }
+    // }, [showDialog]);
 
     useEffect(() => {
         if (enrolledCourses || schedules) {
@@ -120,13 +123,6 @@ export default function AttendanceVerification() {
                     text1: 'Schedules Fetched',
                     text2: `Found ${currentSchedules.length} active classes for today.`,
                 });
-            } else {
-                Toast.show({
-                    type: 'info',
-                    text1: 'No Active Classes',
-                    text2: 'There are no classes scheduled for the current time.',
-                });
-                setShowDialog(false);
             }
         } else {
             Toast.show({
@@ -274,6 +270,7 @@ export default function AttendanceVerification() {
     return (
         <VStack>
             <Button
+                className="w-full"
                 variant="outline"
                 size="xl"
                 onPress={() => setShowDialog(true)}
@@ -286,32 +283,12 @@ export default function AttendanceVerification() {
                 isOpen={showDialog}
                 onClose={() => setShowDialog(false)}
                 onAction={handleSubmit}
-                title="Take Attendance"
+                title="Face Recognition"
                 actionText={'Submit'}
                 cancelText={'Cancel'}
                 isLoading={isSubmitting}
             >
-                {formFields ? (
-                    formFields.map(field => (
-                        <FormFieldComponent
-                            key={field.id}
-                            {...field}
-                            value={formData[field.id]}
-                            onChange={(value) => handleFieldChange(field.id, value)}
-                            isInvalid={!!errors[field.id]}
-                            errorText={errors[field.id]}
-                            options={
-                                field.id === 'course' ? (
-                                    enrolledCourses
-                                    ? createOptionsFromResponse(schedules, "courseId", "courseTitle")
-                                    : []
-                                ) : field.options
-                            }
-                        />
-                    ))
-                ) : (
-                    <Text>Loading form fields...</Text>
-                )}
+                <FaceRecognition />
             </ModalDialog>
         </VStack>
     );
