@@ -21,6 +21,7 @@ export default function FaceRecognition() {
                         size="full"
                         source={{ uri }}
                         alt="Picture taken from camera"
+                        style={{ width: "100%", aspectRatio: 1 }}
                     />
                     {/* <Button onPress={() => setUri(undefined)} title="Take another picture" /> */}
                 </VStack>
@@ -44,7 +45,7 @@ export default function FaceRecognition() {
         setUri(photo?.uri);
     };
     return (
-        <VStack space="lg" className="h-96">
+        <VStack space="lg" className="h-90">
             {uri ? renderPicture() : renderCamera()}
             <Button onPress={uri ? () => setUri(undefined) : takePicture}>
                 <ButtonText>
