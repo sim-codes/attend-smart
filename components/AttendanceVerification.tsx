@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import { VStack } from "@/components/ui/vstack";
 import { Button, ButtonText } from "@/components/ui/button";
 import ModalDialog from "./ModalDialog";
-import FormFieldComponent from "./forms/FormFieldComponent";
 import { AttendanceField, AttendanceFieldId } from "@/constants/types/attendance";
 import { ScheduleApiResponse } from "@/constants/types/schedule";
 import { attendanceFormFields } from '@/constants/forms';
-import { Text } from "@/components/ui/text";
 import { createOptionsFromResponse } from "@/hooks/useCreateOptions";
 import Toast from 'react-native-toast-message';
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
@@ -15,8 +13,7 @@ import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
 import * as Location from 'expo-location';
-import { CameraView } from "expo-camera";
-import FaceRecognition from "./FaceRecognition";
+import FaceRecognition from "@/components/FaceRecognition";
 
 export default function AttendanceVerification() {
     const { user } = useAppSelector((state) => state.auth);
