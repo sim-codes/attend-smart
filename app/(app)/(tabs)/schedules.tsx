@@ -6,6 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 import { ScheduleApiResponse } from "@/constants/types/schedule";
 import Toast from "react-native-toast-message";
+import AttendanceReport from "@/components/attendanceReport";
 
 export default function Schedules() {
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);
@@ -46,13 +47,15 @@ export default function Schedules() {
         console.log('Schedule pressed:', schedule);
     };
     return (
-        <VStack className="h-full w-full bg-primary-500 py-10 px-6" space="4xl">
+        <VStack className="flex-1 bg-primary-500 py-10 px-6" space="3xl">
             <Text size="2xl" className="text-secondary-0" bold>Schedules</Text>
 
             <CalendarSchedule
             schedules={schedules}
             onSchedulePress={handleSchedulePress}
             />
+
+            <AttendanceReport />
         </VStack>
     )
 }

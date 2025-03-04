@@ -18,6 +18,7 @@ import {
   getDaysInMonth as getDaysInMonthUtil
 } from 'date-fns';
 import { CalendarScheduleProps } from '@/constants/types/schedule';
+import { VStack } from '@/components/ui/vstack';
 
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -104,9 +105,10 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
   const shouldJustifyBetween = lastWeek.length <= 6;
 
   return (
-    <View className="bg-primary-700 rounded-xl pb-2">
+    <ScrollView className="flex-2">
+    <VStack className="bg-primary-700 rounded-xl pb-2">
       {/* Calendar Header */}
-      <View className="flex-row justify-between rounded-3xl items-center p-4 bg-primary-700">
+      <VStack className="flex-row justify-between rounded-3xl items-center p-4 bg-primary-700">
         <TouchableOpacity onPress={() => navigateMonth('prev')}>
           <Ionicons name="arrow-back-outline" size={24} color="white" />
         </TouchableOpacity>
@@ -116,7 +118,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
         <TouchableOpacity onPress={() => navigateMonth('next')}>
           <Ionicons name="arrow-forward-outline" size={24} color="white" />
         </TouchableOpacity>
-      </View>
+      </VStack>
 
       {/* Weekday Headers */}
       <View className="flex-row justify-around py-2 bg-tertiary-500">
@@ -175,7 +177,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
       {/* Schedule List - Animated Section */}
       <Animated.View style={{ height: scheduleHeight }} className="overflow-hidden">
         {selectedDate && (
-          <ScrollView className="flex-1 p-4">
+          <VStack className="p-4">
             <Text className="text-lg font-bold mb-2 text-white">
               Schedule for {format(selectedDate, 'MMMM d, yyyy')}
             </Text>
@@ -198,10 +200,11 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
                 <Text className="text-gray-600 text-center">No class schedule for today</Text>
               </View>
             )}
-          </ScrollView>
+          </VStack>
         )}
       </Animated.View>
-    </View>
+    </VStack>
+    </ScrollView>
   );
 };
 
