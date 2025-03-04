@@ -14,7 +14,6 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
-import CameraScreen from "./camera";
 import * as Location from 'expo-location';
 import { CameraView } from "expo-camera";
 import FaceRecognition from "./FaceRecognition";

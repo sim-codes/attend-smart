@@ -19,7 +19,6 @@ import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 import { scheduleServices } from "@/services/schedule";
 import { ScheduleApiResponse } from "@/constants/types/schedule";
 import AttendanceVerification from "@/components/AttendanceVerification";
-import FaceRecognition from "@/components/FaceRecognition";
 
 export default function Home() {
     const { user } = useAppSelector((state) => state.auth);
