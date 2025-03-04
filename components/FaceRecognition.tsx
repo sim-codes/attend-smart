@@ -44,11 +44,7 @@ export default function FaceRecognition() {
     const takePicture = async () => {
         if (ref.current) {
             const options: CameraPictureOptions = {
-                quality: 0.7,  // Image quality (0.0 - 1.0)
-                base64: false, // Include base64 string (default: false)
-                exif: true,    // Include EXIF metadata (default: false)
-                skipProcessing: false, // Skip additional processing (default: false)
-                shutterSound: false,   // Play shutter sound (default: true)
+                shutterSound: false,
             };
             const photo = await ref.current?.takePictureAsync(options);
             setUri(photo?.uri);
