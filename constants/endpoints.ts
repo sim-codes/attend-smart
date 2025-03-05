@@ -45,7 +45,7 @@ export const API_ENDPOINTS = {
         update: (id: Id) => `/students/${id}`,
     },
     attendance: {
-        getAll: '/students',
+        getAll: '/attendance',
         getSingle: (id: Id) => `/students/${id}`,
         sign: (studentId: StudentId) => `/attendance/${studentId}`,
         signWithoutLocation: (studentId: StudentId) => `/attendance/${studentId}/signin`,

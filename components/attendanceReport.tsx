@@ -73,10 +73,10 @@ const dummyEnrolledCourses = [
 
 const AttendanceReport = () => {
   const { user } = useAppSelector((state) => state.auth);
-  
+
   // Use dummy enrolled courses instead of fetching from store
   const enrolledCourses = dummyEnrolledCourses;
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>([]);
   const [stats, setStats] = useState<AttendanceStats>({
@@ -94,38 +94,38 @@ const AttendanceReport = () => {
 
   const fetchAttendanceData = async () => {
     setIsLoading(true);
-    
+
     try {
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Use dummy data
       const data = dummyAttendanceRecords;
-      
+
       setAttendanceRecords(data);
-      
+
       // Calculate statistics
       const totalClasses = data.length;
       const present = data.filter(record => record.status === 'Present').length;
       const absent = totalClasses - present;
       const attendancePercentage = totalClasses > 0 ? (present / totalClasses) * 100 : 0;
-      
+
       setStats({
         totalClasses,
         present,
         absent,
         attendancePercentage
       });
-      
+
       // Calculate course summaries
       const courseSummaryMap = new Map<string, CourseAttendanceSummary>();
-      
+
       enrolledCourses.forEach(course => {
         const courseRecords = data.filter(record => record.courseId === course.courseId);
         const courseClasses = courseRecords.length;
         const coursePresent = courseRecords.filter(record => record.status === 'Present').length;
         const percentage = courseClasses > 0 ? (coursePresent / courseClasses) * 100 : 0;
-        
+
         courseSummaryMap.set(course.courseId, {
           courseId: course.courseId,
           courseTitle: course.title || 'Unknown Course',
@@ -134,9 +134,9 @@ const AttendanceReport = () => {
           percentage
         });
       });
-      
+
       setCourseSummaries(Array.from(courseSummaryMap.values()));
-      
+
       Toast.show({
         type: 'success',
         text1: 'Success',
@@ -170,9 +170,9 @@ const AttendanceReport = () => {
 
   const renderCourseItem = ({ item }: { item: CourseAttendanceSummary }) => {
     const isSelected = selectedCourse === item.courseId;
-    
+
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => setSelectedCourse(isSelected ? null : item.courseId)}
         className={`p-4 mb-2 rounded-xl ${isSelected ? 'bg-tertiary-500' : 'bg-primary-600'}`}
       >
@@ -181,9 +181,9 @@ const AttendanceReport = () => {
             <Text bold className="text-secondary-0">{item.courseTitle}</Text>
             <Text className="text-tertiary-100">{item.classesAttended} of {item.totalClasses} classes attended</Text>
           </VStack>
-          <Text 
-            size="xl" 
-            bold 
+          <Text
+            size="xl"
+            bold
             className={getPercentageColor(item.percentage)}
           >
             {Math.round(item.percentage)}%
@@ -241,22 +241,22 @@ const AttendanceReport = () => {
             <Text className="text-tertiary-100">Classes</Text>
           </VStack>
         </HStack>
-        
+
         <HStack className="mt-4 items-center">
           <Text className="text-white mr-2">Overall Attendance:</Text>
-          <Text 
-            size="xl" 
-            bold 
+          <Text
+            size="xl"
+            bold
             className={getPercentageColor(stats.attendancePercentage)}
           >
             {Math.round(stats.attendancePercentage)}%
           </Text>
         </HStack>
       </VStack>
-      
+
       {/* Course Attendance Section */}
       <Heading size="md" className="text-secondary-0">Course Attendance</Heading>
-      
+
       {isLoading ? (
         <Center className="flex-1">
           <Text className="text-tertiary-100">Loading attendance data...</Text>
@@ -270,10 +270,10 @@ const AttendanceReport = () => {
           contentContainerStyle={{ flexGrow: 1 }}
         />
       )}
-      
+
       {/* Refresh Button */}
-      <Button 
-        variant="subtle"
+      <Button
+        variant="link"
         onPress={fetchAttendanceData}
         isDisabled={isLoading}
         className="self-center mt-2"

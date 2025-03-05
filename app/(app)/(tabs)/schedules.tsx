@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 import { ScheduleApiResponse } from "@/constants/types/schedule";
 import Toast from "react-native-toast-message";
-import AttendanceReport from "@/components/attendanceReport";
+import AttendanceReport from "@/components/attendanceReport;
 
 export default function Schedules() {
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);

@@ -21,5 +21,11 @@ export const attendanceService = {
         return ServiceHandler.execute(() =>
             apiClient.post(API_ENDPOINTS.attendance.sign(studentId), payload)
         );
+    },
+
+    async getStudentAttendanceRecords(studentId: string) {
+        return ServiceHandler.execute(() =>
+            apiClient.get(API_ENDPOINTS.attendance.getAll + `?userId=${studentId}`)
+        );
     }
 }

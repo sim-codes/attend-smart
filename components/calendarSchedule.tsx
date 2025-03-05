@@ -102,7 +102,6 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
 
   const weeks = getWeeksInMonth(currentMonth);
   const lastWeek = weeks[weeks.length - 1];
-  const shouldJustifyBetween = lastWeek.length <= 6;
 
   return (
     <ScrollView className="flex-2">
@@ -138,7 +137,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
         >
           {week.map((date, dayIndex) => {
             if (!date) {
-              return <View key={dayIndex} className="w-10 h-10" />;
+              return <View key={dayIndex} className="w-9 h-9" />;
             }
 
             const hasSchedule = getSchedulesForDate(date).length > 0;
@@ -150,7 +149,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
               <TouchableOpacity
                 key={date.toString()}
                 onPress={() => handleDatePress(date)}
-                className={`w-10 h-10 justify-center items-center ${
+                className={`w-9 h-9 justify-center items-center ${
                   isToday ? 'bg-tertiary-100 rounded-lg' :
                   isSelected ? 'bg-tertiary-200 rounded-lg' : ''
                 }`}
