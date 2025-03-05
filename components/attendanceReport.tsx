@@ -9,7 +9,7 @@ import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { useAppSelector } from "@/store/hooks";
 import { Center } from "@/components/ui/center";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { AttendanceStats, CourseAttendanceSummary, AttendanceRecord } from "@/constants/types/attendance";
 import { dummyAttendanceRecords, dummyEnrolledCourses } from "@/constants/data";
 import { attendanceService } from "@/services/attendance";
@@ -17,8 +17,9 @@ import { attendanceService } from "@/services/attendance";
 
 const AttendanceReport = () => {
   const { user } = useAppSelector((state) => state.auth);
+  const { data: enrolledCourses } = useAppSelector((state) => state.courses);
 
-  const enrolledCourses = dummyEnrolledCourses;
+  // const enrolledCourses = dummyEnrolledCourses;
 
   const [isLoading, setIsLoading] = useState(false);
   const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>([]);
@@ -40,48 +41,45 @@ const AttendanceReport = () => {
 
     try {
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const data = dummyAttendanceRecords;
-      if (user) {
-        const response = await attendanceService.getStudentAttendanceRecords(user.id);
-        console.log('Attendance records:', response.data);
-      }
+      const { data, success } = await attendanceService.getStudentAttendanceRecords(user?.id!);
 
-      setAttendanceRecords(data);
+      if (success && data) {
+        setAttendanceRecords(data);
 
-      // Calculate statistics
-      const totalClasses = data.length;
-      const present = data.filter(record => record.status === 'Present').length;
-      const absent = totalClasses - present;
-      const attendancePercentage = totalClasses > 0 ? (present / totalClasses) * 100 : 0;
+        const totalClasses = data.length;
+        const present = data.filter(record => record.status === 'Present').length;
+        const absent = totalClasses - present;
+        const attendancePercentage = totalClasses > 0 ? (present / totalClasses) * 100 : 0;
 
-      setStats({
-        totalClasses,
-        present,
-        absent,
-        attendancePercentage
-      });
 
-      // Calculate course summaries
-      const courseSummaryMap = new Map<string, CourseAttendanceSummary>();
-
-      enrolledCourses.forEach(course => {
-        const courseRecords = data.filter(record => record.courseId === course.courseId);
-        const courseClasses = courseRecords.length;
-        const coursePresent = courseRecords.filter(record => record.status === 'Present').length;
-        const percentage = courseClasses > 0 ? (coursePresent / courseClasses) * 100 : 0;
-
-        courseSummaryMap.set(course.courseId, {
-          courseId: course.courseId,
-          courseTitle: course.title || 'Unknown Course',
-          classesAttended: coursePresent,
-          totalClasses: courseClasses,
-          percentage
+        setStats({
+          totalClasses,
+          present,
+          absent,
+          attendancePercentage
         });
-      });
 
-      setCourseSummaries(Array.from(courseSummaryMap.values()));
+        const courseSummaryMap = new Map<string, CourseAttendanceSummary>();
+
+        enrolledCourses.forEach(course => {
+          const courseRecords = data.filter(record => record.courseId === course.courseId);
+          const courseClasses = courseRecords.length;
+          const coursePresent = courseRecords.filter(record => record.status === 'Present').length;
+          const percentage = courseClasses > 0 ? (coursePresent / courseClasses) * 100 : 0;
+
+          courseSummaryMap.set(course.courseId, {
+            courseId: course.courseId,
+            courseTitle: 'Unknown Course',
+            classesAttended: coursePresent,
+            totalClasses: courseClasses,
+            percentage
+          });
+        });
+
+        setCourseSummaries(Array.from(courseSummaryMap.values()));
+      }
 
       Toast.show({
         type: 'success',
@@ -143,7 +141,7 @@ const AttendanceReport = () => {
               .filter(record => record.courseId === item.courseId)
               .map(record => (
                 <HStack key={record.id} className="justify-between py-1 border-b border-tertiary-400">
-                  <Text className="text-white">{format(new Date(record.date), 'MMM dd, yyyy')}</Text>
+                  <Text className="text-white">{format(new Date(record.recordedAt), 'MMM dd, yyyy')}</Text>
                   <Text className={getStatusColor(record.status)}>{record.status}</Text>
                 </HStack>
               ))}

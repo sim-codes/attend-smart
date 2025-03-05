@@ -25,7 +25,7 @@ export interface AttendanceRecord {
     id: string;
     courseId: string;
     courseTitle: string;
-    date: string; // ISO date string
-    status: string; // 'Present', 'Absent', etc.
+    recordedAt: string;
+    status: string;
     notes?: string;
 }

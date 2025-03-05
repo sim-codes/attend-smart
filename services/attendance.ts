@@ -1,6 +1,7 @@
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import { ServiceHandler } from './utils/serviceHandler';
+import { AttendanceRecord } from '@/constants/types/attendance';
 
 interface AttendancePayload {
     status: string;
@@ -24,7 +25,7 @@ export const attendanceService = {
     },
 
     async getStudentAttendanceRecords(studentId: string) {
-        return ServiceHandler.execute(() =>
+        return ServiceHandler.execute<AttendanceRecord[]>(() =>
             apiClient.get(API_ENDPOINTS.attendance.getAll + `?userId=${studentId}`)
         );
     }
