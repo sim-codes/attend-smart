@@ -12,6 +12,7 @@ import { Center } from "@/components/ui/center";
 import { format } from "date-fns";
 import { AttendanceStats, CourseAttendanceSummary, AttendanceRecord } from "@/constants/types/attendance";
 import { dummyAttendanceRecords, dummyEnrolledCourses } from "@/constants/data";
+import { attendanceService } from "@/services/attendance";
 
 
 const AttendanceReport = () => {
@@ -41,8 +42,11 @@ const AttendanceReport = () => {
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Use dummy data
       const data = dummyAttendanceRecords;
+      if (user) {
+        const response = await attendanceService.getStudentAttendanceRecords(user.id);
+        console.log('Attendance records:', response.data);
+      }
 
       setAttendanceRecords(data);
 
