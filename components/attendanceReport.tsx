@@ -161,7 +161,7 @@ const AttendanceReport = () => {
   );
 
   return (
-    <VStack className="flex-2 bg-primary-500 h-full" space="md">
+    <VStack className="flex-1 bg-primary-500" space="md">
       {/* Stats Section */}
       <VStack className="bg-primary-600 py-2 px-4 rounded-xl justify-center h-48" space="sm">
         <Heading size="md" className="text-secondary-0">Attendance Summary</Heading>

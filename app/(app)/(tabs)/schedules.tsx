@@ -47,7 +47,7 @@ export default function Schedules() {
         console.log('Schedule pressed:', schedule);
     };
     return (
-        <VStack className="flex-1 bg-primary-500 py-10 px-6" space="3xl">
+        <VStack className="flex-1 bg-primary-500 py-10 px-6" space="xl">
             <Text size="2xl" className="text-secondary-0" bold>Schedules</Text>
 
             <CalendarSchedule

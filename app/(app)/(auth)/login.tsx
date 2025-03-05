@@ -119,7 +119,7 @@ export default function Login() {
             <ButtonText size="xl">{isLoading ? "Loading..." : "Login"}</ButtonText>
           </Button>
 
-          <Text className="text-center text-primary-500">
+          <Text className="text-center text-primary-500 my-2">
             Don't have an account?{" "}
             <Link href="/(app)/(auth)/signup"
               className="underline text-primary-500 font-bold"

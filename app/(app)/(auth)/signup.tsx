@@ -203,7 +203,7 @@ export default function SignUp() {
                         </ButtonText>
                     </Button>
 
-                    <Text className="text-center text-primary-500">
+                    <Text className="text-center text-primary-500 my-2">
                         Have an account?{" "}
                         <Link href="/(app)/(auth)/login"
                             className="underline text-primary-500 font-bold"

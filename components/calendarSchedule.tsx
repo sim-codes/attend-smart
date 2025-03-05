@@ -104,8 +104,8 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
   const lastWeek = weeks[weeks.length - 1];
 
   return (
-    <ScrollView className="flex-2">
-    <VStack className="bg-primary-700 rounded-xl pb-2">
+    <ScrollView className="flex-1">
+    <VStack className="bg-primary-700 rounded-xl pb-2 min-h-52">
       {/* Calendar Header */}
       <VStack className="flex-row justify-between rounded-3xl items-center p-4 bg-primary-700">
         <TouchableOpacity onPress={() => navigateMonth('prev')}>
