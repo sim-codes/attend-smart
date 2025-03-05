@@ -14,8 +14,7 @@ import {
   isSameDay,
   isSameMonth,
   addDays,
-  getDay,
-  getDaysInMonth as getDaysInMonthUtil
+  getDay
 } from 'date-fns';
 import { CalendarScheduleProps } from '@/constants/types/schedule';
 import { VStack } from '@/components/ui/vstack';
@@ -28,19 +27,9 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
   const [scheduleHeight] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    // Automatically select current date on component mount
     const today = new Date();
     handleDatePress(today);
   }, []);
-
-  const getDaysInMonth = () => {
-    const monthStart = startOfMonth(currentMonth);
-    const monthEnd = endOfMonth(currentMonth);
-    const startDate = startOfWeek(monthStart);
-    const endDate = addDays(monthEnd, 6 - getDay(monthEnd));
-
-    return eachDayOfInterval({ start: startDate, end: endDate });
-  };
 
   const getSchedulesForDate = (date: Date) => {
     const dayOfWeek = WEEKDAYS[date.getDay()];
@@ -101,7 +90,6 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
   };
 
   const weeks = getWeeksInMonth(currentMonth);
-  const lastWeek = weeks[weeks.length - 1];
 
   return (
     <ScrollView className="flex-1">
