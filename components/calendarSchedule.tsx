@@ -133,7 +133,7 @@ const CalendarSchedule = ({ schedules, onSchedulePress }: CalendarScheduleProps)
       {weeks.map((week, weekIndex) => (
         <View
         key={weekIndex}
-        className={`flex-row gap-x-2 items-end p-2 justify-between`}
+        className={`flex-row gap-x-1 items-end p-2 justify-between`}
         >
           {week.map((date, dayIndex) => {
             if (!date) {

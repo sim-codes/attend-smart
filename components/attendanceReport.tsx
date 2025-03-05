@@ -71,7 +71,7 @@ const AttendanceReport = () => {
 
           courseSummaryMap.set(course.courseId, {
             courseId: course.courseId,
-            courseTitle: 'Unknown Course',
+            courseTitle:  enrolledCourses.find(c => c.courseId === course.courseId)?.courseTitle || 'Unknown Course',
             classesAttended: coursePresent,
             totalClasses: courseClasses,
             percentage
@@ -118,7 +118,7 @@ const AttendanceReport = () => {
     return (
       <TouchableOpacity
         onPress={() => setSelectedCourse(isSelected ? null : item.courseId)}
-        className={`p-4 mb-2 rounded-xl ${isSelected ? 'bg-tertiary-500' : 'bg-primary-600'}`}
+        className={`py-2 px-4 mb-2 rounded-xl ${isSelected ? 'bg-tertiary-500' : 'bg-primary-600'}`}
       >
         <HStack className="justify-between items-center">
           <VStack>
@@ -161,32 +161,32 @@ const AttendanceReport = () => {
   );
 
   return (
-    <VStack className="flex-2 bg-primary-500" space="md">
+    <VStack className="flex-2 bg-primary-500 h-full" space="md">
       {/* Stats Section */}
-      <VStack className="bg-primary-600 p-4 rounded-xl mb-2">
-        <Heading size="md" className="text-secondary-0 mb-2">Attendance Summary</Heading>
-        
+      <VStack className="bg-primary-600 py-2 px-4 rounded-xl justify-center h-48" space="sm">
+        <Heading size="md" className="text-secondary-0">Attendance Summary</Heading>
+
         <HStack className="justify-between">
-          <VStack className="items-center p-2 bg-primary-700 rounded-lg flex-1 mr-2">
+          <VStack className="items-center justify-center h-20 p-2 bg-primary-700 rounded-lg flex-1 mr-2">
             <Text className="text-tertiary-100">Total</Text>
             <Text size="xl" className="text-white" bold>{stats.totalClasses}</Text>
             <Text className="text-tertiary-100">Classes</Text>
           </VStack>
-          
-          <VStack className="items-center p-2 bg-primary-700 rounded-lg flex-1 mx-1">
+
+          <VStack className="items-center justify-center h-20 p-2 bg-primary-700 rounded-lg flex-1 mx-1">
             <Text className="text-tertiary-100">Present</Text>
             <Text size="xl" className="text-success-500" bold>{stats.present}</Text>
             <Text className="text-tertiary-100">Classes</Text>
           </VStack>
-          
-          <VStack className="items-center p-2 bg-primary-700 rounded-lg flex-1 ml-2">
+
+          <VStack className="items-center justify-center h-20 p-2 bg-primary-700 rounded-lg flex-1 ml-2">
             <Text className="text-tertiary-100">Absent</Text>
             <Text size="xl" className="text-error-500" bold>{stats.absent}</Text>
             <Text className="text-tertiary-100">Classes</Text>
           </VStack>
         </HStack>
 
-        <HStack className="mt-4 items-center">
+        <HStack className="items-center">
           <Text className="text-white mr-2">Overall Attendance:</Text>
           <Text
             size="xl"
@@ -220,7 +220,7 @@ const AttendanceReport = () => {
         variant="link"
         onPress={fetchAttendanceData}
         isDisabled={isLoading}
-        className="self-center mt-2"
+        className="self-center"
       >
         <HStack space="sm" className="items-center">
           <Ionicons name="refresh-outline" size={18} color="#D6BD98" />
