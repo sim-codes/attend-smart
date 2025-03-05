@@ -1,3 +1,5 @@
+import { AttendanceRecord } from "@/constants/types/attendance";
+
 export const courses = [
   {
     id: 1,
@@ -128,4 +130,33 @@ export const scheduleData = [
         departmentId: "3d490a70-94ce-4d15-9494-5248280c2ce3",
         classroomId: "c9d4c053-49b6-410c-bc78-2d54a9991870",
     },
+];
+
+export const dummyAttendanceRecords: AttendanceRecord[] = [
+  // Data Structures Course
+  { id: "1", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-10T10:00:00Z", status: "Present" },
+  { id: "2", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-12T10:00:00Z", status: "Present" },
+  { id: "3", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-17T10:00:00Z", status: "Absent" },
+  { id: "4", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-19T10:00:00Z", status: "Present" },
+  { id: "5", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-24T10:00:00Z", status: "Present" },
+  { id: "6", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-26T10:00:00Z", status: "Present" },
+
+  { id: "7", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-11T13:00:00Z", status: "Present" },
+  { id: "8", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-13T13:00:00Z", status: "Present" },
+  { id: "9", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-18T13:00:00Z", status: "Absent" },
+  { id: "10", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-20T13:00:00Z", status: "Absent" },
+  { id: "11", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-25T13:00:00Z", status: "Present" },
+
+  { id: "12", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-12T15:30:00Z", status: "Present" },
+  { id: "13", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-14T15:30:00Z", status: "Present" },
+  { id: "14", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-19T15:30:00Z", status: "Present" },
+  { id: "15", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-21T15:30:00Z", status: "Present" },
+  { id: "16", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-26T15:30:00Z", status: "Excused" },
+  { id: "17", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-28T15:30:00Z", status: "Present" },
+];
+
+export const dummyEnrolledCourses = [
+  { courseId: "CS201", title: "Data Structures" },
+  { courseId: "CS301", title: "Database Systems" },
+  { courseId: "CS401", title: "Software Engineering" },
 ];

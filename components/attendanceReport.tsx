@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, View, TouchableOpacity } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import { VStack } from "@/components/ui/vstack";
 import { HStack } from "@/components/ui/hstack";
 import { Text } from "@/components/ui/text";
@@ -10,71 +10,13 @@ import Toast from "react-native-toast-message";
 import { useAppSelector } from "@/store/hooks";
 import { Center } from "@/components/ui/center";
 import { format } from "date-fns";
+import { AttendanceStats, CourseAttendanceSummary, AttendanceRecord } from "@/constants/types/attendance";
+import { dummyAttendanceRecords, dummyEnrolledCourses } from "@/constants/data";
 
-// Define attendance record type
-interface AttendanceRecord {
-  id: string;
-  courseId: string;
-  courseTitle: string;
-  date: string; // ISO date string
-  status: string; // 'Present', 'Absent', etc.
-  notes?: string;
-}
-
-// Define attendance stats type
-interface AttendanceStats {
-  totalClasses: number;
-  present: number;
-  absent: number;
-  attendancePercentage: number;
-}
-
-// Course attendance summary
-interface CourseAttendanceSummary {
-  courseId: string;
-  courseTitle: string;
-  classesAttended: number;
-  totalClasses: number;
-  percentage: number;
-}
-
-// DUMMY DATA
-const dummyAttendanceRecords: AttendanceRecord[] = [
-  // Data Structures Course
-  { id: "1", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-10T10:00:00Z", status: "Present" },
-  { id: "2", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-12T10:00:00Z", status: "Present" },
-  { id: "3", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-17T10:00:00Z", status: "Absent" },
-  { id: "4", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-19T10:00:00Z", status: "Present" },
-  { id: "5", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-24T10:00:00Z", status: "Present" },
-  { id: "6", courseId: "CS201", courseTitle: "Data Structures", date: "2025-02-26T10:00:00Z", status: "Present" },
-  
-  // Database Systems Course
-  { id: "7", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-11T13:00:00Z", status: "Present" },
-  { id: "8", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-13T13:00:00Z", status: "Present" },
-  { id: "9", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-18T13:00:00Z", status: "Absent" },
-  { id: "10", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-20T13:00:00Z", status: "Absent" },
-  { id: "11", courseId: "CS301", courseTitle: "Database Systems", date: "2025-02-25T13:00:00Z", status: "Present" },
-  
-  // Software Engineering Course
-  { id: "12", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-12T15:30:00Z", status: "Present" },
-  { id: "13", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-14T15:30:00Z", status: "Present" },
-  { id: "14", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-19T15:30:00Z", status: "Present" },
-  { id: "15", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-21T15:30:00Z", status: "Present" },
-  { id: "16", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-26T15:30:00Z", status: "Excused" },
-  { id: "17", courseId: "CS401", courseTitle: "Software Engineering", date: "2025-02-28T15:30:00Z", status: "Present" },
-];
-
-// Mock enrolled courses to match the dummy data
-const dummyEnrolledCourses = [
-  { courseId: "CS201", title: "Data Structures" },
-  { courseId: "CS301", title: "Database Systems" },
-  { courseId: "CS401", title: "Software Engineering" },
-];
 
 const AttendanceReport = () => {
   const { user } = useAppSelector((state) => state.auth);
 
-  // Use dummy enrolled courses instead of fetching from store
   const enrolledCourses = dummyEnrolledCourses;
 
   const [isLoading, setIsLoading] = useState(false);
