@@ -23,7 +23,6 @@ export default function FaceRecognition() {
                         alt="Picture taken from camera"
                         style={{ width: "100%", aspectRatio: 3 / 4 }}
                     />
-                    {/* <Button onPress={() => setUri(undefined)} title="Take another picture" /> */}
                 </VStack>
             );
     };
