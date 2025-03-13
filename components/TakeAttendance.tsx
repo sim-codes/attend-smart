@@ -15,6 +15,7 @@ import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
 import * as Location from 'expo-location';
+import { current } from "@reduxjs/toolkit";
 
 export default function TakeAttendance() {
     const { user } = useAppSelector((state) => state.auth);
@@ -243,6 +244,7 @@ export default function TakeAttendance() {
                 courseId: formData.course,
                 studentLon: currentLocation.coords.longitude,
                 studentLat: currentLocation.coords.latitude,
+                accuracy: currentLocation.coords.accuracy || 25,
             };
 
             const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);

@@ -9,6 +9,7 @@ interface AttendancePayload {
     courseId: string;
     studentLon: number;
     studentLat: number;
+    accuracy: number;
 }
 
 export const attendanceService = {
