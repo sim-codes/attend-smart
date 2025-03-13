@@ -236,6 +236,8 @@ export default function TakeAttendance() {
                 return;
             }
 
+            console.log(currentLocation.coords)
+
             const payload = {
                 status: formData.status,
                 courseId: formData.course,

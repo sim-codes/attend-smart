@@ -106,8 +106,8 @@ export default function Home() {
                 <>
                 <HStack className="justify-between items-center w-full gap-x-2">
                             <RegisterCourse />
-                            <AttendanceVerification />
-                        {/* <TakeAttendance /> */}
+                            {/* <AttendanceVerification /> */}
+                        <TakeAttendance />
                 </HStack>
 
                     <CourseList
