@@ -233,6 +233,7 @@ export default function AttendanceVerification() {
                 courseId: formData.course,
                 studentLon: currentLocation.coords.longitude,
                 studentLat: currentLocation.coords.latitude,
+                accuracy: currentLocation.coords.accuracy || 25,
             };
 
             const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);

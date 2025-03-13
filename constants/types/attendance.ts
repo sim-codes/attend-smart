@@ -29,3 +29,12 @@ export interface AttendanceRecord {
     status: string;
     notes?: string;
 }
+
+export interface AttendancePayload {
+    status: string;
+    notes?: string;
+    courseId: string;
+    studentLon: number;
+    studentLat: number;
+    accuracy: number;
+}

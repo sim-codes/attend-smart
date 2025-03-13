@@ -43,10 +43,13 @@ const AttendanceReport = () => {
       // Simulate API delay
       // await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const { data, success } = await attendanceService.getStudentAttendanceRecords(user?.id!);
+      const response = await attendanceService.getStudentAttendanceRecords(user?.id!);
+      const data = response.data?.data || [];
 
-      if (success && data) {
-        setAttendanceRecords(data);
+      if (response.success) {
+        setAttendanceRecords(response.data?.data || []);
+        const paginationHeader = response.data?.headers['x-pagination'];
+        // console.log(paginationHeader);
 
         const totalClasses = data.length;
         const present = data.filter(record => record.status === 'Present').length;

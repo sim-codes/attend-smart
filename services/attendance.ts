@@ -1,16 +1,8 @@
+import { AttendancePayload, AttendanceRecord } from '@/constants/types/attendance';
 import { apiClient } from '@/services/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
 import { ServiceHandler } from './utils/serviceHandler';
-import { AttendanceRecord } from '@/constants/types/attendance';
-
-interface AttendancePayload {
-    status: string;
-    notes?: string;
-    courseId: string;
-    studentLon: number;
-    studentLat: number;
-    accuracy: number;
-}
+import { ApiResponseWithHeader } from '@/constants/types/common';
 
 export const attendanceService = {
     async submitAttendance(studentId: string, payload: AttendancePayload) {
@@ -26,8 +18,8 @@ export const attendanceService = {
     },
 
     async getStudentAttendanceRecords(studentId: string) {
-        return ServiceHandler.execute<AttendanceRecord[]>(() =>
-            apiClient.get(API_ENDPOINTS.attendance.getAll + `?userId=${studentId}`)
+        return ServiceHandler.execute(() =>
+            apiClient.get<ApiResponseWithHeader<AttendanceRecord>>(API_ENDPOINTS.attendance.getAll + `?userId=${studentId}&pageSize=50`, {}, true),
         );
     }
 }
