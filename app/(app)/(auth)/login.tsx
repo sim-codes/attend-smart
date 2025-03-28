@@ -18,7 +18,7 @@ export default function Login() {
   const { isLoading, error } = useAppSelector((state) => state.auth);
 
   const [formData, setFormData] = useState<Record<LoginFieldId, string>>({
-    username: '',
+    email: '',
     password: ''
   });
   const [errors, setErrors] = useState<Partial<Record<LoginFieldId, string>>>({});
@@ -64,8 +64,8 @@ export default function Login() {
     const newErrors: Partial<Record<LoginFieldId, string>> = {};
     let isValid = true;
 
-    if (!formData.username) {
-        newErrors.username = 'Email is required';
+    if (!formData.email) {
+        newErrors.email = 'Email is required';
         isValid = false;
     }
 

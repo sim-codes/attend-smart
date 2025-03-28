@@ -5,6 +5,15 @@ export interface Option {
     label: string;
 }
 
+export interface Metadata {
+    currentPage: number;
+    totalPages: number;
+    pageSize: number;
+    totalCount: number;
+    hasPrevious: boolean;
+    hasNext: boolean;
+}
+
 export interface ApiResponseWithHeader<T> {
     data?: T[];
     headers?: any;

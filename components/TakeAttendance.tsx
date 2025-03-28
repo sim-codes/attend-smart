@@ -248,6 +248,7 @@ export default function TakeAttendance() {
             };
 
             const response = await attendanceService.submitAttendanceWithLocation(user?.id!, payload);
+            console.log(response);
 
             if (response.success) {
                 Toast.show({
@@ -255,7 +256,6 @@ export default function TakeAttendance() {
                     text1: 'Success',
                     text2: 'Attendance submitted successfully.',
                 });
-                setShowDialog(false);
             } else {
                 Toast.show({
                     type: 'error',
@@ -272,6 +272,7 @@ export default function TakeAttendance() {
             });
         } finally {
             setIsSubmitting(false);
+            setShowDialog(false);
         }
     };
 

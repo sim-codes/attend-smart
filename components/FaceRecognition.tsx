@@ -7,7 +7,7 @@ import { Image } from "./ui/image";
 
 export default function FaceRecognition() {
     const [permission, requestPermission] = useCameraPermissions();
-        const ref = useRef<CameraView>(null);
+    const ref = useRef<CameraView>(null);
     const [uri, setUri] = useState<string | undefined>(undefined);
 
     if (!permission) {

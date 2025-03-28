@@ -4,7 +4,7 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { Ionicons } from "@expo/vector-icons";
 import ModalDialog from "./ModalDialog";
 import FormFieldComponent from "./forms/FormFieldComponent";
-import { CourseEnrollmentFieldId, CourseEnrollmentField } from "@/constants/types/course";
+import { CourseEnrollmentFieldId, CourseEnrollmentField, CourseData, Course } from "@/constants/types/course";
 import { CourseApiResponse } from "@/constants/types/course";
 import { FacultyAndDepartmentApiResponse } from "@/constants/types/api";
 
@@ -39,7 +39,7 @@ export default function RegisterCourse() {
     const [formFields, setFormFields] = useState<CourseEnrollmentField[] | undefined>(undefined);
     const [facultiesData, setFacultiesData] = useState<FacultyAndDepartmentApiResponse[] | null>(null);
     const [departmentsData, setDepartmentsData] = useState<FacultyAndDepartmentApiResponse[] | null>(null);
-    const [coursesData, setCoursesData] = useState<CourseApiResponse[] | null>(null);
+    const [coursesData, setCoursesData] = useState<Course[] | undefined>(undefined);
     const [coursesPagination, setCoursesPagination] = useState<PaginationMetadata | null>(null);
 
     // Form data and errors
@@ -106,14 +106,9 @@ export default function RegisterCourse() {
     const loadCourses = async (departmentId: string) => {
         try {
             const response = await courseService.getCoursesByDepartment(departmentId);
-            if (response.success) {
-                setCoursesData(response.data?.data!);
-                // Extract pagination metadata from headers
-                const paginationHeader = response.data?.headers['x-paginationz'];
-                if (paginationHeader) {
-                    const metadata = JSON.parse(paginationHeader);
-                    setCoursesPagination(metadata);
-                }
+            if (response.success && response.data) {
+                const data  = response.data.courses;
+                setCoursesData(data);
             }
         } catch (error) {
             console.error("Error loading courses:", error);
@@ -149,13 +144,13 @@ export default function RegisterCourse() {
                 course: ''
             }));
             setDepartmentsData(null);
-            setCoursesData(null);
+            setCoursesData(undefined);
         }
 
         // Clear courses when department or level changes
         if (id === 'department') {
             setFormData(prev => ({ ...prev, course: '' }));
-            setCoursesData(null);
+            setCoursesData(undefined);
         }
 
         // Clear error when field changes

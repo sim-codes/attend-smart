@@ -1,16 +1,24 @@
 import { BaseFormField } from "@/constants/types/forms";
+import { Metadata } from "./common";
 
 export interface Course {
     id: string;
     title: string;
+    name: string;
     courseCode: string;
     creditUnits: number;
 }
 
-export interface CourseApiResponse extends Course {
+export interface CourseData {
+    id: string;
     name: string;
     departmentId: string;
     levelId: string;
+}
+
+export interface CourseApiResponse extends Course {
+    courses: Course[];
+    metadata: Metadata;
 }
 
 export interface EnrollmentResponse {

@@ -1,4 +1,5 @@
 import { BaseFormField } from "@/constants/types/forms";
+import { Metadata } from "./common";
 
 export type AttendanceFieldId = "course" | "status"
 
@@ -28,6 +29,11 @@ export interface AttendanceRecord {
     recordedAt: string;
     status: string;
     notes?: string;
+}
+
+export interface AttendaceApiResponse {
+    reports: AttendanceRecord[];
+    metadata: Metadata;
 }
 
 export interface AttendancePayload {
