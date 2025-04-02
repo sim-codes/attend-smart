@@ -175,9 +175,9 @@ export default function AttendanceVerification() {
     const getCurrentLocation = async (): Promise<Location.LocationObject | null> => {
         try {
             const location = await Location.getCurrentPositionAsync({
-                accuracy: Location.Accuracy.High, // Using high accuracy for better precision
-                timeInterval: 5000, // Update every 5 seconds
-                distanceInterval: 5, // Update every 5 meters
+                accuracy: Location.Accuracy.Highest,
+                timeInterval: 5000,
+                distanceInterval: 5,
             });
             setLocation(location);
             return location;
@@ -283,8 +283,8 @@ export default function AttendanceVerification() {
                 actionText={'Submit'}
                 cancelText={'Cancel'}
                 isLoading={isSubmitting}
-            >
-                <FaceRecognition />
+            ><></>
+                {/* <FaceRecognition /> */}
             </ModalDialog>
         </VStack>
     );

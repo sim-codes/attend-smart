@@ -16,6 +16,9 @@ import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
 import * as Location from 'expo-location';
 import { current } from "@reduxjs/toolkit";
+import FaceRecognition from "./FaceRecognition";
+import { Modal } from "react-native";
+import cloudinaryService from "@/services/cloudinary";
 
 export default function TakeAttendance() {
     const { user } = useAppSelector((state) => state.auth);
@@ -25,6 +28,10 @@ export default function TakeAttendance() {
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [schedules, setSchedules] = useState<ScheduleApiResponse[]>([]);
+
+    const [showCameraModal, setShowCameraModal] = useState(false);
+    const [capturedImageUrl, setCapturedImageUrl] = useState<string | null>(null);
+    const [showFormModal, setShowFormModal] = useState(false);
 
     const courseIds = enrolledCourses.map(course => course.courseId);
     const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -184,9 +191,9 @@ export default function TakeAttendance() {
     const getCurrentLocation = async (): Promise<Location.LocationObject | null> => {
         try {
             const location = await Location.getCurrentPositionAsync({
-                accuracy: Location.Accuracy.High, // Using high accuracy for better precision
-                timeInterval: 5000, // Update every 5 seconds
-                distanceInterval: 5, // Update every 5 meters
+                accuracy: Location.Accuracy.Highest,
+                timeInterval: 5000,
+                distanceInterval: 5,
             });
             setLocation(location);
             return location;
@@ -276,20 +283,64 @@ export default function TakeAttendance() {
         }
     };
 
+    const handleFaceCapture = async (localUri: string) => {
+        try {
+            // Upload to Cloudinary
+            const cloudinaryUrl = await cloudinaryService.uploadToCloudinary(localUri);
+            if (!cloudinaryUrl) throw new Error('Failed to upload image');
+            console.log('Uploaded image', cloudinaryUrl)
+
+            // Get profile image from user data
+            const profileImage = user?.profileImageUrl;
+            if (!profileImage) throw new Error('No profile image found');
+
+            console.log('user profile image', profileImage)
+
+            const verification = await attendanceService.verifyFace({
+                unknown_face_url: cloudinaryUrl,
+                known_face_url: profileImage,
+                tolerance: 0.6,
+            });
+
+            console.log('Face verification', verification)
+
+            if (!verification.success) throw new Error('Face verification failed');
+
+            setCapturedImageUrl(cloudinaryUrl);
+            setShowCameraModal(false);
+            setShowFormModal(true);
+        } catch (error) {
+            throw error;
+        }
+    };
+
     return (
         <VStack>
-            <Button
+            {/* <Button
                 variant="outline"
                 size="xl"
                 onPress={() => setShowDialog(true)}
             >
                 <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
                 <ButtonText className="text-secondary-0" size="md">Attendance</ButtonText>
+            </Button> */}
+
+            <Button onPress={() => setShowCameraModal(true)}>
+                <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
+                <ButtonText className="text-secondary-0" size="md">Take Attendance</ButtonText>
             </Button>
 
             <ModalDialog
-                isOpen={showDialog}
-                onClose={() => setShowDialog(false)}
+                isOpen={showCameraModal}
+                onClose={() => setShowCameraModal(false)}
+                onAction={() => setShowCameraModal(false)}
+            >
+                <FaceRecognition onCapture={handleFaceCapture} />
+            </ModalDialog>
+
+            <ModalDialog
+                isOpen={showFormModal}
+                onClose={() => setShowFormModal(false)}
                 onAction={handleSubmit}
                 title="Take Attendance"
                 actionText={'Submit'}
