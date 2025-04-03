@@ -18,7 +18,7 @@ import * as Location from 'expo-location';
 import FaceRecognition from "./FaceRecognition";
 import cloudinaryService from "@/services/cloudinary";
 
-export default function TakeAttendance() {
+export default function TakeAttendance({profileImageUri}: { profileImageUri: string | null }) {
     const { user } = useAppSelector((state) => state.auth);
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);
     const dispatch = useAppDispatch();
@@ -283,28 +283,20 @@ export default function TakeAttendance() {
 
     const handleFaceCapture = async (localUri: string) => {
         try {
-            // Upload to Cloudinary
-            const cloudinaryUrl = await cloudinaryService.uploadToCloudinary(localUri);
-            if (!cloudinaryUrl) throw new Error('Failed to upload image');
-            console.log('Uploaded image', cloudinaryUrl)
 
-            // Get profile image from user data
-            const profileImage = user?.profileImageUrl;
-            if (!profileImage) throw new Error('No profile image found');
-
-            console.log('user profile image', profileImage)
+            if (!profileImageUri) {
+                throw new Error('Profile image not available');
+            }
 
             const verification = await attendanceService.verifyFace({
-                unknown_face_url: cloudinaryUrl,
-                known_face_url: profileImage,
-                tolerance: 0.6,
+                image1: profileImageUri,
+                image2: localUri,
             });
 
             console.log('Face verification', verification)
 
-            if (!verification.success) throw new Error('Face verification failed');
-
-            setCapturedImageUrl(cloudinaryUrl);
+            // if (!verification.success) throw new Error('Face verification failed');
+            setCapturedImageUrl(localUri);
             setShowCameraModal(false);
             setShowFormModal(true);
         } catch (error) {

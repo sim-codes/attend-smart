@@ -25,14 +25,37 @@ export const attendanceService = {
     },
 
     async verifyFace(payload: FaceVerificationPayload) {
-        return ServiceHandler.execute(() => {
-            return axios.post('https://dcv7qtf3-8000.uks1.devtunnels.ms/match_faces', payload)
-        })
+        const image1Extension = payload.image1.split('.').pop()?.toLowerCase();
+        const image2Extension = payload.image2.split('.').pop()?.toLowerCase();
+
+        const image1Name = `image1.${image1Extension}`;
+        const image2Name = `image2.${image2Extension}`;
+
+        const formData = new FormData();
+        formData.append('image1', {
+            uri: payload.image1,
+            name: image1Name,
+            type: image1Extension === 'png' ? 'image/png' : 'image/jpeg',
+        } as any);
+
+        formData.append('image2', {
+            uri: payload.image2,
+            name: image2Name,
+            type: image2Extension === 'png' ? 'image/png' : 'image/jpeg',
+        } as any);
+
+        console.log("Form data", formData);
+
+        const response =  ServiceHandler.execute(() => axios.post('https://dcv7qtf3-8000.uks1.devtunnels.ms/compare-faces'));
+
+        // const response = await axios.get('https://dcv7qtf3-8000.uks1.devtunnels.ms')
+
+        console.log("Face verification response", response);
+        return response
     }
 }
 
 interface FaceVerificationPayload{
-    known_face_url: string;
-    unknown_face_url: string;
-    tolerance: number;
+    image1: string;
+    image2: string;
 }

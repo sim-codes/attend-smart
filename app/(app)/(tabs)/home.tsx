@@ -19,11 +19,13 @@ import { fetchEnrolledCourses } from "@/store/slices/courseSlice";
 import { scheduleServices } from "@/services/schedule";
 import { ScheduleApiResponse } from "@/constants/types/schedule";
 import AttendanceVerification from "@/components/AttendanceVerification";
+import * as FileSystem from 'expo-file-system';
 
 export default function Home() {
     const { user } = useAppSelector((state) => state.auth);
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);
     const [showDialog, setShowDialog] = useState(false);
+    const [localImageUri, setLocalImageUri] = useState<string | null>(null);
     const { data: profile, error: profileError } = useAppSelector((state) => state.profile);
     const dispatch = useAppDispatch();
 
@@ -37,6 +39,50 @@ export default function Home() {
             dispatch(fetchEnrolledCourses(user?.id!));
         }
     }, [dispatch]);
+
+    const downloadImageToLocal = async () => {
+        try {
+            const imageUrl = user?.profileImageUrl;
+            if (!imageUrl || !imageUrl.startsWith('http')) return;
+
+            const fileName = imageUrl.split('/').pop() || `profile-${Date.now()}.jpg`;
+            const localUri = `${FileSystem.cacheDirectory}${fileName}`;
+
+            const fileInfo = await FileSystem.getInfoAsync(localUri);
+
+            if (fileInfo.exists) {
+                setLocalImageUri(localUri);
+                return;
+            }
+            const downloadResult = await FileSystem.downloadAsync(
+                imageUrl,
+                localUri
+            );
+            setLocalImageUri(downloadResult.uri);
+        } catch (err) {
+            console.error('Error downloading profile image:', err);
+        }
+    };
+
+    const cleanupTempFile = async () => {
+        if (localImageUri) {
+            try {
+                const fileInfo = await FileSystem.getInfoAsync(localImageUri);
+                if (fileInfo.exists) {
+                    await FileSystem.deleteAsync(localImageUri);
+                }
+            } catch (err) {
+                console.error('Error cleaning up temp file:', err);
+            }
+        }
+    };
+
+    useEffect(() => {
+        downloadImageToLocal();
+        return () => {
+            cleanupTempFile();
+        };
+    }, [user?.profileImageUrl]);
 
     const fetchCourseSchedules = async () => {
         const { data, success, error } = await scheduleServices.getAllSchedules();
@@ -107,7 +153,7 @@ export default function Home() {
                 <HStack className="justify-between items-center w-full gap-x-2">
                             <RegisterCourse />
                             {/* <AttendanceVerification /> */}
-                        <TakeAttendance />
+                        <TakeAttendance profileImageUri={localImageUri} />
                 </HStack>
 
                     <CourseList

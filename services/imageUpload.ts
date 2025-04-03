@@ -42,7 +42,6 @@ class ImageUploadService {
     }
 
     async uploadToServer(localUri: string): Promise<string | null> {
-        const fileInfo = await FileSystem.getInfoAsync(localUri);
         const fileExtension = localUri.split('.').pop()?.toLowerCase();
 
         const fileName = `image_${new Date().getTime()}.${fileExtension}`;
@@ -55,8 +54,6 @@ class ImageUploadService {
         } as any);
 
         try {
-            console.log("Uploading to server", this.serverUrl);
-
             const response = await axios.post<ImageUploadResponse>(
                 this.serverUrl,
                 formData,

@@ -54,7 +54,7 @@ export default function FaceRecognition({ onCapture }: {
                 </VStack>
             );
         }
-        
+
         if (uri) {
             return (
                 <VStack space="lg" className="h-96 bg-black">
