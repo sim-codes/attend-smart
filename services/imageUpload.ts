@@ -33,11 +33,11 @@ class ImageUploadService {
         if (result.canceled) return null;
         const selectedUri = result.assets[0].uri;
         const fileExtension = selectedUri.split('.').pop()?.toLowerCase();
-        const validExtensions = ['jpg', 'jpeg', 'png'];
-        if (!fileExtension || !validExtensions.includes(fileExtension)) {
-            alert('Please select a JPG, JPEG, or PNG image file');
-            return null;
-        }
+        // const validExtensions = ['jpg', 'jpeg', 'png'];
+        // if (!fileExtension || !validExtensions.includes(fileExtension)) {
+        //     alert('Please select a JPG, JPEG, or PNG image file');
+        //     return null;
+        // }
         return selectedUri;
     }
 
