@@ -37,6 +37,7 @@ export const API_ENDPOINTS = {
         changePassword: '/authentication/change-password',
         generateResetToken: '/authentication/generate-reset-token',
         refreshToken: '/token/refresh',
+        uploadImage: '/authentication/upload-image',
     },
     student: {
         getAll: '/students',

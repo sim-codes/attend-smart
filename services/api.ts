@@ -5,7 +5,7 @@ import { tokenHelperService } from './utils/tokenHelper';
 import { updateToken, logout } from '@/store/slices/authSlice';
 import { API_CONFIG } from '@/constants/config';
 
-const BASE_URL = API_CONFIG.BASE_URL;
+export const BASE_URL = API_CONFIG.BASE_URL;
 
 class ApiClient {
   private client: AxiosInstance;

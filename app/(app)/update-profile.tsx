@@ -2,16 +2,16 @@ import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { Avatar, AvatarFallbackText, AvatarImage } from "@/components/ui/avatar";
-import cloudinaryService from "@/services/cloudinary";
 import { Pressable } from "react-native";
 import UpdateProfile from "@/components/UpdateProfile";
 import { useAppSelector } from "@/store/hooks";
+import imageUploadService from "@/services/imageUpload";
 
 export default function UpdateProfileModal() {
     const { data: profile } = useAppSelector((state) => state.profile);
     const [image, setImage] = useState<string | undefined>(profile?.profileImageUrl);
     const handleUpload = async () => {
-        const imageUrl = await cloudinaryService.handleImageUpload();
+        const imageUrl = await imageUploadService.handleImageUpload();
         if (imageUrl) {
             setImage(imageUrl);
         }

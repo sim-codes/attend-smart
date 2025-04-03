@@ -15,9 +15,7 @@ import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
 import * as Location from 'expo-location';
-import { current } from "@reduxjs/toolkit";
 import FaceRecognition from "./FaceRecognition";
-import { Modal } from "react-native";
 import cloudinaryService from "@/services/cloudinary";
 
 export default function TakeAttendance() {

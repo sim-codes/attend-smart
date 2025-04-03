@@ -7,11 +7,11 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { signupSteps } from "@/constants/forms";
 import { SignupStep, SignupFieldId } from "@/constants/types/auth-forms";
 import { Avatar, AvatarImage, AvatarFallbackText } from "@/components/ui/avatar";
-import cloudinaryService from "@/services/cloudinary";
 import { Pressable } from "react-native";
 import Toast from "react-native-toast-message";
 import { authService } from "@/services/auth";
 import { ScrollView } from "react-native";
+import imageUploadService from "@/services/imageUpload";
 
 export default function SignUp() {
     const [image, setImage] = useState<string | undefined>(undefined);
@@ -31,10 +31,12 @@ export default function SignUp() {
     const [errors, setErrors] = useState<Partial<Record<SignupFieldId, string>>>({});
 
     const handleUpload = async () => {
-        const imageUrl = await cloudinaryService.handleImageUpload();
+        const imageUrl = await imageUploadService.handleImageUpload();
         if (imageUrl) {
             setImage(imageUrl);
         }
+
+        console.log("Image url", imageUrl);
     };
 
     const handleSubmit = async () => {
