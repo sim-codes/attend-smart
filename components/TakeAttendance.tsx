@@ -46,7 +46,6 @@ export default function TakeAttendance() {
 
     const checkAndRequestLocation = async () => {
         try {
-            // First check if location services are enabled
             const serviceEnabled = await Location.hasServicesEnabledAsync();
             if (!serviceEnabled) {
                 setErrorMsg('Location services are disabled. Please enable them in your device settings.');
@@ -58,7 +57,6 @@ export default function TakeAttendance() {
                 return;
             }
 
-            // Request permissions
             const { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
@@ -184,9 +182,9 @@ export default function TakeAttendance() {
     const getCurrentLocation = async (): Promise<Location.LocationObject | null> => {
         try {
             const location = await Location.getCurrentPositionAsync({
-                accuracy: Location.Accuracy.Highest, // Using high accuracy for better precision
-                timeInterval: 5000, // Update every 5 seconds
-                distanceInterval: 5, // Update every 5 meters
+                accuracy: Location.Accuracy.Highest,
+                timeInterval: 5000,
+                distanceInterval: 5,
             });
             setLocation(location);
             return location;
