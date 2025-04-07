@@ -187,14 +187,14 @@ export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: 
 
     const handleSubmit = async () => {
 
-        if (profileImageUrl == undefined) {
-            Toast.show({
-                type: 'error',
-                text1: 'Profile Image Required',
-                text2: 'Profile image is a required field!',
-            });
-            return;
-        }
+        // if (profileImageUrl == undefined) {
+        //     Toast.show({
+        //         type: 'error',
+        //         text1: 'Profile Image Required',
+        //         text2: 'Profile image is a required field!',
+        //     });
+        //     return;
+        // }
 
         setIsSubmitting(true);
 
@@ -206,7 +206,7 @@ export default function UpdateProfile({ profileImageUrl } : { profileImageUrl?: 
             lastName: formData.lastname,
             email: formData.email,
             phoneNumber: formData.phonenumber,
-            profileImageUrl: profileImageUrl
+            profileImageUrl: profileImageUrl ?? "",
         }
 
         const response = await studentService.updateStudentProfile(profile?.userId!, payload);

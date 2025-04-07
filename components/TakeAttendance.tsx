@@ -15,10 +15,9 @@ import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
 import * as Location from 'expo-location';
-import FaceRecognition from "./FaceRecognition";
-import cloudinaryService from "@/services/cloudinary";
+import { current } from "@reduxjs/toolkit";
 
-export default function TakeAttendance({profileImageUri}: { profileImageUri: string | null }) {
+export default function TakeAttendance() {
     const { user } = useAppSelector((state) => state.auth);
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);
     const dispatch = useAppDispatch();
@@ -26,10 +25,6 @@ export default function TakeAttendance({profileImageUri}: { profileImageUri: str
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [schedules, setSchedules] = useState<ScheduleApiResponse[]>([]);
-
-    const [showCameraModal, setShowCameraModal] = useState(false);
-    const [capturedImageUrl, setCapturedImageUrl] = useState<string | null>(null);
-    const [showFormModal, setShowFormModal] = useState(false);
 
     const courseIds = enrolledCourses.map(course => course.courseId);
     const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -189,9 +184,9 @@ export default function TakeAttendance({profileImageUri}: { profileImageUri: str
     const getCurrentLocation = async (): Promise<Location.LocationObject | null> => {
         try {
             const location = await Location.getCurrentPositionAsync({
-                accuracy: Location.Accuracy.Highest,
-                timeInterval: 5000,
-                distanceInterval: 5,
+                accuracy: Location.Accuracy.Highest, // Using high accuracy for better precision
+                timeInterval: 5000, // Update every 5 seconds
+                distanceInterval: 5, // Update every 5 meters
             });
             setLocation(location);
             return location;
@@ -281,56 +276,20 @@ export default function TakeAttendance({profileImageUri}: { profileImageUri: str
         }
     };
 
-    const handleFaceCapture = async (localUri: string) => {
-        try {
-
-            if (!profileImageUri) {
-                throw new Error('Profile image not available');
-            }
-
-            const verification = await attendanceService.verifyFace({
-                image1: profileImageUri,
-                image2: localUri,
-            });
-
-            console.log('Face verification', verification)
-
-            // if (!verification.success) throw new Error('Face verification failed');
-            setCapturedImageUrl(localUri);
-            setShowCameraModal(false);
-            setShowFormModal(true);
-        } catch (error) {
-            throw error;
-        }
-    };
-
     return (
         <VStack>
-            {/* <Button
+            <Button
                 variant="outline"
                 size="xl"
                 onPress={() => setShowDialog(true)}
             >
                 <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
                 <ButtonText className="text-secondary-0" size="md">Attendance</ButtonText>
-            </Button> */}
-
-            <Button onPress={() => setShowCameraModal(true)}>
-                <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
-                <ButtonText className="text-secondary-0" size="md">Take Attendance</ButtonText>
             </Button>
 
             <ModalDialog
-                isOpen={showCameraModal}
-                onClose={() => setShowCameraModal(false)}
-                onAction={() => setShowCameraModal(false)}
-            >
-                <FaceRecognition onCapture={handleFaceCapture} />
-            </ModalDialog>
-
-            <ModalDialog
-                isOpen={showFormModal}
-                onClose={() => setShowFormModal(false)}
+                isOpen={showDialog}
+                onClose={() => setShowDialog(false)}
                 onAction={handleSubmit}
                 title="Take Attendance"
                 actionText={'Submit'}

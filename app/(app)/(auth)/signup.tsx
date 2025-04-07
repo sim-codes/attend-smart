@@ -35,21 +35,19 @@ export default function SignUp() {
         if (imageUrl) {
             setImage(imageUrl);
         }
-
-        console.log("Image url", imageUrl);
     };
 
     const handleSubmit = async () => {
         if (!validateStep(currentStep)) return;
 
-        if (!image) {
-            Toast.show({
-                type: 'error',
-                text1: 'Image Required',
-                text2: 'Please upload an image'
-            });
-            return;
-        }
+        // if (!image) {
+        //     Toast.show({
+        //         type: 'error',
+        //         text1: 'Image Required',
+        //         text2: 'Please upload an image'
+        //     });
+        //     return;
+        // }
 
         setLoading(true);
 
@@ -60,7 +58,7 @@ export default function SignUp() {
             email: formData.email,
             password: formData.password,
             phoneNumber: formData.phonenumber,
-            profileImageUrl: image,
+            profileImageUrl: image ?? "",
             roles: [
                 "Student"
             ]
