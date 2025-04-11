@@ -15,9 +15,11 @@ import { scheduleServices } from "@/services/schedule";
 import { getDay } from 'date-fns';
 import { attendanceService } from "@/services/attendance";
 import * as Location from 'expo-location';
-import { current } from "@reduxjs/toolkit";
+import FaceRecognition from "./FaceRecognition";
+import cloudinaryService from "@/services/cloudinary";
+import faceVerificationService from "@/services/facialRecognition";
 
-export default function TakeAttendance() {
+export default function TakeAttendance({profileImageUri}: { profileImageUri: string | null }) {
     const { user } = useAppSelector((state) => state.auth);
     const { data: enrolledCourses } = useAppSelector((state) => state.courses);
     const dispatch = useAppDispatch();
@@ -25,6 +27,10 @@ export default function TakeAttendance() {
     const [showDialog, setShowDialog] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [schedules, setSchedules] = useState<ScheduleApiResponse[]>([]);
+
+    const [showCameraModal, setShowCameraModal] = useState(false);
+    const [capturedImageUrl, setCapturedImageUrl] = useState<string | null>(null);
+    const [showFormModal, setShowFormModal] = useState(false);
 
     const courseIds = enrolledCourses.map(course => course.courseId);
     const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -46,6 +52,7 @@ export default function TakeAttendance() {
 
     const checkAndRequestLocation = async () => {
         try {
+            // First check if location services are enabled
             const serviceEnabled = await Location.hasServicesEnabledAsync();
             if (!serviceEnabled) {
                 setErrorMsg('Location services are disabled. Please enable them in your device settings.');
@@ -57,6 +64,7 @@ export default function TakeAttendance() {
                 return;
             }
 
+            // Request permissions
             const { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
@@ -274,20 +282,55 @@ export default function TakeAttendance() {
         }
     };
 
+    const handleFaceCapture = async (localUri: string) => {
+        try {
+            if (!profileImageUri) {
+                throw new Error('Profile image not available');
+            }
+
+            const verification = await faceVerificationService.verifyFace({
+                image1: profileImageUri,
+                image2: localUri,
+            });
+
+            console.log('Face verification result:', verification);
+
+            if (!verification.success) throw new Error('Face verification failed');
+            setCapturedImageUrl(localUri);
+            setShowCameraModal(false);
+            setShowFormModal(true);
+        } catch (error) {
+            throw error;
+        }
+    };
+
     return (
         <VStack>
-            <Button
+            {/* <Button
                 variant="outline"
                 size="xl"
                 onPress={() => setShowDialog(true)}
             >
                 <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
                 <ButtonText className="text-secondary-0" size="md">Attendance</ButtonText>
+            </Button> */}
+
+            <Button onPress={() => setShowCameraModal(true)}>
+                <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
+                <ButtonText className="text-secondary-0" size="md">Take Attendance</ButtonText>
             </Button>
 
             <ModalDialog
-                isOpen={showDialog}
-                onClose={() => setShowDialog(false)}
+                isOpen={showCameraModal}
+                onClose={() => setShowCameraModal(false)}
+                onAction={() => setShowCameraModal(false)}
+            >
+                <FaceRecognition onCapture={handleFaceCapture} />
+            </ModalDialog>
+
+            <ModalDialog
+                isOpen={showFormModal}
+                onClose={() => setShowFormModal(false)}
                 onAction={handleSubmit}
                 title="Take Attendance"
                 actionText={'Submit'}

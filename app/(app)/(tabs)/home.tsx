@@ -20,6 +20,8 @@ import { scheduleServices } from "@/services/schedule";
 import { ScheduleApiResponse } from "@/constants/types/schedule";
 import AttendanceVerification from "@/components/AttendanceVerification";
 import * as FileSystem from 'expo-file-system';
+import { Platform } from "react-native";
+import { set } from "date-fns";
 
 export default function Home() {
     const { user } = useAppSelector((state) => state.auth);
@@ -46,19 +48,26 @@ export default function Home() {
             if (!imageUrl || !imageUrl.startsWith('http')) return;
 
             const fileName = imageUrl.split('/').pop() || `profile-${Date.now()}.jpg`;
-            const localUri = `${FileSystem.cacheDirectory}${fileName}`;
 
-            const fileInfo = await FileSystem.getInfoAsync(localUri);
-
-            if (fileInfo.exists) {
-                setLocalImageUri(localUri);
+            if (Platform.OS === 'web') {
+                const imageRes = await fetch(imageUrl);
+                const blob = await imageRes.blob();
+                setLocalImageUri(blob as unknown as string);
                 return;
+            } else {
+                const localUri = `${FileSystem.documentDirectory}${fileName}`;
+                const fileInfo = await FileSystem.getInfoAsync(localUri);
+                if (fileInfo.exists) {
+                    setLocalImageUri(fileInfo.uri);
+                    return;
+                }
+
+                const downloadResult = await FileSystem.downloadAsync(
+                    imageUrl,
+                    localUri
+                );
+                setLocalImageUri(downloadResult.uri);
             }
-            const downloadResult = await FileSystem.downloadAsync(
-                imageUrl,
-                localUri
-            );
-            setLocalImageUri(downloadResult.uri);
         } catch (err) {
             console.error('Error downloading profile image:', err);
         }
