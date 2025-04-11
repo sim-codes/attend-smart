@@ -40,14 +40,14 @@ export default function SignUp() {
     const handleSubmit = async () => {
         if (!validateStep(currentStep)) return;
 
-        // if (!image) {
-        //     Toast.show({
-        //         type: 'error',
-        //         text1: 'Image Required',
-        //         text2: 'Please upload an image'
-        //     });
-        //     return;
-        // }
+        if (!image) {
+            Toast.show({
+                type: 'error',
+                text1: 'Image Required',
+                text2: 'Please upload an image'
+            });
+            return;
+        }
 
         setLoading(true);
 
