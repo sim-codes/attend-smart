@@ -131,7 +131,7 @@ export class FaceVerificationService {
 
     private async executeRequest(formData: FormData): Promise<any> {
         try {
-            const response = await axios.post('https://dcv7qtf3-8000.uks1.devtunnels.ms/compare-faces', formData, {
+            const response = await axios.post('http://localhost:8000/compare-faces/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }

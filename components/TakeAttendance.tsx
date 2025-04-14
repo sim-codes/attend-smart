@@ -18,6 +18,7 @@ import * as Location from 'expo-location';
 import FaceRecognition from "./FaceRecognition";
 import cloudinaryService from "@/services/cloudinary";
 import faceVerificationService from "@/services/facialRecognition";
+import { Platform } from "react-native";
 
 export default function TakeAttendance({profileImageUri}: { profileImageUri: string | null }) {
     const { user } = useAppSelector((state) => state.auth);
@@ -306,19 +307,19 @@ export default function TakeAttendance({profileImageUri}: { profileImageUri: str
 
     return (
         <VStack>
-            {/* <Button
+            <Button
                 variant="outline"
                 size="xl"
-                onPress={() => setShowDialog(true)}
+                onPress={Platform.OS === 'web' ? () => setShowCameraModal(true) : () => setShowDialog(true)}
             >
                 <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
                 <ButtonText className="text-secondary-0" size="md">Attendance</ButtonText>
-            </Button> */}
+            </Button>
 
-            <Button onPress={() => setShowCameraModal(true)}>
+            {/* <Button onPress={() => setShowCameraModal(true)}>
                 <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
                 <ButtonText className="text-secondary-0" size="md">Take Attendance</ButtonText>
-            </Button>
+            </Button> */}
 
             <ModalDialog
                 isOpen={showCameraModal}
@@ -329,8 +330,8 @@ export default function TakeAttendance({profileImageUri}: { profileImageUri: str
             </ModalDialog>
 
             <ModalDialog
-                isOpen={showFormModal}
-                onClose={() => setShowFormModal(false)}
+                isOpen={Platform.OS === 'web' ? showFormModal : showDialog}
+                onClose={Platform.OS === 'web' ? () => setShowFormModal(false) : () => setShowDialog(false)}
                 onAction={handleSubmit}
                 title="Take Attendance"
                 actionText={'Submit'}
