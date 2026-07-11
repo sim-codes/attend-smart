@@ -160,7 +160,7 @@ const AttendanceReport = () => {
   );
 
   return (
-    <VStack className="flex-1 bg-primary-500" space="md">
+    <VStack className="flex-1 bg-primary-0" space="md">
       {/* Stats Section */}
       <VStack className="bg-primary-600 py-2 px-4 rounded-xl justify-center h-48" space="sm">
         <Heading size="md" className="text-secondary-0">Attendance Summary</Heading>
@@ -198,7 +198,7 @@ const AttendanceReport = () => {
       </VStack>
 
       {/* Course Attendance Section */}
-      <Heading size="md" className="text-secondary-0">Course Attendance</Heading>
+      <Heading size="md" className="text-primary-500">Course Attendance</Heading>
 
       {isLoading ? (
         <Center className="flex-1">
@@ -222,8 +222,8 @@ const AttendanceReport = () => {
         className="self-center"
       >
         <HStack space="sm" className="items-center">
-          <Ionicons name="refresh-outline" size={18} color="#D6BD98" />
-          <ButtonText className="text-secondary-0">Refresh Data</ButtonText>
+          <Ionicons name="refresh-outline" size={18} color="#1A3636" />
+          <ButtonText className="text-primary-500">Refresh Data</ButtonText>
         </HStack>
       </Button>
     </VStack>

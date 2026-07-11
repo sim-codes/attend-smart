@@ -103,7 +103,7 @@ export const config = {
     '--color-info-950': '3 38 56',
 
     /* Typography */
-'--color-typography-0': '214 189 152',   // Lightest (for light text on dark backgrounds)
+'--color-typography-0': '255 255 255',   // White (for light text on dark backgrounds)
 '--color-typography-50': '103 125 106',   // Light shade
 '--color-typography-100': '64 83 76',     // Light-medium shade
 '--color-typography-200': '103 125 106',  // Medium light shade

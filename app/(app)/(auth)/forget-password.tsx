@@ -12,13 +12,13 @@ export default function ForgetPassword() {
     alert("Login button clicked1");
   }
   return (
-    <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
+    <VStack className="h-full w-full justify-between bg-primary-0" space="4xl">
       <VStack className="my-6 p-6">
-        <Text size="3xl" className="text-secondary-0">Welcome Back,</Text>
-        <Text size="3xl" className="text-secondary-0" bold>Forgot password?</Text>
+        <Text size="3xl" className="text-primary-500">Welcome Back,</Text>
+        <Text size="3xl" className="text-primary-500" bold>Forgot password?</Text>
       </VStack>
 
-      <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-14 py-12 px-4">
+      <VStack className="bg-background-0 h-full w-full rounded-t-[5rem] gap-y-4 mt-14 py-12 px-4">
 
       <FormFieldComponent
           label="Email"

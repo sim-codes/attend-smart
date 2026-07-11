@@ -50,7 +50,7 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
         >
             <HStack className="justify-between items-start">
                 <VStack className="flex-1">
-                    <Text size="md" className="font-semibold text-white">{item.courseTitle}</Text>
+                    <Text size="md" className="font-semibold text-primary-500">{item.courseTitle}</Text>
                     <Text className="text-secondary-100 mt-1">{item.courseCode}</Text>
                     <Text className="text-secondary-100 mt-1">
                         Credits: {item.creditUnits}
@@ -73,15 +73,15 @@ const CourseList = ({courses, onDeleteCourses = async () => {}}: CourseListProps
         <View className="flex-1 bg-transparent">
             {/* Header */}
             <VStack className="p-4 border-b border-gray-200">
-                <Text className="text-white mb-2 text-center" size="xl" bold>
+                <Text className="text-primary-500 mb-2 text-center" size="xl" bold>
                     {courses.length}
                     {" "}Registered Courses
                 </Text>
                 <HStack className="justify-between items-center">
-                    <Text size='md' className="font-semibold text-secondary-0">
+                    <Text size='md' className="font-semibold text-primary-500">
                         Total Units: {calculateTotalUnits()}
                     </Text>
-                    <Text size='md' className="font-semibold text-secondary-0">
+                    <Text size='md' className="font-semibold text-primary-500">
                         Selected: {selectedCourses.size}
                     </Text>
                 </HStack>

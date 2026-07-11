@@ -34,11 +34,11 @@ export default function Profile() {
     };
 
     return (
-        <VStack className="h-full w-full bg-primary-500 py-10 px-6" space="3xl">
-            <Heading size="2xl" className="text-secondary-0" bold>Profile</Heading>
+        <VStack className="h-full w-full bg-primary-0 py-10 px-6" space="3xl">
+            <Heading size="2xl" className="text-primary-500" bold>Profile</Heading>
 
             <VStack className="justify-start items-center w-full gap-y-2">
-                <Avatar size="2xl" className="border-4 border-white/20">
+                <Avatar size="2xl" className="border-4 border-primary-500/30">
                     <AvatarFallbackText>{user?.username}</AvatarFallbackText>
                     <AvatarImage
                         source={{
@@ -47,18 +47,18 @@ export default function Profile() {
                     />
                 </Avatar>
 
-                <Heading size="2xl" className="text-white md:text-xs">
+                <Heading size="2xl" className="text-primary-500 md:text-xs">
                     {user?.lastName} {user?.firstName}
                 </Heading>
             </VStack>
 
             <ScrollView className="flex-1 gap-y-3" showsVerticalScrollIndicator={false}>
                 <VStack space="sm">
-                    <Heading size="md" className="text-secondary-0">Personal data</Heading>
+                    <Heading size="md" className="text-primary-500">Personal data</Heading>
                     <HStack space="sm" className="items-end">
                         <Ionicons name="person-outline" size={28} color="#677D6A" />
                         <VStack>
-                            <Text size="lg" className="text-white">{user?.lastName} {user?.firstName}</Text>
+                            <Text size="lg" className="text-primary-500">{user?.lastName} {user?.firstName}</Text>
                             <Text size="sm" className="text-tertiary-100">Full Name</Text>
                         </VStack>
                     </HStack>
@@ -66,7 +66,7 @@ export default function Profile() {
                     <HStack space="sm" className="items-end">
                         <Ionicons name="phone-portrait-outline" size={28} color="#677D6A" />
                         <VStack>
-                            <Text size="lg" className="text-white">{user?.phoneNumber}</Text>
+                            <Text size="lg" className="text-primary-500">{user?.phoneNumber}</Text>
                             <Text size="sm" className="text-tertiary-100">Phone Number</Text>
                         </VStack>
                     </HStack>
@@ -74,21 +74,21 @@ export default function Profile() {
                     <HStack space="sm" className="items-end">
                         <Ionicons name="mail-outline" size={28} color="#677D6A" />
                         <VStack>
-                            <Text size="lg" className="text-white">{user?.email}</Text>
+                            <Text size="lg" className="text-primary-500">{user?.email}</Text>
                             <Text size="sm" className="text-tertiary-100">Email</Text>
                         </VStack>
                     </HStack>
                 </VStack>
 
                 <VStack space="sm">
-                    <Heading size="md" className="text-secondary-0">Student Details</Heading>
+                    <Heading size="md" className="text-primary-500">Student Details</Heading>
                     {
                         profile ?
                         <>
                         <HStack space="sm" className="items-end">
                             <Ionicons name="folder-open-outline" size={28} color="#677D6A" />
                             <VStack>
-                                <Text size="lg" className="text-white">{profile?.department}</Text>
+                                <Text size="lg" className="text-primary-500">{profile?.department}</Text>
                                 <Text size="sm" className="text-tertiary-100">Department</Text>
                             </VStack>
                         </HStack>
@@ -96,7 +96,7 @@ export default function Profile() {
                         <HStack space="sm" className="items-end">
                             <Ionicons name="people-outline" size={28} color="#677D6A" />
                             <VStack>
-                                <Text size="lg" className="text-white">{profile?.matriculationNumber}</Text>
+                                <Text size="lg" className="text-primary-500">{profile?.matriculationNumber}</Text>
                                 <Text size="sm" className="text-tertiary-100">Matric Number</Text>
                             </VStack>
                         </HStack>
@@ -104,35 +104,35 @@ export default function Profile() {
                         <HStack space="sm" className="items-end">
                             <Ionicons name="list-outline" size={28} color="#677D6A" />
                             <VStack>
-                                <Text size="lg" className="text-white">{profile?.level}</Text>
+                                <Text size="lg" className="text-primary-500">{profile?.level}</Text>
                                 <Text size="sm" className="text-tertiary-100">Level</Text>
                             </VStack>
                         </HStack>
                         </> : <>
                         <HStack space="sm" className="items-end">
                             <FontAwesome name="user-o" size={28} color="#677D6A" />
-                            <Text size="lg" className="text-white">Create Student profile on home screen</Text>
+                            <Text size="lg" className="text-primary-500">Create Student profile on home screen</Text>
                         </HStack>
                         </>
                     }
                 </VStack>
 
                 <VStack space="sm">
-                    <Heading size="sm" className="text-secondary-0">Settings</Heading>
+                    <Heading size="sm" className="text-primary-500">Settings</Heading>
 
                     <ChangePassword />
 
                     <Pressable onPress={() => router.push('/update-profile')}>
                         <HStack space="sm" className="items-end">
                             <FontAwesome name="edit" size={28} color="#677D6A" />
-                            <Text size="lg" className="text-white">Update Profile</Text>
+                            <Text size="lg" className="text-primary-500">Update Profile</Text>
                         </HStack>
                     </Pressable>
 
                     <Pressable onPress={() => setShowAlertDialog(true)}>
                     <HStack space="sm" className="items-end">
                         <FontAwesome name="sign-out" size={28} color="#677D6A" />
-                        <Text size="lg" className="text-white">Sign Out</Text>
+                        <Text size="lg" className="text-primary-500">Sign Out</Text>
                     </HStack>
                     </Pressable>
                 </VStack>

@@ -82,13 +82,13 @@ export default function Login() {
   };
 
   return (
-    <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
+    <VStack className="h-full w-full justify-between bg-primary-0" space="4xl">
       <VStack className="my-8 p-6">
-        <Text size="3xl" className="text-secondary-0">Welcome Back,</Text>
-        <Text size="3xl" className="text-secondary-0" bold>Log In!</Text>
+        <Text size="3xl" className="text-primary-500">Welcome Back,</Text>
+        <Text size="3xl" className="text-primary-500" bold>Log In!</Text>
       </VStack>
 
-      <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] mt-8 py-12 px-4" space="lg">
+      <VStack className="bg-background-0 h-full w-full rounded-t-[5rem] mt-8 py-12 px-4" space="lg">
 
         <ScrollView className="flex-1 gap-y-2">
           {loginFormFields.map(field => (

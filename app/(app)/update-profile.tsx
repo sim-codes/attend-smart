@@ -17,16 +17,16 @@ export default function UpdateProfileModal() {
         }
     };
     return (
-        <VStack className="flex-1 w-full bg-primary-500" space="4xl">
+        <VStack className="flex-1 w-full bg-primary-0" space="4xl">
 
             <VStack className="my-8 p-6">
-                <Text size="4xl" className="text-secondary-0">Hi there,</Text>
-                <Text size="4xl" className="text-secondary-0" bold>Update your profile</Text>
+                <Text size="4xl" className="text-primary-500">Hi there,</Text>
+                <Text size="4xl" className="text-primary-500" bold>Update your profile</Text>
             </VStack>
 
-            <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
+            <VStack className="bg-background-0 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
                 <VStack className="justify-start items-center w-full gap-y-2">
-                    <Avatar size="2xl" className=" absolute -top-28 border-4 border-white/20">
+                    <Avatar size="2xl" className=" absolute -top-28 border-4 border-primary-500/30">
                         <AvatarFallbackText>Avatar</AvatarFallbackText>
                         <AvatarImage
                             source={{

@@ -151,17 +151,17 @@ export default function SignUp() {
     };
 
     return (
-    <VStack className="h-full w-full justify-between bg-primary-500" space="4xl">
+    <VStack className="h-full w-full justify-between bg-primary-0" space="4xl">
         <VStack className="my-8 p-6">
-            <Text size="3xl" className="text-secondary-0">Welcome,</Text>
-            <Text size="3xl" className="text-secondary-0" bold>Sign up!</Text>
+            <Text size="3xl" className="text-primary-500">Welcome,</Text>
+            <Text size="3xl" className="text-primary-500" bold>Sign up!</Text>
         </VStack>
 
-            <VStack className="bg-secondary-0/70 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
+            <VStack className="bg-background-0 h-full w-full rounded-t-[5rem] gap-y-4 mt-8 py-12 px-4">
                 <Pressable onPress={handleUpload} className="gap-y-6">
 
                     <VStack className="justify-start items-center w-full gap-y-2">
-                        <Avatar size="2xl" className=" absolute -top-28 border-4 border-white/20">
+                        <Avatar size="2xl" className=" absolute -top-28 border-4 border-primary-500/30">
                             <AvatarFallbackText>Avatar</AvatarFallbackText>
                             <AvatarImage
                                 source={{

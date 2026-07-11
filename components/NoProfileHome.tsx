@@ -210,7 +210,7 @@ export default function NoProfileHome() {
         className="self-center aspect-[384/384] h-2/3"
         alt="Student profile setup"
       />
-      <Heading className="text-white text-center" size="xl">
+      <Heading className="text-primary-500 text-center" size="xl">
         You haven't set up your student profile yet
       </Heading>
       <Button
@@ -219,8 +219,8 @@ export default function NoProfileHome() {
         size="xl"
         onPress={() => setShowDialog(true)}
       >
-        <FontAwesome6 name="user" size={28} color="#D6BD98" />
-        <ButtonText className="text-secondary-0">Let's do that</ButtonText>
+        <FontAwesome6 name="user" size={28} color="#1A3636" />
+        <ButtonText className="text-primary-500">Let's do that</ButtonText>
       </Button>
 
       <ModalDialog

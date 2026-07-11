@@ -312,8 +312,8 @@ export default function TakeAttendance({profileImageUri}: { profileImageUri: str
                 size="xl"
                 onPress={Platform.OS === 'web' ? () => setShowCameraModal(true) : () => setShowDialog(true)}
             >
-                <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
-                <ButtonText className="text-secondary-0" size="md">Attendance</ButtonText>
+                <FontAwesome6 name="address-book" size={24} color="#1A3636" />
+                <ButtonText className="text-primary-500" size="md">Attendance</ButtonText>
             </Button>
 
             {/* <Button onPress={() => setShowCameraModal(true)}>

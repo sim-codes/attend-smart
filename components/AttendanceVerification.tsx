@@ -271,8 +271,8 @@ export default function AttendanceVerification() {
                 size="xl"
                 onPress={() => setShowDialog(true)}
             >
-                <FontAwesome6 name="address-book" size={24} color="#D6BD98" />
-                <ButtonText className="text-secondary-0" size="md">Attendance</ButtonText>
+                <FontAwesome6 name="address-book" size={24} color="#1A3636" />
+                <ButtonText className="text-primary-500" size="md">Attendance</ButtonText>
             </Button>
 
             <ModalDialog

@@ -12,8 +12,8 @@ import { ActivityIndicator, View } from 'react-native';
 import { VStack } from "@/components/ui/vstack";
 
 const LoadingScreen = () => (
-  <VStack className="flex-1 items-center justify-center bg-primary-500">
-    <ActivityIndicator size="large" />
+  <VStack className="flex-1 items-center justify-center bg-primary-0">
+    <ActivityIndicator size="large" color="#1A3636" />
   </VStack>
 );
 

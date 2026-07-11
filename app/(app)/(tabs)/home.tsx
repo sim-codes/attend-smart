@@ -139,9 +139,9 @@ export default function Home() {
     };
 
     return (
-        <VStack className="h-full w-full bg-primary-500 py-10 px-6" space="4xl">
+        <VStack className="h-full w-full bg-primary-0 py-10 px-6" space="4xl">
             <HStack className="justify-start items-center w-full gap-x-2">
-                <Avatar size="lg" className="border-4 border-white/20">
+                <Avatar size="lg" className="border-4 border-primary-500/30">
                     <AvatarFallbackText>{user?.username}</AvatarFallbackText>
                     <AvatarImage
                         source={{
@@ -150,7 +150,7 @@ export default function Home() {
                     />
                 </Avatar>
 
-                <Heading size="2xl" className="text-white">
+                <Heading size="2xl" className="text-primary-500">
                     Hello,{" "}
                     {user?.username}
                 </Heading>

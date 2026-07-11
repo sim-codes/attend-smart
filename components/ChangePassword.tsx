@@ -94,7 +94,7 @@ export default function ChangePassword() {
         <Pressable onPress={() => setShowAlertDialog(true)}>
             <HStack space="sm" className="items-end">
                 <Ionicons name="lock-open-outline" size={28} color="#677D6A" />
-                <Text size="xl" className="text-white">Change Password</Text>
+                <Text size="xl" className="text-primary-500">Change Password</Text>
             </HStack>
 
             <ModalDialog
