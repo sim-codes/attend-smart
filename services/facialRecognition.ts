@@ -1,6 +1,5 @@
 import { Platform } from 'react-native';
 import axios from 'axios';
-import FormData from 'form-data';
 
 interface FaceVerificationPayload {
     image1: Blob | string;

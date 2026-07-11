@@ -17,7 +17,7 @@ cssInterop(H5, { className: 'style' });
 cssInterop(H6, { className: 'style' });
 
 const MappedHeading = memo(
-  forwardRef<React.ElementRef<typeof H1>, IHeadingProps>(
+  forwardRef<any, IHeadingProps>(
     (
       {
         size,
@@ -51,7 +51,6 @@ const MappedHeading = memo(
                 class: className,
               })}
               {...props}
-              // @ts-expect-error
               ref={ref}
             />
           );
@@ -70,7 +69,6 @@ const MappedHeading = memo(
                 class: className,
               })}
               {...props}
-              // @ts-expect-error
               ref={ref}
             />
           );
@@ -89,7 +87,6 @@ const MappedHeading = memo(
                 class: className,
               })}
               {...props}
-              // @ts-expect-error
               ref={ref}
             />
           );
@@ -108,7 +105,6 @@ const MappedHeading = memo(
                 class: className,
               })}
               {...props}
-              // @ts-expect-error
               ref={ref}
             />
           );
@@ -127,7 +123,6 @@ const MappedHeading = memo(
                 class: className,
               })}
               {...props}
-              // @ts-expect-error
               ref={ref}
             />
           );
@@ -147,7 +142,6 @@ const MappedHeading = memo(
                 class: className,
               })}
               {...props}
-              // @ts-expect-error
               ref={ref}
             />
           );
@@ -166,7 +160,6 @@ const MappedHeading = memo(
                 class: className,
               })}
               {...props}
-              // @ts-expect-error
               ref={ref}
             />
           );
@@ -176,7 +169,7 @@ const MappedHeading = memo(
 );
 
 const Heading = memo(
-  forwardRef<React.ElementRef<typeof H1>, IHeadingProps>(
+  forwardRef<any, IHeadingProps>(
     ({ className, size = 'lg', as: AsComp, ...props }, ref) => {
       const {
         isTruncated,
